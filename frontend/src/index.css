@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+
+@keyframes slideBounce {
+  0% {
+    transform: translate(60px, -60px) scale(0.95);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(0, 0) scale(1.02);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-slide-bounce {
+  animation: slideBounce 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}

@@ -91,10 +91,8 @@ const Header = () => {
           {/* Login */}
           <Link
             to="/login"
-            className="hidden sm:block px-4 py-2 rounded-full text-sm font-semibold text-white
-            bg-gradient-to-r from-blue-600 to-blue-400
-            hover:from-blue-700 hover:to-blue-500
-            shadow-sm transition-all"
+            state={{ fromHeaderLogin: true }}
+            className="hidden sm:block bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-blue-500 transition-all"
           >
             Login
           </Link>
