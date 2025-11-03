@@ -1,10 +1,17 @@
-function App() {
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
+function App() {
   return (
     <>
-     <h1 className="text-4xl text-blue-600 font-bold">Hello</h1>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer></Footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
