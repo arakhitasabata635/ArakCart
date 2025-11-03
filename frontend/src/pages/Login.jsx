@@ -4,6 +4,9 @@ import { useState } from "react";
 
 const Login = () => {
   const [profileImage, setProfileImage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -46,17 +49,24 @@ const Login = () => {
             className="w-full py-2 px-4 mt-1 rounded-lg border border-gray-300 focus:border-blue-500 outline-none"
           />
         </div>
-        {/* Password Input */}
+                {/* Password Input */}
         <div className="mb-2">
-          <label className="text-sm font-semibold text-gray-700">
-            Password
-          </label>
+          <label className="text-sm font-semibold text-gray-700">Password</label>
           <div className="relative mt-1">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="••••••••"
               className="w-full py-2 px-4 pr-12 rounded-lg border border-gray-300 focus:border-blue-500 outline-none"
             />
+
+            {/* Show / Hide Password Button */}
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
         </div>
         {/* Login Button */}
