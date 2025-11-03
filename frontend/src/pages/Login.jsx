@@ -6,6 +6,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [animation, setAnimation] = useState("");
+  const [data, setData] = useState({email:"", password:""});
 
   const location = useLocation();
 
@@ -18,15 +19,31 @@ const Login = () => {
       }, 1500);
     }
   }, [location.state]);
-
+  // after upload image show the image in login page
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) setProfileImage(URL.createObjectURL(file));
   };
 
+  // get the user inputs
+ const handleOnChange = (e) => {
+  const { name, value } = e.target;
+  setData((prev) => ({
+    ...prev,
+    [name]: value
+  }));
+};
+
+
+  const hendleOnSubmit = (e) => {
+    e.preventDefault();
+    console.log("user data" , data.password , data.email);
+  };
+
   return (
     <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 px-3">
       <form
+        onSubmit={hendleOnSubmit}
         className={`bg-white shadow-xl rounded-2xl p-7 w-full max-w-sm transition-all duration-300 ${animation}`}
       >
         {/* Profile Image Upload */}
@@ -58,6 +75,9 @@ const Login = () => {
         <div className="mb-4">
           <label className="text-sm font-semibold text-gray-700">Email</label>
           <input
+            name="email"
+            onChange={handleOnChange}
+            value={data.email}
             type="email"
             placeholder="example@email.com"
             className="w-full py-2 px-4 mt-1 rounded-lg border border-gray-300 focus:border-blue-500 outline-none"
@@ -71,6 +91,9 @@ const Login = () => {
           </label>
           <div className="relative mt-1">
             <input
+              name="password"
+              onChange={handleOnChange}
+              value={data.password}
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
               className="w-full py-2 px-4 pr-12 rounded-lg border border-gray-300 focus:border-blue-500 outline-none"
