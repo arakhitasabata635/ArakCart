@@ -62,6 +62,43 @@ const Header = () => {
             </div>
           </div>
         </div>
+        {/* Icons + Login */}
+        <div className="flex items-center gap-5">
+          {/* User */}
+          <Link to="/profile">
+            <FaUser
+              className="text-gray-700 hover:text-blue-600 transition"
+              size={22}
+            />
+          </Link>
+
+          {/* Cart */}
+          <Link to="/cart" className="relative">
+            <FaShoppingCart
+              className="text-gray-700 hover:text-blue-600 transition"
+              size={22}
+            />
+            {cartCount > 0 && (
+              <span
+                className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs
+              w-5 h-5 flex items-center justify-center rounded-full"
+              >
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
+          {/* Login */}
+          <Link
+            to="/login"
+            className="hidden sm:block px-4 py-2 rounded-full text-sm font-semibold text-white
+            bg-gradient-to-r from-blue-600 to-blue-400
+            hover:from-blue-700 hover:to-blue-500
+            shadow-sm transition-all"
+          >
+            Login
+          </Link>
+        </div>
       </div>
     </header>
   );
