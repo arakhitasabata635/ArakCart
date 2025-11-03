@@ -101,6 +101,15 @@ const Login = () => {
         <button className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-2 font-semibold rounded-full hover:scale-[1.03] active:scale-[0.98] transition-transform duration-150">
           Login
         </button>
+        <p className="text-sm text-gray-600 mt-4 text-center">
+          Don’t have an account?{" "}
+          <Link
+            to="/signup"
+            className="text-blue-600 hover:text-blue-800 font-medium underline transition duration-200"
+          >
+            Sign up
+          </Link>
+        </p>
       </form>
     </div>
   );
