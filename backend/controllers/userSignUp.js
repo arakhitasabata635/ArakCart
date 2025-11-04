@@ -14,6 +14,11 @@ const userSignUpController = async (req, res) => {
     if (!name) {
       throw new Error("please enter name");
     }
+    //duplicate user check
+    const user = await userModel.findOne({ email });
+    if (user) {
+      throw new Error("user already exist.");
+    }
     //hashed password creation
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -36,11 +41,11 @@ const userSignUpController = async (req, res) => {
     });
   } catch (err) {
     res.json({
-      message: err,
+      message: err.message || err,
       error: true,
       success: false,
     });
   }
 };
 
-export default userSignUpController ;
+export default userSignUpController;
