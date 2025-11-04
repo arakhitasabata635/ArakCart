@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import imageToBase64 from "../../helpers/imageToBase64";
 import apiSummary from "../../common";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const conformPassword = useRef("");
+  const confirmPassword = useRef("");
 
   const [data, setData] = useState({
     name: "",
@@ -32,21 +33,31 @@ const Signup = () => {
       [name]: value,
     }));
   };
+  const navigate = useNavigate()
   const hendleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
-    if (data.password === conformPassword.current.value) {
-      const jsonResponsData = await fetch(apiSummary.SignUP.url, {
-        method: apiSummary.SignUP.method,
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const userdata = await jsonResponsData.json();
-      console.log(userdata);
-    } else {
-      console.log("check the conform password");
+
+    if (data.password !== confirmPassword.current.value) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
+    const jsonResponsData = await fetch(apiSummary.SignUP.url, {
+      method: apiSummary.SignUP.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const resData = await jsonResponsData.json();
+
+    if (resData.sucess) {
+      toast.success(resData.message);
+      navigate("/login")
+    } 
+    if(resData.error) {
+      toast.error(resData.message );
     }
   };
 
@@ -149,7 +160,7 @@ const Signup = () => {
             <input
               type="text"
               name="confirmPassword"
-              ref={conformPassword}
+              ref={confirmPassword}
               placeholder="Confirm Password"
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
               required
