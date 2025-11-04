@@ -32,7 +32,7 @@ const userSignUpController = async (req, res) => {
       password: hashedPassword,
     };
     const userData = new userModel(payload);
-    const saveUser = userData.save();
+    const saveUser = await userData.save();
     res.status(201).json({
       data: saveUser,
       sucess: true,
