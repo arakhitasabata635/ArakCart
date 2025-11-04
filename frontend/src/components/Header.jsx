@@ -10,8 +10,17 @@ const Header = () => {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto h-16 flex items-center justify-between px-3">
         {/* Logo */}
-        <Link to="/">
-          <img src={Logo} alt="ArakCart Logo" className="w-28" />
+        <Link to="/" className="relative select-none group">
+          <img
+            src={Logo}
+            alt="ArakCart Logo"
+            className="w-28 transition-all duration-300 
+             group-hover:scale-[1.07] group-hover:drop-shadow-md
+             animate-logoFade"
+          />
+
+          {/* Subtle ripple animation on click */}
+          <span className="absolute inset-0 rounded-lg scale-0 bg-blue-500/10 group-active:scale-100 transition-transform duration-300"></span>
         </Link>
         {/* Search Bar (Hidden on Mobile) */}
         <div className="hidden md:flex flex-1 max-w-xl mx-6">
@@ -65,17 +74,17 @@ const Header = () => {
         {/* Icons + Login */}
         <div className="flex items-center gap-5">
           {/* User */}
-          <Link to="/profile">
+          <Link to="/profile" className="group">
             <FaUser
-              className="text-gray-700 hover:text-blue-600 transition"
               size={22}
+              className=" text-gray-700 transition  hover:text-blue-600 group-hover:scale-110 animate-logoFade"
             />
           </Link>
 
           {/* Cart */}
           <Link to="/cart" className="relative">
             <FaShoppingCart
-              className="text-gray-700 hover:text-blue-600 transition"
+              className=" text-gray-700 transition  hover:text-blue-600 hover:scale-105"
               size={22}
             />
             {cartCount > 0 && (
@@ -91,8 +100,7 @@ const Header = () => {
           {/* Login */}
           <Link
             to="/login"
-            state={{ fromHeaderLogin: true }}
-            className="hidden sm:block bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-blue-500 transition-all"
+            className="hidden sm:block bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-blue-500 transition-all hover:scale-105"
           >
             Login
           </Link>

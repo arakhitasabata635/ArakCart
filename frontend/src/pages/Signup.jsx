@@ -4,7 +4,6 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
 
   const [data, setData] = useState({
@@ -35,28 +34,45 @@ const Signup = () => {
       >
         {/* Profile Image Upload */}
         <div className="flex justify-center mb-6 relative">
-          <label htmlFor="profileUpload">
-            <div className="w-24 h-24 bg-gray-100 border-2 border-dashed border-blue-400 rounded-full flex items-center justify-center overflow-hidden cursor-pointer hover:bg-gray-200 transition">
-              {profileImage ? (
-                <img
-                  src={profileImage}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-gray-400 text-sm">Upload</span>
-              )}
-            </div>
-          </label>
-
-          <input
-            id="profileUpload"
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="hidden"
-          />
+  <label htmlFor="profileUpload" className="cursor-pointer">
+    <div
+      className="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500 
+      bg-gradient-to-br from-blue-50 to-white shadow-md 
+      flex flex-col items-center justify-center gap-1 transition-all
+      hover:scale-105 hover:shadow-lg relative"
+    >
+      {profileImage ? (
+        <img
+          src={profileImage}
+          alt="Profile"
+          className="w-full h-full object-cover animate-fadeIn" 
+        />
+      ) : (
+        <div className="flex flex-col items-center justify-center animate-pulse">
+          <svg
+            className="w-6 h-6 text-blue-500"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M4 4h4l1-1h2l1 1h4v12H4V4zm6 3a3 3 0 100 6 3 3 0 000-6z" />
+          </svg>
+          <span className="text-[11px] text-blue-500 font-medium">
+            Upload Photo
+          </span>
         </div>
+      )}
+    </div>
+  </label>
+
+  <input
+    id="profileUpload"
+    type="file"
+    accept="image/*"
+    onChange={handleImageUpload}
+    className="hidden"
+  />
+</div>
+
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
           Create Account
         </h2>
@@ -105,7 +121,7 @@ const Signup = () => {
           {/* Confirm Password */}
           <div className="relative">
             <input
-              type={showConfirmPassword ? "text" : "password"}
+              type="text"
               name="confirmPassword"
               value={data.confirmPassword}
               onChange={handleOnChange}
@@ -113,12 +129,6 @@ const Signup = () => {
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
               required
             />
-            <span
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-3 cursor-pointer text-gray-600"
-            >
-              {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
-            </span>
           </div>
 
           <button
