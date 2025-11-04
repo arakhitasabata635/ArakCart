@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
   const [animation, setAnimation] = useState("");
-  const [data, setData] = useState({email:"", password:""});
+  const [data, setData] = useState({ email: "", password: "" });
 
   const location = useLocation();
 
@@ -19,25 +18,20 @@ const Login = () => {
       }, 1500);
     }
   }, [location.state]);
-  // after upload image show the image in login page
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) setProfileImage(URL.createObjectURL(file));
-  };
+  
 
   // get the user inputs
- const handleOnChange = (e) => {
-  const { name, value } = e.target;
-  setData((prev) => ({
-    ...prev,
-    [name]: value
-  }));
-};
-
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const hendleOnSubmit = (e) => {
     e.preventDefault();
-    console.log("user data" , data.password , data.email);
+    console.log("user data", data.password, data.email);
   };
 
   return (
@@ -46,30 +40,16 @@ const Login = () => {
         onSubmit={hendleOnSubmit}
         className={`bg-white shadow-xl rounded-2xl p-7 w-full max-w-sm transition-all duration-300 ${animation}`}
       >
-        {/* Profile Image Upload */}
-        <div className="flex justify-center mb-6 relative">
-          <label htmlFor="profileUpload">
-            <div className="w-24 h-24 bg-gray-100 border-2 border-dashed border-blue-400 rounded-full flex items-center justify-center overflow-hidden cursor-pointer hover:bg-gray-200 transition">
-              {profileImage ? (
-                <img
-                  src={profileImage}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-gray-400 text-sm">Upload</span>
-              )}
-            </div>
-          </label>
-
-          <input
-            id="profileUpload"
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="hidden"
-          />
+        {/* Profile Icon */}
+        <div className="flex justify-center mb-6">
+          <div
+            className="w-20 h-20 rounded-full flex justify-center items-center
+                               bg-gradient-to-r from-blue-600 to-blue-400 text-white shadow-md"
+          >
+            <FaUserAlt size={28} />
+          </div>
         </div>
+        
 
         {/* Email Input */}
         <div className="mb-4">
