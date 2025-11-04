@@ -29,9 +29,9 @@ const Signup = () => {
 
   return (
     <section className="h-screen flex justify-center items-center bg-slate-50">
-      <div
+      <form
         className="bg-white shadow-lg rounded-xl p-8 w-full max-w-sm
-                   border border-blue-100 animate-slideFromRight"
+                   border border-blue-100 animate-slide-bounce"
       >
         {/* Profile Image Upload */}
         <div className="flex justify-center mb-6 relative">
@@ -62,7 +62,7 @@ const Signup = () => {
         </h2>
 
         {/* Input Fields */}
-        <form className="space-y-4">
+        <div className="space-y-4">
           <input
             type="text"
             name="name"
@@ -70,6 +70,7 @@ const Signup = () => {
             onChange={handleOnChange}
             placeholder="Full Name"
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+            required
           />
 
           <input
@@ -79,6 +80,7 @@ const Signup = () => {
             onChange={handleOnChange}
             placeholder="Email"
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+            required
           />
 
           {/* Password */}
@@ -90,6 +92,7 @@ const Signup = () => {
               onChange={handleOnChange}
               placeholder="Password"
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+              required
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
@@ -108,6 +111,7 @@ const Signup = () => {
               onChange={handleOnChange}
               placeholder="Confirm Password"
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+              required
             />
             <span
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -118,12 +122,12 @@ const Signup = () => {
           </div>
 
           <button
-            type="button"
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-2 rounded-full font-semibold hover:opacity-90 transition-all"
+            type="submit"
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-2 font-semibold rounded-full hover:scale-[1.03] active:scale-[0.98] transition-transform duration-150 cursor-pointer"
           >
             Sign Up
           </button>
-        </form>
+        </div>
 
         {/* Link */}
         <p className="text-center text-gray-600 mt-4 text-sm">
@@ -135,7 +139,7 @@ const Signup = () => {
             Login
           </Link>
         </p>
-      </div>
+      </form>
     </section>
   );
 };

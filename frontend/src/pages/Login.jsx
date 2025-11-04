@@ -1,25 +1,12 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [animation, setAnimation] = useState("");
   const [data, setData] = useState({ email: "", password: "" });
 
-  const location = useLocation();
-
-  // 🔹 If user navigated from Header Login → trigger animation
-  useEffect(() => {
-    if (location.state?.fromHeaderLogin) {
-      setAnimation("animate-slide-bounce");
-      setTimeout(() => {
-        setAnimation("");
-      }, 1500);
-    }
-  }, [location.state]);
-  
-
+ 
   // get the user inputs
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -38,7 +25,7 @@ const Login = () => {
     <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 px-3">
       <form
         onSubmit={hendleOnSubmit}
-        className={`bg-white shadow-xl rounded-2xl p-7 w-full max-w-sm transition-all duration-300 ${animation}`}
+        className={`bg-white shadow-xl rounded-2xl p-7 w-full max-w-sm transition-all duration-300 animate-slide-bounce`}
       >
         {/* Profile Icon */}
         <div className="flex justify-center mb-6">
@@ -60,6 +47,7 @@ const Login = () => {
             value={data.email}
             type="email"
             placeholder="example@email.com"
+            required
             className="w-full py-2 px-4 mt-1 rounded-lg border border-gray-300 focus:border-blue-500 outline-none"
           />
         </div>
@@ -75,13 +63,14 @@ const Login = () => {
               onChange={handleOnChange}
               value={data.password}
               type={showPassword ? "text" : "password"}
+              required
               placeholder="••••••••"
               className="w-full py-2 px-4 pr-12 rounded-lg border border-gray-300 focus:border-blue-500 outline-none"
             />
 
             {/* Show Hide */}
             <button
-              type="button"
+              type="submit"
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
               onClick={() => setShowPassword(!showPassword)}
             >
@@ -101,7 +90,7 @@ const Login = () => {
         </div>
 
         {/* Login Button */}
-        <button className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-2 font-semibold rounded-full hover:scale-[1.03] active:scale-[0.98] transition-transform duration-150">
+        <button className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-2 font-semibold rounded-full hover:scale-[1.03] active:scale-[0.98] transition-transform duration-150 cursor-pointer">
           Login
         </button>
         <p className="text-sm text-gray-600 mt-4 text-center">
