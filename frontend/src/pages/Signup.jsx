@@ -33,7 +33,8 @@ const Signup = () => {
       [name]: value,
     }));
   };
-  const navigate = useNavigate()
+  //heandle on submit
+  const navigate = useNavigate();
   const hendleOnSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,10 +55,10 @@ const Signup = () => {
 
     if (resData.sucess) {
       toast.success(resData.message);
-      navigate("/login")
-    } 
-    if(resData.error) {
-      toast.error(resData.message );
+      navigate("/login");
+    }
+    if (resData.error) {
+      toast.error(resData.message);
     }
   };
 

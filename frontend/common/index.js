@@ -5,6 +5,10 @@ const apiSummary = {
     url: `${backendPortUrl}/api/signup`,
     method: "POST",
   },
+  login: {
+    url: `${backendPortUrl}/api/login`,
+    method: "POST",
+  },
 };
 
 export default apiSummary;

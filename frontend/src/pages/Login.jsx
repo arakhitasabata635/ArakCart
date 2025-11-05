@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
+import apiSummary from "../../common";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,9 +18,23 @@ const Login = () => {
     }));
   };
 
-  const hendleOnSubmit = (e) => {
+  const hendleOnSubmit = async(e) => {
     e.preventDefault();
-    console.log("user data", data.password, data.email);
+    const jsonResponsData = await fetch(apiSummary.login.url, {
+      method: apiSummary.login.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const resData = await jsonResponsData.json();
+    if(resData.success){
+      toast.success(resData.message)
+    }
+    if(resData.error){
+      toast.error(resData.error)
+    }
   };
 
   return (
