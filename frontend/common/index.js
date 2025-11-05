@@ -3,19 +3,19 @@ const backendPortUrl = "http://localhost:8080";
 const apiSummary = {
   SignUP: {
     url: `${backendPortUrl}/api/signup`,
-    method: "POST",
+    method: "post",
   },
   login: {
     url: `${backendPortUrl}/api/login`,
-    method: "POST",
+    method: "post",
   },
   current_user: {
     url: `${backendPortUrl}/api/user-details`,
-    method: "GET",
+    method: "get",
   },
   logout_user: {
     url: `${backendPortUrl}/api/userLogout`,
-    method: "GET",
+    method: "get",
   },
 };
 

@@ -32,13 +32,14 @@ const Login = () => {
     });
 
     const resData = await jsonResponsData.json();
+    console.log(resData);
     if (resData.success) {
       toast.success(resData.message);
       navigate("/");
       fetchUserDetails();
     }
     if (resData.error) {
-      toast.error(resData.error);
+      toast.error(resData.message);
     }
   };
 

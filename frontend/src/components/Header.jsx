@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import Logo from "../assest/logo-with-text.svg";
@@ -9,6 +9,7 @@ import { setUserDetails } from "../store/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const user = useSelector((state) => state?.user?.user);
   const cartCount = 10;
   const handleLogout = async () => {
@@ -20,6 +21,7 @@ const Header = () => {
     if (data.success) {
       toast.success(data.message);
       dispatch(setUserDetails(null));
+      navigate("/login")
     }
     if (data.error) {
       toast.error(data.message);
