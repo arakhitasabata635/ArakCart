@@ -1,5 +1,6 @@
 import userModel from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const userLoginController = async (req, res) => {
   try {
@@ -11,16 +12,30 @@ const userLoginController = async (req, res) => {
     if (!password) {
       throw new Error("please enter password");
     }
-  
+
     const user = await userModel.findOne({ email });
     const checkPassword = await bcrypt.compare(password, user.password);
     if (user.email !== email || !checkPassword) {
       throw new Error("invalid email and password");
-    }else{
-      console.log("home");
     }
-  
-  
+    const tokenData = {
+      _id: user._id,
+      email: user.email,
+    };
+    const token = await jwt.sign(tokenData, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRE,
+    });
+
+    const tokenOption = {
+      httpOnly: true,
+      secure: true,
+    };
+    res.cookie("token", token, tokenOption).json({
+      message: "Login Sucessfully",
+      data: token,
+      success: true,
+      error: false,
+    });
   } catch (err) {
     res.json({
       message: err.message || err,

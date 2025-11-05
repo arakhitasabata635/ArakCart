@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import router from "./routes/index.js"
+import cookieParser from "cookie-parser";
 
 
 dotenv.config();
@@ -12,6 +13,7 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser())
 
 app.use("/api",router)
 
