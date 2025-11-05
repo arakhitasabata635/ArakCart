@@ -13,6 +13,10 @@ const apiSummary = {
     url: `${backendPortUrl}/api/user-details`,
     method: "GET",
   },
+  logout_user: {
+    url: `${backendPortUrl}/api/userLogout`,
+    method: "GET",
+  },
 };
 
 export default apiSummary;

@@ -2,12 +2,29 @@ import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import Logo from "../assest/logo-with-text.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import apiSummary from "../../common";
+import { toast } from "react-toastify";
+import { setUserDetails } from "../store/userSlice";
 
 const Header = () => {
-  const cartCount = 10;
+  const dispatch = useDispatch();
   const user = useSelector((state) => state?.user?.user);
-  console.log("user", user);
+  const cartCount = 10;
+  const handleLogout = async () => {
+    const fetchData = await fetch(apiSummary.logout_user.url, {
+      method: apiSummary.logout_user.method,
+      credentials: "include",
+    });
+    const data = await fetchData.json();
+    if (data.success) {
+      toast.success(data.message);
+      dispatch(setUserDetails(null));
+    }
+    if (data.error) {
+      toast.error(data.message);
+    }
+  };
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -114,13 +131,22 @@ const Header = () => {
             )}
           </Link>
 
-          {/* Login */}
-          <Link
-            to="/login"
-            className="hidden sm:block bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-blue-500 transition-all hover:scale-105"
-          >
-            Login
-          </Link>
+          {/* Login/logout */}
+          {user?._id ? (
+            <button
+              onClick={handleLogout}
+              className="hidden sm:block bg-gradient-to-r from-red-600 to-red-400 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-red-700 hover:to-red-500 transition-all hover:scale-105"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="hidden sm:block bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-blue-500 transition-all hover:scale-105"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </header>
