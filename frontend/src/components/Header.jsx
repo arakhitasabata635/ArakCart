@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import Logo from "../assest/logo-with-text.svg";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const cartCount = 10;
+  const user = useSelector((state) => state?.user?.user);
+  console.log("user", user);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -75,10 +78,24 @@ const Header = () => {
         <div className="flex items-center gap-5">
           {/* User */}
           <Link to="/profile" className="group">
-            <FaUser
-              size={22}
-              className=" text-gray-700 transition  hover:text-blue-600 group-hover:scale-110 animate-logoFade"
-            />
+            {user?.profilePic ? (
+              <div
+                className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-400 
+               shadow-md cursor-pointer transition-all group-hover:scale-110 
+               hover:border-blue-600 hover:shadow-lg"
+              >
+                <img
+                  src={user.profilePic}
+                  alt={user.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <FaUser
+                size={22}
+                className=" text-gray-700 transition  hover:text-blue-600 group-hover:scale-110 animate-logoFade"
+              />
+            )}
           </Link>
 
           {/* Cart */}
