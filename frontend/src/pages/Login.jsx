@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import apiSummary from "../../common";
@@ -7,8 +7,8 @@ import apiSummary from "../../common";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
- 
   // get the user inputs
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -17,8 +17,8 @@ const Login = () => {
       [name]: value,
     }));
   };
-
-  const hendleOnSubmit = async(e) => {
+  // heandle on submit
+  const hendleOnSubmit = async (e) => {
     e.preventDefault();
     const jsonResponsData = await fetch(apiSummary.login.url, {
       method: apiSummary.login.method,
@@ -26,14 +26,16 @@ const Login = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      credentials: "include",
     });
 
     const resData = await jsonResponsData.json();
-    if(resData.success){
-      toast.success(resData.message)
+    if (resData.success) {
+      toast.success(resData.message);
+      navigate("/");
     }
-    if(resData.error){
-      toast.error(resData.error)
+    if (resData.error) {
+      toast.error(resData.error);
     }
   };
 
@@ -52,7 +54,6 @@ const Login = () => {
             <FaUserAlt size={28} />
           </div>
         </div>
-        
 
         {/* Email Input */}
         <div className="mb-4">
