@@ -9,6 +9,10 @@ const apiSummary = {
     url: `${backendPortUrl}/api/login`,
     method: "POST",
   },
+  current_user: {
+    url: `${backendPortUrl}/api/user-details`,
+    method: "GET",
+  },
 };
 
 export default apiSummary;

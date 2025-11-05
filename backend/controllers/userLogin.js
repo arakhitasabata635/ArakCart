@@ -37,7 +37,7 @@ const userLoginController = async (req, res) => {
       error: false,
     });
   } catch (err) {
-    res.json({
+    res.status(400).json({
       message: err.message || err,
       error: true,
       success: false,

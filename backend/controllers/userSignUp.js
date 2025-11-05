@@ -40,7 +40,7 @@ const userSignUpController = async (req, res) => {
       message: "user created sucessfully!",
     });
   } catch (err) {
-    res.json({
+    res.status(400).json({
       message: err.message || err,
       error: true,
       success: false,
