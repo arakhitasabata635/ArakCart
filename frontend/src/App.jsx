@@ -8,7 +8,6 @@ import apiSummary from "../common";
 import Context  from "./context";
 
 function App() {
-  console.log("hii");
   const fetchUserDetails = async () => {
     const dataResponse = await fetch(apiSummary.current_user.url, {
       method: apiSummary.current_user.method,
@@ -26,7 +25,7 @@ function App() {
   }, []);
   return (
     <>
-      <Context.Provider value={fetchUserDetails}>
+      <Context.Provider value={{fetchUserDetails}}>
         <ToastContainer position="top-right" autoClose={3000} />
         <Header />
         <main>

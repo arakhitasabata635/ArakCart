@@ -1,8 +1,15 @@
-
+import userModel from "../models/userModel.js";
 
 const userDetailsController = async (req, res) => {
   try {
-   
+    const user = await userModel.findById(req.userId);
+
+    res.status(200).json({
+      data: user,
+      sucess: true,
+      error: false,
+      message: "user details"
+    });
   } catch (err) {
     res.status(400).json({
       message: err.message || err,
