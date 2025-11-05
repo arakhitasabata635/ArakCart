@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import apiSummary from "../common";
+import Context  from "./context";
 
 function App() {
   console.log("hii");
@@ -16,21 +17,23 @@ function App() {
       },
       credentials: "include",
     });
-    const dataApi= await dataResponse.json();
+    const dataApi = await dataResponse.json();
     console.log("data_user", dataApi);
   };
   useEffect(() => {
     //user details
-    fetchUserDetails()
+    fetchUserDetails();
   }, []);
   return (
     <>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-      <Footer></Footer>
+      <Context.Provider value={fetchUserDetails}>
+        <ToastContainer position="top-right" autoClose={3000} />
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer></Footer>
+      </Context.Provider>
     </>
   );
 }

@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import apiSummary from "../../common";
+import context from "../context";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const {fetchUserDetails} = useContext(context)
 
   // get the user inputs
   const handleOnChange = (e) => {
@@ -33,6 +35,7 @@ const Login = () => {
     if (resData.success) {
       toast.success(resData.message);
       navigate("/");
+      fetchUserDetails();
     }
     if (resData.error) {
       toast.error(resData.error);
