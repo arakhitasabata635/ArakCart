@@ -6,8 +6,8 @@ const allUsersController = async (req, res) => {
      res.status(200).json({
       message: "All users",
       data: allUsers,
-      error: true,
-      success: false,
+      error: false,
+      success: true,
     });
   } catch (err) {
     res.status(400).json({

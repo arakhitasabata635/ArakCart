@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import apiSummary from "../../common";
 import { FaEdit } from "react-icons/fa";
-import moment from "moment"
-
+import moment from "moment";
+import { toast } from "react-toastify";
+import ChengeUserRole from "../components/ChengeUserRole";
 const AllUsers = () => {
   const [alluser, setAlluser] = useState([]);
+  const [editingUser, setEditingUser] = useState(false);
 
   //fetch all users
   const fetchAllUsers = async () => {
@@ -14,8 +16,13 @@ const AllUsers = () => {
     });
 
     const dataResponce = await fetchData.json();
-    setAlluser(dataResponce.data);
-    console.log("alluser", dataResponce.data);
+    if (dataResponce.success) {
+      toast.success(dataResponce.message);
+      setAlluser(dataResponce.data);
+    }
+    if (dataResponce.error) {
+      toast.error(dataResponce.message);
+    }
   };
 
   useEffect(() => {
@@ -57,68 +64,70 @@ const AllUsers = () => {
 
             <tbody className="bg-white divide-y divide-gray-100">
               {alluser?.map((user, idx) => (
-              <tr key={user._id || idx} className="hover:bg-gray-50">
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {idx + 1}
-                </td>
+                <tr key={user._id || idx} className="hover:bg-gray-50">
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
+                    {idx + 1}
+                  </td>
 
-                <td className="px-4 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-                      {user.profilePic ? (
-                        <img
-                          src={user.profilePic}
-                          alt={user.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <span className="text-xs text-gray-400">
-                          {user.name?.charAt(0)?.toUpperCase() || "U"}
-                        </span>
-                      )}
-                    </div>
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">
-                        {user.name || "—"}
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                        {user.profilePic ? (
+                          <img
+                            src={user.profilePic}
+                            alt={user.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-xs text-gray-400">
+                            {user.name?.charAt(0)?.toUpperCase() || "U"}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-900 capitalize">
+                          {user.name}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
+                  </td>
 
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {user.email || "—"}
-                </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
+                    {user.email}
+                  </td>
 
-                <td className="px-4 py-4 whitespace-nowrap">
-                  <span
-                    className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${
-                      user.role === "admin"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-green-100 text-green-700"
-                    }`}
-                  >
-                    {user.role || "user"}
-                  </span>
-                </td>
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    <span
+                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${
+                        user.role === "admin"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-green-100 text-green-700"
+                      }`}
+                    >
+                      {user.role}
+                    </span>
+                  </td>
 
-                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
-                  {moment(user.createdAt).format('LL')}
-                </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
+                    {moment(user.createdAt).format("LL")}
+                  </td>
 
-                <td className="px-4 py-4 whitespace-nowrap text-center">
-                  <button
-                    title="Edit user"
-                    className="inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:bg-blue-50 transition"
-                  >
-                    <FaEdit/>
-                  </button>
-                </td>
-              </tr>
+                  <td className="px-4 py-4 whitespace-nowrap text-center">
+                    <button
+                     onClick={() => setEditingUser(user)}  
+                      title="Edit user"
+                      className="inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:bg-blue-100 transition"
+                    >
+                      <FaEdit />
+                    </button>
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      {editingUser && <ChengeUserRole setEditingUser={setEditingUser}  user={editingUser}/>}
     </section>
   );
 };
