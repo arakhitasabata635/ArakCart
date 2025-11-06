@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema(
     },
     password: String,
     profilePic: String,
+    role: {
+      type: String,
+      default: "user",
+      required: true,
+    },
   },
   {
     timestamps: true,
@@ -18,4 +23,4 @@ const userSchema = new mongoose.Schema(
 
 const userModel = mongoose.model("user", userSchema);
 
-export default userModel ;
+export default userModel;

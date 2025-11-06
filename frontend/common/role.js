@@ -1,3 +1,3 @@
-const ROLE = [ "ADMIN", , "GENERAL"];
+const ROLE = [ "admin", "user"];
 
 export default ROLE;
