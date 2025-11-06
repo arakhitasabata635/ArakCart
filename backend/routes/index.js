@@ -17,6 +17,8 @@ router.get("/userLogout",userLogoutController)
 
 //admin pannel
 router.get("/admin/users", authToken,allUsersController)
+router.post("/admin/update-user", authToken,allUsersController)
+
 
 
 
