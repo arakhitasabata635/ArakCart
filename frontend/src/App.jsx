@@ -12,6 +12,7 @@ import { setUserDetails } from "./store/userSlice";
 function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith("/admin");
+
   const dispatch = useDispatch();
   const fetchUserDetails = async () => {
     const dataResponse = await fetch(apiSummary.current_user.url, {
@@ -30,6 +31,7 @@ function App() {
     //user details
     fetchUserDetails();
   }, []);
+
   return (
     <>
       <Context.Provider value={{ fetchUserDetails }}>

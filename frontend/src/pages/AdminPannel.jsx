@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { FaUsers, FaBox } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
@@ -49,6 +49,7 @@ const AdminPannel = () => {
       {/*  Main Content */}
       <main className="flex-1 p-6 bg-white">
         <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+        <Outlet/>
       </main>
     </div>
   );
