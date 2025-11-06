@@ -9,7 +9,7 @@ import { setUserDetails } from "../store/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
   const cartCount = 10;
   const handleLogout = async () => {
@@ -21,7 +21,7 @@ const Header = () => {
     if (data.success) {
       toast.success(data.message);
       dispatch(setUserDetails(null));
-      navigate("/login")
+      navigate("/login");
     }
     if (data.error) {
       toast.error(data.message);
@@ -96,12 +96,12 @@ const Header = () => {
         {/* Icons + Login */}
         <div className="flex items-center gap-5">
           {/* User */}
-          <Link to="/profile" className="group">
+          <div className="relative group ">
             {user?.profilePic ? (
               <div
-                className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-400 
-               shadow-md cursor-pointer transition-all group-hover:scale-110 
-               hover:border-blue-600 hover:shadow-lg"
+                className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-500 
+      shadow-md cursor-pointer transition-all duration-300 
+      hover:border-blue-700 hover:shadow-lg"
               >
                 <img
                   src={user.profilePic}
@@ -112,10 +112,28 @@ const Header = () => {
             ) : (
               <FaUser
                 size={22}
-                className=" text-gray-700 transition  hover:text-blue-600 group-hover:scale-110 animate-logoFade"
+                className="text-gray-700 transition hover:text-blue-600 group-hover:scale-110 animate-logoFade"
               />
             )}
-          </Link>
+
+            {/* Admin Popup — Desktop Only (hidden on small screens) */}
+            {user?.role === "admin" && (
+              <div
+                className="absolute right-0 mt-3 w-44 rounded-lg bg-white shadow-xl border 
+      opacity-0 invisible transition-all duration-200
+      group-hover:opacity-100 group-hover:visible 
+      hidden sm:block z-50"
+              >
+                <Link
+                  to="/admin"
+                  className="block px-4 py-2 text-gray-700 text-sm font-medium 
+        hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-200"
+                >
+                  🔐 Admin Panel
+                </Link>
+              </div>
+            )}
+          </div>
 
           {/* Cart */}
           <Link to="/cart" className="relative">
