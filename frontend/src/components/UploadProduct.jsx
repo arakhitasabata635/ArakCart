@@ -1,10 +1,20 @@
 import React, { useState } from "react";
 import productCategory from "../../common/productCategory";
 import { FaUpload, FaTrash } from "react-icons/fa";
+import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 
 const UploadProduct = ({ setUploadProduct }) => {
   const [images, setImages] = useState([]);
-  const [data, setData] =useState("")
+  const [data, setData] = useState("");
+ 
+
+  // image d in cloudnary
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    setImages(file.name)
+    const uploadRes  = await uploadImgCloudnary(file);
+    console.log("uploadImgInCloudnary", uploadRes);
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
@@ -57,7 +67,7 @@ const UploadProduct = ({ setUploadProduct }) => {
               accept="image/*"
               multiple
               className="hidden"
-              // onChange={handleImageUpload}
+              onChange={handleImageUpload}
             />
           </label>
 

@@ -1,6 +1,7 @@
-const url = process.env.REACT_APP_CLOUDNARY_NAME;
+const url = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
 const uploadImgCloudnary = async (image) => {
+  console.log(url);
   const formData = new FormData();
   formData.append("file", image);
   formData.append("upload_preset", "arakcart-product");
@@ -9,5 +10,7 @@ const uploadImgCloudnary = async (image) => {
     method: "post",
     body: formData,
   });
-  return dataResponce.json();
+  return await dataResponce.json();
 };
+
+export default uploadImgCloudnary;
