@@ -4,17 +4,30 @@ import { FaUpload, FaTrash } from "react-icons/fa";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 
 const UploadProduct = ({ setUploadProduct }) => {
-  const [images, setImages] = useState([]);
-  const [data, setData] = useState("");
  
+  const [data, setData] = useState({
+    productName: "",
+    brandName: "",
+    category: "",
+    productImages: [],
+    price: "",
+    sellingPrice: "",
+    description: "",
+  });
 
   // image d in cloudnary
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    setImages(file.name)
-    const uploadRes  = await uploadImgCloudnary(file);
-    console.log("uploadImgInCloudnary", uploadRes);
+    if (!file) return;
+    const uploadRes = await uploadImgCloudnary(file);
+    setData((prev)=>{
+      return {
+        ...prev,
+        productImages:[...prev.productImages, uploadRes.url]
+      }
+    })
   };
+  console.log("uploadImgInCloudnary", data);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
@@ -25,7 +38,7 @@ const UploadProduct = ({ setUploadProduct }) => {
 
         <input
           type="text"
-          name="name"
+          name="productName"
           placeholder="Product Name"
           // onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
@@ -33,7 +46,7 @@ const UploadProduct = ({ setUploadProduct }) => {
 
         <input
           type="text"
-          name="brand"
+          name="brandName"
           placeholder="Brand Name"
           // onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
@@ -72,19 +85,19 @@ const UploadProduct = ({ setUploadProduct }) => {
           </label>
 
           {/* Preview Images */}
-          {images.length > 0 && (
+          {data.productImages.length > 0 && (
             <div className="grid grid-cols-3 gap-2 mt-2">
-              {images?.map((img, index) => (
+              {data.productImages?.map((img, index) => (
                 <div key={index} className="relative group">
                   <img
-                    src={img.url}
+                    src={img}
                     alt="preview"
                     className="w-full h-24 object-cover rounded-lg border"
                   />
 
                   {/* Delete button */}
                   <button
-                    onClick={() => removeImage(index)}
+                    // onClick={() => removeImage(index)}
                     className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
                   >
                     <FaTrash size={12} />
