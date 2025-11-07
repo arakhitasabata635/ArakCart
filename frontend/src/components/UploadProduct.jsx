@@ -1,85 +1,83 @@
 import React from "react";
+import productCategory from "../../common/productCategory";
 
 const UploadProduct = ({ setUploadProduct }) => {
   return (
-    <div
-      // onClick={() => setOpenAddPopup(false)}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-    >
-      <form
-        // onClick={(e) => e.stopPropagation()}
-        // onSubmit={handleSubmit}
-        className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 animate-fadeIn"
-      >
-        <h3 className="text-lg font-bold text-gray-800 mb-4">
-          Add New Product
-        </h3>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
+      <div className="w-[420px] bg-white p-6 rounded-xl shadow-lg flex flex-col gap-3 animate-fadeIn">
+        <h2 className="text-xl font-semibold text-gray-800 text-center mb-2">
+          Add Product
+        </h2>
 
-        <div className="grid gap-3">
-          <input
-            type="text"
-            name="name"
-            // value={data.name}
-            // onChange={handleOnChange}
-            placeholder="Product Name"
-            required
-            className="inputBox"
-          />
+        <input
+          type="text"
+          name="name"
+          placeholder="Product Name"
+          // onChange={handleChange}
+          className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+        />
 
-          <input
-            type="text"
-            name="brand"
-            // value={data.brand}
-            // onChange={handleOnChange}
-            placeholder="Brand Name"
-            required
-            className="inputBox"
-          />
+        <input
+          type="text"
+          name="brand"
+          placeholder="Brand Name"
+          // onChange={handleChange}
+          className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+        />
 
-          <textarea
-            name="description"
-            // value={data.description}
-            // onChange={handleOnChange}
-            placeholder="Description"
-            rows="3"
-            className="inputBox resize-none"
-          />
+        <select
+          name="category"
+          // onChange={handleChange}
+          className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+        >
+          <option value="">Select Category</option>
+          {productCategory.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
 
-          <input
-            type="number"
-            name="price"
-            // value={data.price}
-            // onChange={handleOnChange}
-            placeholder="Price"
-            required
-            className="inputBox"
-          />
+        <textarea
+          name="description"
+          placeholder="Description"
+          // onChange={handleChange}
+          className="border border-gray-300 px-3 py-2 rounded-lg h-20 resize-none focus:ring focus:ring-indigo-400 outline-none"
+        />
 
-          <input
-            type="number"
-            name="sellingPrice"
-            // value={data.sellingPrice}
-            // onChange={handleOnChange}
-            placeholder="Selling Price"
-            required
-            className="inputBox"
-          />
-        </div>
+        <input
+          type="number"
+          name="price"
+          placeholder="Price"
+          // onChange={handleChange}
+          className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+        />
+
+        <input
+          type="number"
+          name="sellingPrice"
+          placeholder="Selling Price"
+          // onChange={handleChange}
+          className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+        />
 
         {/* Buttons */}
-        <div className="flex justify-end gap-3 mt-5">
+        <div className="flex justify-between mt-3">
           <button
-            type="button"
-            onClick={() => setUploadProduct(false)}
-            className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+            className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition"
+            onClick={()=>setUploadProduct(false)}
           >
             Cancel
           </button>
-          <button className="px-5 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition">
-            Add
+
+          <button
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+            // onClick={handleSubmit}
+          >
+            Add Product
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

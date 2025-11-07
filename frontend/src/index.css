@@ -41,17 +41,6 @@
 }
 
 /*upload products*/
-.inputBox {
-  width: 100%;
-  border: 1px solid #cbd5e1;
-  padding: 10px;
-  border-radius: 6px;
-  outline: none;
-}
-
-.inputBox:focus {
-  border-color: #3b82f6;
-}
 
 @keyframes fadeIn {
   from {
