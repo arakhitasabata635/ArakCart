@@ -15,11 +15,19 @@ const AdminPannel = () => {
       >
         {/* Profile Section */}
         <div className="text-center">
-          <img
-            src={admin?.profilePic}
-            alt={admin?.name}
-            className="w-24 h-24 mx-auto rounded-full border-4 border-white shadow-lg"
-          />
+          <div className="w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                        {admin?.profilePic ? (
+                          <img
+                            src={admin?.profilePic}
+                            alt={admin?.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-2xl text-gray-600">
+                            {admin?.name?.charAt(0)?.toUpperCase() || "U"}
+                          </span>
+                        )}
+                      </div>
           <h2 className="mt-3 text-xl font-bold tracking-wide capitalize">
             {admin?.name}
           </h2>

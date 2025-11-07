@@ -117,7 +117,7 @@ const Header = () => {
             )}
 
             {/* Admin Popup — Desktop Only (hidden on small screens) */}
-            {user?.role === "admin" && (
+            {(user?.role === "admin" || user?.role === "owner") && (
               <div
                 className="absolute right-0 mt-3 w-44 rounded-lg bg-white shadow-xl border 
       opacity-0 invisible transition-all duration-200
