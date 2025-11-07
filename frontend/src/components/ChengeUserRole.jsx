@@ -4,7 +4,7 @@ import ROLE from "../../common/role";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
 
-const ChangeUserRole = ({ user, setEditingUser }) => {
+const ChangeUserRole = ({ user, setEditingUser, setAlluser }) => {
   const modalRef = useRef();
   const [newRole, setNewrole] = useState(user?.role);
 
@@ -22,7 +22,6 @@ const ChangeUserRole = ({ user, setEditingUser }) => {
 
   const handleSave = async () => {
     if (user.role !== newRole) {
-      console.log(user.role, newRole);
       user.newRole = newRole;
       const updateUserFetch = await fetch(apiSummary.updateUser.url, {
         method: apiSummary.updateUser.method,
@@ -35,6 +34,11 @@ const ChangeUserRole = ({ user, setEditingUser }) => {
       const updateUser = await updateUserFetch.json();
       if (updateUser.success) {
         toast.success(updateUser.message);
+        setAlluser((prevUsers) =>
+          prevUsers.map((u) =>
+            u._id === updateUser.data._id ? updateUser.data : u
+          )
+        );
         setEditingUser(null);
       }
       if (updateUser.error) {

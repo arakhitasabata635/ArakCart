@@ -114,7 +114,7 @@ const AllUsers = () => {
 
                   <td className="px-4 py-4 whitespace-nowrap text-center">
                     <button
-                     onClick={() => setEditingUser(user)}  
+                      onClick={() => setEditingUser(user)}
                       title="Edit user"
                       className="inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:bg-blue-100 transition"
                     >
@@ -127,7 +127,13 @@ const AllUsers = () => {
           </table>
         </div>
       </div>
-      {editingUser && <ChengeUserRole setEditingUser={setEditingUser}  user={editingUser}/>}
+      {editingUser && (
+        <ChengeUserRole
+          setEditingUser={setEditingUser}
+          user={editingUser}
+          setAlluser={setAlluser}
+        />
+      )}
     </section>
   );
 };

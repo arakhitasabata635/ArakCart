@@ -13,7 +13,7 @@ const updateUserController = async (req, res) => {
       ).select("-password");
 
       res.status(200).json({
-        message: "role update is sucessfully",
+        message: "User role updated successfully!",
         data: updatedUser,
         error: false,
         success: true,
