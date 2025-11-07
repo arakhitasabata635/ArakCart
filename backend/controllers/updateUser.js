@@ -1,9 +1,10 @@
 import userModel from "../models/userModel.js";
 
-const updateUseController = async (req, res) => {
+const updateUserController = async (req, res) => {
   try {
     const user = req.body;
-    const sessionUser = await userModel.findById(req.userid);
+    console.log(user);
+    const sessionUser = await userModel.findById(req.userId);
     if (sessionUser.role === "admin") {
       const updatedUser = await userModel.findByIdAndUpdate(
         user._id,
@@ -34,4 +35,4 @@ const updateUseController = async (req, res) => {
   }
 };
 
-export default updateUseController;
+export default updateUserController;

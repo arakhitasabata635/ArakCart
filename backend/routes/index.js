@@ -6,6 +6,7 @@ import userDetailsController from "../controllers/userDetails.js";
 import authToken from "../middlewares/authToken.js";
 import userLogoutController from "../controllers/userLogout.js";
 import allUsersController from "../controllers/allUsers.js";
+import updateUserController from "../controllers/updateUser.js";
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get("/userLogout",userLogoutController)
 
 //admin pannel
 router.get("/admin/users", authToken,allUsersController)
-router.post("/admin/update-user", authToken,allUsersController)
+router.post("/admin/update-user", authToken,updateUserController)
 
 
 

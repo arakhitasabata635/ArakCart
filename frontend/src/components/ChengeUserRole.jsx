@@ -1,15 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import ROLE from "../../common/role";
+import apiSummary from "../../common";
+import { toast } from "react-toastify";
 
 const ChangeUserRole = ({ user, setEditingUser }) => {
   const modalRef = useRef();
+  const [newRole, setNewrole] = useState(user?.role);
 
   // Close modal when clicking outside content box
   const handleOutsideClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      console.log(modalRef.current);
-      setEditingUser(false);
+      setEditingUser(null);
     }
   };
 
@@ -18,9 +20,34 @@ const ChangeUserRole = ({ user, setEditingUser }) => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
-  const handleSave = () => {
-    const updatedRole = document.getElementById("roleSelect").value;
-    onSave(user._id, updatedRole);
+  const handleSave = async () => {
+    if (user.role !== newRole) {
+      console.log(user.role, newRole);
+      user.newRole = newRole;
+      const updateUserFetch = await fetch(apiSummary.updateUser.url, {
+        method: apiSummary.updateUser.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(user),
+      });
+      const updateUser = await updateUserFetch.json();
+      if (updateUser.success) {
+        toast.success(updateUser.message);
+        setEditingUser(null);
+      }
+      if (updateUser.error) {
+        toast.error(updateUser.message);
+      }
+    } else {
+      toast.error("user type is not change");
+      setEditingUser(null);
+    }
+  };
+
+  const heandleOnchange = (e) => {
+    setNewrole(e.target.value);
   };
 
   return (
@@ -33,7 +60,7 @@ const ChangeUserRole = ({ user, setEditingUser }) => {
         {/* Close Button */}
         <button
           className="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition"
-          onClick={() => setEditingUser(false)}
+          onClick={() => setEditingUser(null)}
         >
           <FaTimes size={18} />
         </button>
@@ -70,7 +97,8 @@ const ChangeUserRole = ({ user, setEditingUser }) => {
           <label className="text-sm font-medium text-gray-700">Role</label>
           <select
             id="roleSelect"
-            defaultValue={user?.role}
+            value={newRole}
+            onChange={heandleOnchange}
             className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-blue-500"
           >
             {ROLE.map((option, indx) => (
@@ -85,14 +113,14 @@ const ChangeUserRole = ({ user, setEditingUser }) => {
         <div className="flex justify-end gap-3 pt-2">
           <button
             className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
-            onClick={() => setEditingUser(false)}
+            onClick={() => setEditingUser(null)}
           >
             Cancel
           </button>
 
           <button
             className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
-            // onClick={handleSave}
+            onClick={handleSave}
           >
             Save
           </button>

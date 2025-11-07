@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import ChengeUserRole from "../components/ChengeUserRole";
 const AllUsers = () => {
   const [alluser, setAlluser] = useState([]);
-  const [editingUser, setEditingUser] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
 
   //fetch all users
   const fetchAllUsers = async () => {

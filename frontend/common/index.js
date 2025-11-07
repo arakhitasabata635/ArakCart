@@ -20,6 +20,10 @@ const apiSummary = {
   allUser:{
     url: `${backendPortUrl}/api/admin/users`,
     method: "get"
+  },
+   updateUser:{
+    url: `${backendPortUrl}/api/admin/update-user`,
+    method: "post"
   }
 };
 
