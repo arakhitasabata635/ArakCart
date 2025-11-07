@@ -40,3 +40,31 @@
   animation: logoFade 0.5s ease-out;
 }
 
+/*upload products*/
+.inputBox {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  padding: 10px;
+  border-radius: 6px;
+  outline: none;
+}
+
+.inputBox:focus {
+  border-color: #3b82f6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn .3s ease-out;
+}
+
