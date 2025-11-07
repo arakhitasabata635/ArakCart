@@ -5,7 +5,7 @@ const updateUserController = async (req, res) => {
     const user = req.body;
     console.log(user);
     const sessionUser = await userModel.findById(req.userId);
-    if (sessionUser.role === "admin") {
+    if (sessionUser.role === "owner") {
       const updatedUser = await userModel.findByIdAndUpdate(
         user._id,
         { role: user.newRole },
@@ -21,7 +21,7 @@ const updateUserController = async (req, res) => {
     }
     else{
         res.status(400).json({
-      message: "Access denied! Admin only",
+      message: "Access denied! Owner only",
       error: true,
       success: false,
     });

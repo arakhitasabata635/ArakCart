@@ -2,8 +2,11 @@ import userModel from "../models/userModel.js";
 
 const allUsersController = async (req, res) => {
   try {
-    const allUsers = await userModel.find().select("-password");
-     res.status(200).json({
+    const allUsers = await userModel
+      .find({ role: { $ne: "owner" } })
+      .select("-password");
+
+    res.status(200).json({
       message: "All users",
       data: allUsers,
       error: false,
