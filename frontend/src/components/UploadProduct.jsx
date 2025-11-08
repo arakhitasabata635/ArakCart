@@ -15,6 +15,18 @@ const UploadProduct = ({ setUploadProduct }) => {
     description: "",
   });
 
+
+  const handleChange=(e)=>{
+    const {name, value} = e.target
+
+    setData(prev=>{
+      return {
+        ...prev,
+        [name]:value
+      }
+    })
+  }
+
   // image d in cloudnary
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -31,6 +43,8 @@ const UploadProduct = ({ setUploadProduct }) => {
     });
   };
 
+  console.log(data);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
       <form className="w-[520px] h-[520px] overflow-y-scroll  bg-white p-6 rounded-xl shadow-lg flex flex-col gap-3 animate-fadeIn">
@@ -42,7 +56,8 @@ const UploadProduct = ({ setUploadProduct }) => {
           type="text"
           name="productName"
           placeholder="Product Name"
-          // onChange={handleChange}
+          value={data.productName}
+          onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
         />
 
@@ -50,13 +65,15 @@ const UploadProduct = ({ setUploadProduct }) => {
           type="text"
           name="brandName"
           placeholder="Brand Name"
-          // onChange={handleChange}
+          value={data.brandName}
+          onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
         />
 
         <select
           name="category"
-          // onChange={handleChange}
+          value={data.category}
+          onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
         >
           <option value="" hidden>
@@ -102,7 +119,8 @@ const UploadProduct = ({ setUploadProduct }) => {
           type="number"
           name="price"
           placeholder="Price"
-          // onChange={handleChange}
+          value={data.price}
+          onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
         />
 
@@ -110,13 +128,15 @@ const UploadProduct = ({ setUploadProduct }) => {
           type="number"
           name="sellingPrice"
           placeholder="Selling Price"
-          // onChange={handleChange}
+          value={data.sellingPrice}
+          onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
         />
         <textarea
           name="description"
           placeholder="Description"
-          // onChange={handleChange}
+          value={data.description}
+          onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg w-full min-h-[80px] max-h-[150px] resize-none  overflow-y-auto outline-none focus:ring-indigo-400 focus:border-indigo-400 bg-white text-gray-800
           "
         />
