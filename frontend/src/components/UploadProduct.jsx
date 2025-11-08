@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import productCategory from "../../common/productCategory";
-import { FaUpload, FaTrash } from "react-icons/fa";
+import { FaUpload } from "react-icons/fa";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
+import ProductImage from "./ProductImage";
 
 const UploadProduct = ({ setUploadProduct }) => {
  
@@ -85,26 +86,14 @@ const UploadProduct = ({ setUploadProduct }) => {
           </label>
 
           {/* Preview Images */}
-          {data.productImages.length > 0 && (
+          {data.productImages.length > 0 ? (
             <div className="grid grid-cols-3 gap-2 mt-2">
               {data.productImages?.map((img, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={img}
-                    alt="preview"
-                    className="w-full h-24 object-cover rounded-lg border"
-                  />
-
-                  {/* Delete button */}
-                  <button
-                    // onClick={() => removeImage(index)}
-                    className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
-                  >
-                    <FaTrash size={12} />
-                  </button>
-                </div>
+               <ProductImage img={img} index={index}/>
               ))}
             </div>
+          ):(
+            <p className="text-red-500 "> *please upload product image.</p>
           )}
         </div>
 
