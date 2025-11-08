@@ -5,7 +5,6 @@ import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import ProductImage from "./ProductImage";
 
 const UploadProduct = ({ setUploadProduct }) => {
- 
   const [data, setData] = useState({
     productName: "",
     brandName: "",
@@ -21,14 +20,16 @@ const UploadProduct = ({ setUploadProduct }) => {
     const file = e.target.files[0];
     if (!file) return;
     const uploadRes = await uploadImgCloudnary(file);
-    setData((prev)=>{
+    setData((prev) => {
       return {
         ...prev,
-        productImages:[...prev.productImages, uploadRes.url]
-      }
-    })
+        productImages: [
+          ...prev.productImages,
+          { imgUrl: uploadRes.url, public_id: uploadRes.public_id },
+        ],
+      };
+    });
   };
-  console.log("uploadImgInCloudnary", data);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
@@ -89,10 +90,10 @@ const UploadProduct = ({ setUploadProduct }) => {
           {data.productImages.length > 0 ? (
             <div className="grid grid-cols-3 gap-2 mt-2">
               {data.productImages?.map((img, index) => (
-               <ProductImage img={img} index={index}/>
+                <ProductImage img={img} key={index} setData={setData} />
               ))}
             </div>
-          ):(
+          ) : (
             <p className="text-red-500 "> *please upload product image.</p>
           )}
         </div>

@@ -7,6 +7,7 @@ import authToken from "../middlewares/authToken.js";
 import userLogoutController from "../controllers/userLogout.js";
 import allUsersController from "../controllers/allUsers.js";
 import updateUserController from "../controllers/updateUser.js";
+import  deleteCloudinaryImage from "../controllers/deleteImgFromCloudnary.js";
 
 const router = express.Router();
 
@@ -19,6 +20,10 @@ router.get("/userLogout",userLogoutController)
 //admin pannel
 router.get("/admin/users", authToken,allUsersController)
 router.post("/admin/update-user", authToken,updateUserController)
+
+//delete img from cloudnary
+router.delete("/delete-image",deleteCloudinaryImage)
+
 
 
 

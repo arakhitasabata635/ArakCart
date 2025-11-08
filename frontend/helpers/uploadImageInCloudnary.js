@@ -1,7 +1,6 @@
 const url = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
 const uploadImgCloudnary = async (image) => {
-  console.log(url);
   const formData = new FormData();
   formData.append("file", image);
   formData.append("upload_preset", "arakcart-product");
