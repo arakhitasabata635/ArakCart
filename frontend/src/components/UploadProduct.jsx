@@ -3,6 +3,9 @@ import productCategory from "../../common/productCategory";
 import { FaUpload } from "react-icons/fa";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import ProductImage from "./ProductImage";
+import apiSummary from "../../common";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const UploadProduct = ({ setUploadProduct }) => {
   const [data, setData] = useState({
@@ -14,6 +17,7 @@ const UploadProduct = ({ setUploadProduct }) => {
     sellingPrice: "",
     description: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,16 +46,30 @@ const UploadProduct = ({ setUploadProduct }) => {
     });
   };
 
-  const heandleOnSubmit = (e) => {
+  const heandleOnSubmit = async (e) => {
     console.log(e);
     e.preventDefault();
     console.log(data);
+    const fetchUploadProductApi = await fetch(apiSummary.UploadProduct.url, {
+      method: apiSummary.UploadProduct.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    });
+    const dataRes = await fetchUploadProductApi.json();
+    if(dataRes.success){
+      toast.success(dataRes.message);
+      navigate("/")
+    }
+
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
       <form
-        onClick={heandleOnSubmit}
+        onSubmit={heandleOnSubmit}
         className="w-[520px] h-[520px] overflow-y-scroll  bg-white p-6 rounded-xl shadow-lg flex flex-col gap-3 animate-fadeIn"
       >
         <h2 className="text-xl font-semibold text-gray-800 text-center mb-2">
@@ -157,8 +175,9 @@ const UploadProduct = ({ setUploadProduct }) => {
           </button>
 
           <button
+          type="submit"
             className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-            // onClick={handleSubmit}
+            
           >
             Add Product
           </button>

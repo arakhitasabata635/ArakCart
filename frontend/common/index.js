@@ -28,6 +28,10 @@ const apiSummary = {
   delImgCloudnary:{
     url: `${backendPortUrl}/api/delete-image`,
     method: "delete"
+  },
+  UploadProduct:{
+    url: `${backendPortUrl}/api/upload-product`,
+    method: "post"
   }
 };
 
