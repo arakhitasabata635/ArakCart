@@ -8,6 +8,7 @@ import userLogoutController from "../controllers/userLogout.js";
 import allUsersController from "../controllers/allUsers.js";
 import updateUserController from "../controllers/updateUser.js";
 import  deleteCloudinaryImage from "../controllers/deleteImgFromCloudnary.js";
+import uploadProductControler from "../controllers/uploadProduct.js";
 
 const router = express.Router();
 
@@ -23,6 +24,9 @@ router.post("/admin/update-user", authToken,updateUserController)
 
 //delete img from cloudnary
 router.delete("/delete-image",deleteCloudinaryImage)
+
+//product
+router.post("/upload-product", uploadProductControler)
 
 
 

@@ -15,17 +15,16 @@ const UploadProduct = ({ setUploadProduct }) => {
     description: "",
   });
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleChange=(e)=>{
-    const {name, value} = e.target
-
-    setData(prev=>{
+    setData((prev) => {
       return {
         ...prev,
-        [name]:value
-      }
-    })
-  }
+        [name]: value,
+      };
+    });
+  };
 
   // image d in cloudnary
   const handleImageUpload = async (e) => {
@@ -43,11 +42,18 @@ const UploadProduct = ({ setUploadProduct }) => {
     });
   };
 
-  console.log(data);
+  const heandleOnSubmit = (e) => {
+    console.log(e);
+    e.preventDefault();
+    console.log(data);
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-      <form className="w-[520px] h-[520px] overflow-y-scroll  bg-white p-6 rounded-xl shadow-lg flex flex-col gap-3 animate-fadeIn">
+      <form
+        onClick={heandleOnSubmit}
+        className="w-[520px] h-[520px] overflow-y-scroll  bg-white p-6 rounded-xl shadow-lg flex flex-col gap-3 animate-fadeIn"
+      >
         <h2 className="text-xl font-semibold text-gray-800 text-center mb-2">
           Add Product
         </h2>
