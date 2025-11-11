@@ -95,61 +95,68 @@ const Header = () => {
         </div>
         {/* Icons + Login */}
         <div className="flex items-center gap-5">
-          {/* User */}
-          <div className="relative group ">
-            {user?.profilePic ? (
-              <div
-                className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-500 
-      shadow-md cursor-pointer transition-all duration-300 
-      hover:border-blue-700 hover:shadow-lg"
-              >
-                <img
-                  src={user.profilePic}
-                  alt={user.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ) : (
-              <FaUser
-                size={22}
-                className="text-gray-700 transition hover:text-blue-600 group-hover:scale-110 animate-logoFade"
-              />
-            )}
+          {user?._id && (
+            <>
+              {/* User */}
+              <div className="relative group ">
+                {user?.profilePic ? (
+                  <div
+                    className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-500 
+                                shadow-md cursor-pointer transition-all duration-300 
+                                hover:border-blue-700 hover:shadow-lg"
+                  >
+                    <img
+                      src={user.profilePic}
+                      alt={user.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <span
+                    className="w-8 h-8 flex items-center justify-center 
+                                font-medium text-white bg-blue-500 rounded-full uppercase
+                                text-sm cursor-pointer shadow-md"
+                  >
+                    {user?.name?.charAt(0) || "U"}
+                  </span>
+                )}
 
-            {/* Admin Popup — Desktop Only (hidden on small screens) */}
-            {(user?.role === "admin" || user?.role === "owner") && (
-              <div
-                className="absolute right-0 mt-3 w-44 rounded-lg bg-white shadow-xl border 
+                {/* Admin Popup — Desktop Only (hidden on small screens) */}
+                {(user?.role === "admin" || user?.role === "owner") && (
+                  <div
+                    className="absolute right-0 mt-3 w-44 rounded-lg bg-white shadow-xl border 
     opacity-0 invisible transition-all duration-200
     group-hover:opacity-100 group-hover:visible 
-    hidden md:block md:pointer-events-auto pointer-events-none z-50"
-              >
-                <Link
-                  to="/admin"
-                  className="block px-4 py-2 text-gray-700 text-sm font-medium 
+    hidden lg:block lg:pointer-events-auto pointer-events-none z-50"
+                  >
+                    <Link
+                      to="/admin"
+                      className="block px-4 py-2 text-gray-700 text-sm font-medium 
       hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-200"
-                >
-                  🔐 Admin Panel
-                </Link>
+                    >
+                      🔐 Admin Panel
+                    </Link>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          {/* Cart */}
-          <Link to="/cart" className="relative">
-            <FaShoppingCart
-              className=" text-gray-700 transition  hover:text-blue-600 hover:scale-105"
-              size={22}
-            />
-            {cartCount > 0 && (
-              <span
-                className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs
+              {/* Cart */}
+              <Link to="/cart" className="relative">
+                <FaShoppingCart
+                  className=" text-gray-700 transition  hover:text-blue-600 hover:scale-105"
+                  size={22}
+                />
+                {cartCount > 0 && (
+                  <span
+                    className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs
               w-5 h-5 flex items-center justify-center rounded-full"
-              >
-                {cartCount}
-              </span>
-            )}
-          </Link>
+                  >
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+            </>
+          )}
 
           {/* Login/logout */}
           {user?._id ? (
