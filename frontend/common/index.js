@@ -32,6 +32,10 @@ const apiSummary = {
   UploadProduct:{
     url: `${backendPortUrl}/api/upload-product`,
     method: "post"
+  },
+   allProducts:{
+    url: `${backendPortUrl}/api/get-products`,
+    method: "get"
   }
 };
 

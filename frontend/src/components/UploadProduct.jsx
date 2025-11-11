@@ -82,6 +82,7 @@ const UploadProduct = ({ setUploadProduct }) => {
           value={data.productName}
           onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+          required
         />
 
         <input
@@ -91,6 +92,7 @@ const UploadProduct = ({ setUploadProduct }) => {
           value={data.brandName}
           onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+          required
         />
 
         <select
@@ -98,6 +100,7 @@ const UploadProduct = ({ setUploadProduct }) => {
           value={data.category}
           onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+          required
         >
           <option value="" hidden>
             Select Category
@@ -123,6 +126,7 @@ const UploadProduct = ({ setUploadProduct }) => {
               multiple
               className="hidden"
               onChange={handleImageUpload}
+              required
             />
           </label>
 
@@ -145,6 +149,7 @@ const UploadProduct = ({ setUploadProduct }) => {
           value={data.price}
           onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+          required
         />
 
         <input
@@ -154,6 +159,7 @@ const UploadProduct = ({ setUploadProduct }) => {
           value={data.sellingPrice}
           onChange={handleChange}
           className="border border-gray-300 px-3 py-2 rounded-lg focus:ring focus:ring-indigo-400 outline-none"
+          required
         />
         <textarea
           name="description"
