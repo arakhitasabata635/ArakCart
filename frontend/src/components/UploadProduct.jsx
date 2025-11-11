@@ -5,7 +5,6 @@ import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import ProductImage from "./ProductImage";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 const UploadProduct = ({ setUploadProduct }) => {
   const [data, setData] = useState({
@@ -17,7 +16,6 @@ const UploadProduct = ({ setUploadProduct }) => {
     sellingPrice: "",
     description: "",
   });
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,9 +45,7 @@ const UploadProduct = ({ setUploadProduct }) => {
   };
 
   const heandleOnSubmit = async (e) => {
-    console.log(e);
     e.preventDefault();
-    console.log(data);
     const fetchUploadProductApi = await fetch(apiSummary.UploadProduct.url, {
       method: apiSummary.UploadProduct.method,
       headers: {
@@ -59,11 +55,14 @@ const UploadProduct = ({ setUploadProduct }) => {
       body: JSON.stringify(data),
     });
     const dataRes = await fetchUploadProductApi.json();
-    if(dataRes.success){
+    if (dataRes.success) {
       toast.success(dataRes.message);
-      navigate("/")
+      setUploadProduct(false)
+      
     }
-
+    if (dataRes.error) {
+      toast.error(dataRes.message);
+    }
   };
 
   return (
@@ -175,9 +174,8 @@ const UploadProduct = ({ setUploadProduct }) => {
           </button>
 
           <button
-          type="submit"
+            type="submit"
             className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-            
           >
             Add Product
           </button>
