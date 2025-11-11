@@ -1,7 +1,8 @@
+import ProductModel from "../models/productModel.js";
 
-
-const allProductlistControler = async(req,res)=>{
-    try {
+const allProductlistControler = async (req, res) => {
+  try {
+    const allProducts = await ProductModel.find().sort({ createdAt : -1 });
 
     res.status(200).json({
       message: "All products",
@@ -16,6 +17,6 @@ const allProductlistControler = async(req,res)=>{
       success: false,
     });
   }
-}
+};
 
-export default allProductlistControler
+export default allProductlistControler;

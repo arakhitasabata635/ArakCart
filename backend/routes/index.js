@@ -7,33 +7,26 @@ import authToken from "../middlewares/authToken.js";
 import userLogoutController from "../controllers/userLogout.js";
 import allUsersController from "../controllers/allUsers.js";
 import updateUserController from "../controllers/updateUser.js";
-import  deleteCloudinaryImage from "../controllers/deleteImgFromCloudnary.js";
+import deleteCloudinaryImage from "../controllers/deleteImgFromCloudnary.js";
 import uploadProductControler from "../controllers/uploadProduct.js";
 import allProductlistControler from "../controllers/allProduct.js";
 
 const router = express.Router();
 
-router.post("/signup",userSignUpController)
-router.post("/login",userLoginController)
-router.get("/user-details",authToken,userDetailsController)
-router.get("/userLogout",userLogoutController)
-
+router.post("/signup", userSignUpController);
+router.post("/login", userLoginController);
+router.get("/user-details", authToken, userDetailsController);
+router.get("/userLogout", userLogoutController);
 
 //admin pannel
-router.get("/admin/users", authToken,allUsersController)
-router.post("/admin/update-user", authToken,updateUserController)
+router.get("/admin/users", authToken, allUsersController);
+router.post("/admin/update-user", authToken, updateUserController);
 
 //delete img from cloudnary
-router.delete("/delete-image",deleteCloudinaryImage)
+router.delete("/delete-image", authToken, deleteCloudinaryImage);
 
 //product
-router.post("/upload-product", uploadProductControler)
-router.get("/get-products", allProductlistControler)
+router.post("/upload-product", authToken, uploadProductControler);
+router.get("/get-products", authToken, allProductlistControler);
 
-
-
-
-
-export default router ;
-
-
+export default router;
