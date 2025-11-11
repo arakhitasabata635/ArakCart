@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import FullImage from "./FullImage";
 import { FaTrash } from "react-icons/fa";
-import apiSummary from "../../common";
 import { toast } from "react-toastify";
 import deleteImageFromCloudnary from "../../helpers/deleteImageFrom Cloudnary";
 

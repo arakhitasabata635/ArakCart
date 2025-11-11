@@ -32,7 +32,6 @@ const Login = () => {
     });
 
     const resData = await jsonResponsData.json();
-    console.log(resData);
     if (resData.success) {
       toast.success(resData.message);
       navigate("/");
