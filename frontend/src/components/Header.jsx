@@ -120,14 +120,14 @@ const Header = () => {
             {(user?.role === "admin" || user?.role === "owner") && (
               <div
                 className="absolute right-0 mt-3 w-44 rounded-lg bg-white shadow-xl border 
-      opacity-0 invisible transition-all duration-200
-      group-hover:opacity-100 group-hover:visible 
-      hidden sm:block z-50"
+    opacity-0 invisible transition-all duration-200
+    group-hover:opacity-100 group-hover:visible 
+    hidden md:block md:pointer-events-auto pointer-events-none z-50"
               >
                 <Link
                   to="/admin"
                   className="block px-4 py-2 text-gray-700 text-sm font-medium 
-        hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-200"
+      hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-200"
                 >
                   🔐 Admin Panel
                 </Link>

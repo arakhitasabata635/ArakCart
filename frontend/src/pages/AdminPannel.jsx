@@ -6,10 +6,10 @@ const AdminPannel = () => {
   const admin = useSelector((state) => state?.user?.user);
 
   return (
-    <div className="flex bg-gray-100">
+    <div className="hidden md:flex bg-gray-100">
       {/* ✅ Sidebar (Sticky + Height Fixed + Improved Colors + Bigger Text) */}
       <aside
-        className="w-64 bg-blue-600 text-white p-6 hidden md:flex flex-col gap-6 
+        className="w-64 bg-blue-600 text-white p-6  md:flex flex-col gap-6 
         sticky top-16" // top-16 = 64px header height
         style={{ height: "calc(100vh - 64px)" }}
       >
@@ -55,7 +55,7 @@ const AdminPannel = () => {
       </aside>
 
       {/*  Main Content */}
-      <main className="flex-1 p-6 bg-white">
+      <main className=" md:flex-1 p-6 bg-white">
         <Outlet/>
       </main>
     </div>
