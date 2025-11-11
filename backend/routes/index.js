@@ -9,6 +9,7 @@ import allUsersController from "../controllers/allUsers.js";
 import updateUserController from "../controllers/updateUser.js";
 import  deleteCloudinaryImage from "../controllers/deleteImgFromCloudnary.js";
 import uploadProductControler from "../controllers/uploadProduct.js";
+import allProductlistControler from "../controllers/allProduct.js";
 
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.delete("/delete-image",deleteCloudinaryImage)
 
 //product
 router.post("/upload-product", uploadProductControler)
+router.get("/get-products", allProductlistControler)
 
 
 
