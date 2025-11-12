@@ -10,6 +10,7 @@ import updateUserController from "../controllers/updateUser.js";
 import deleteCloudinaryImage from "../controllers/deleteImgFromCloudnary.js";
 import uploadProductControler from "../controllers/uploadProduct.js";
 import allProductlistControler from "../controllers/allProduct.js";
+import editProductControler from "../controllers/editProduct.js";
 
 const router = express.Router();
 
@@ -28,5 +29,6 @@ router.delete("/delete-image", authToken, deleteCloudinaryImage);
 //product
 router.post("/upload-product", authToken, uploadProductControler);
 router.get("/get-products", authToken, allProductlistControler);
+router.post("/edit-product", authToken, editProductControler);
 
 export default router;

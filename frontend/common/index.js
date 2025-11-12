@@ -38,7 +38,7 @@ const apiSummary = {
     method: "get"
   },
   editProduct:{
-    url: `${backendPortUrl}/api/edit-products`,
+    url: `${backendPortUrl}/api/edit-product`,
     method: "post"
   }
 };

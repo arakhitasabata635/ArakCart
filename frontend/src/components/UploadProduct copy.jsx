@@ -127,7 +127,6 @@ const UploadProduct = ({ setUploadProduct , setAllProduct }) => {
               multiple
               className="hidden"
               onChange={handleImageUpload}
-              required
             />
           </label>
 

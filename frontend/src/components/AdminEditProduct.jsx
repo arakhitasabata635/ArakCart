@@ -42,9 +42,10 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
       };
     });
   };
-
   const heandleOnSubmit = async (e) => {
     e.preventDefault();
+    console.log("hii");
+
     const fetchEditProductApi = await fetch(apiSummary.editProduct.url, {
       method: apiSummary.editProduct.method,
       headers: {
@@ -128,8 +129,7 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
               accept="image/*"
               multiple
               className="hidden"
-              onChange={handleImageUpload}
-              required
+              onChange={handleImageUpload}            
             />
           </label>
 
