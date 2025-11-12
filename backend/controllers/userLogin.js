@@ -16,7 +16,6 @@ const userLoginController = async (req, res) => {
     const user = await userModel.findOne({ email });
    
     if (!user) {
-      console.log("done");
       throw new Error("invalid user");
     }
     const checkPassword = await bcrypt.compare(password, user.password);

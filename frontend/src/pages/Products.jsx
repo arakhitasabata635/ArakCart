@@ -54,7 +54,7 @@ const Products = () => {
         ))}
       </div>
 
-      {uploadProduct && <UploadProduct setUploadProduct={setUploadProduct} />}
+      {uploadProduct && <UploadProduct setUploadProduct={setUploadProduct} setAllProduct={setAllProduct}/>}
     </div>
   );
 };

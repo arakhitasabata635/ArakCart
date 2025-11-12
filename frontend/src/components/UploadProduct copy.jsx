@@ -6,7 +6,7 @@ import ProductImage from "./ProductImage";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
 
-const UploadProduct = ({ setUploadProduct }) => {
+const UploadProduct = ({ setUploadProduct , setAllProduct }) => {
   const [data, setData] = useState({
     productName: "",
     brandName: "",
@@ -57,6 +57,7 @@ const UploadProduct = ({ setUploadProduct }) => {
     const dataRes = await fetchUploadProductApi.json();
     if (dataRes.success) {
       toast.success(dataRes.message);
+      setAllProduct(prev =>[...prev, dataRes.data])
       setUploadProduct(false)
       
     }
