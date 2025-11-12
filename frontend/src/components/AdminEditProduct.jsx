@@ -6,8 +6,9 @@ import ProductImage from "./ProductImage";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
 
-const AdminEditProduct = ({ product, setEditProduct }) => {
+const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
   const [data, setData] = useState({
+    _id: product._id,
     productName: product?.productName,
     brandName: product?.brandName,
     category: product?.category,
@@ -19,7 +20,6 @@ const AdminEditProduct = ({ product, setEditProduct }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setData((prev) => {
       return {
         ...prev,
@@ -27,7 +27,6 @@ const AdminEditProduct = ({ product, setEditProduct }) => {
       };
     });
   };
-
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -46,17 +45,22 @@ const AdminEditProduct = ({ product, setEditProduct }) => {
 
   const heandleOnSubmit = async (e) => {
     e.preventDefault();
-    const fetchUploadProductApi = await fetch(apiSummary.UploadProduct.url, {
-      method: apiSummary.UploadProduct.method,
+    const fetchEditProductApi = await fetch(apiSummary.editProduct.url, {
+      method: apiSummary.editProduct.method,
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
       body: JSON.stringify(data),
     });
-    const dataRes = await fetchUploadProductApi.json();
+    const dataRes = await fetchEditProductApi.json();
     if (dataRes.success) {
       toast.success(dataRes.message);
+      setAllProduct((prev) => {
+        prev.map((product) =>
+          product._id === dataRes.data._id ? dataRes.data : product
+        );
+      });
       setEditProduct(false);
     }
     if (dataRes.error) {

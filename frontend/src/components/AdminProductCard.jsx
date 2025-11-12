@@ -1,9 +1,9 @@
 import { RiEdit2Fill } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
 import { useState } from "react";
-import UploadProduct from "./AdminEditProduct";
+import AdminEditProduct from "./AdminEditProduct";
 
-const AdminProductCard = ({ product }) => {
+const AdminProductCard = ({ product, setAllProduct }) => {
   const [editProduct, setEditProduct] = useState(false);
   return (
     <>
@@ -49,7 +49,11 @@ const AdminProductCard = ({ product }) => {
         </div>
       </div>
       {editProduct && (
-        <UploadProduct product={product} setEditProduct={setEditProduct} />
+        <AdminEditProduct
+          product={product}
+          setEditProduct={setEditProduct}
+          setAllProduct={setAllProduct}
+        />
       )}
     </>
   );
