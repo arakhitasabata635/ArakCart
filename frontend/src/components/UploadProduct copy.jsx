@@ -6,7 +6,8 @@ import ProductImage from "./ProductImage";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
 
-const UploadProduct = ({ setUploadProduct , setAllProduct }) => {
+const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
+  const [selectedImgFiles, setSelectedImgfiles] = useState([]);
   const [data, setData] = useState({
     productName: "",
     brandName: "",
@@ -17,9 +18,16 @@ const UploadProduct = ({ setUploadProduct , setAllProduct }) => {
     description: "",
   });
 
+  const handleSelectImages = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    // store all selected files in state
+    setSelectedImgfiles((prev) => [...prev, ...files]);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setData((prev) => {
       return {
         ...prev,
@@ -28,38 +36,42 @@ const UploadProduct = ({ setUploadProduct , setAllProduct }) => {
     });
   };
 
- 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const uploadRes = await uploadImgCloudnary(file);
-    setData((prev) => {
-      return {
-        ...prev,
-        productImages: [
-          ...prev.productImages,
-          { imgUrl: uploadRes.url, public_id: uploadRes.public_id },
-        ],
-      };
-    });
+  const handleUploadAllImages = async () => {
+    if (selectedImgFiles.length === 0) return [];
+    try {
+      const uploadResults = await Promise.all(
+        selectedImgFiles.map((file) => uploadImgCloudnary(file))
+      );
+      setSelectedImgfiles([]);
+      return uploadResults.map((res) => ({
+        imgUrl: res.url,
+        public_id: res.public_id,
+      }));
+    } catch (err) {
+      console.log("error while uploading img", err);
+    }
   };
 
   const heandleOnSubmit = async (e) => {
     e.preventDefault();
+    const allImgs = await handleUploadAllImages();
+    const finaldata = {
+      ...data,
+      productImages: [...data.productImages, ...allImgs],
+    };
     const fetchUploadProductApi = await fetch(apiSummary.UploadProduct.url, {
       method: apiSummary.UploadProduct.method,
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify(data),
+      body: JSON.stringify(finaldata),
     });
     const dataRes = await fetchUploadProductApi.json();
     if (dataRes.success) {
       toast.success(dataRes.message);
-      setAllProduct(prev =>[...prev, dataRes.data])
-      setUploadProduct(false)
-      
+      setAllProduct((prev) => [...prev, dataRes.data]);
+      setUploadProduct(false);
     }
     if (dataRes.error) {
       toast.error(dataRes.message);
@@ -126,15 +138,20 @@ const UploadProduct = ({ setUploadProduct , setAllProduct }) => {
               accept="image/*"
               multiple
               className="hidden"
-              onChange={handleImageUpload}
+              // onChange={handleImageUpload}
+              onChange={handleSelectImages}
             />
           </label>
 
           {/* Preview Images */}
-          {data.productImages.length > 0 ? (
+          {selectedImgFiles.length > 0 ? (
             <div className="grid grid-cols-3 gap-2 mt-2">
-              {data.productImages?.map((img, index) => (
-                <ProductImage img={img} key={index} setData={setData} />
+              {selectedImgFiles.map((file, index) => (
+                <ProductImage
+                  imgUrl={URL.createObjectURL(file)}
+                  key={index}
+                  setData={setData}
+                />
               ))}
             </div>
           ) : (

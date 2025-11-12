@@ -4,7 +4,7 @@ import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import deleteImageFromCloudnary from "../../helpers/deleteImageFrom Cloudnary";
 
-const ProductImage = ({ img, setData }) => {
+const ProductImage = ({ imgUrl, setData }) => {
   const [previewImage, setPreviewImage] = useState(null);
 
   //delete image from cloudnary
@@ -27,11 +27,11 @@ const ProductImage = ({ img, setData }) => {
   return (
     <div  className="relative group">
       <img
-        src={img.imgUrl}
+        src={imgUrl}
         alt="preview"
         className="w-full h-24 object-cover rounded-lg border"
         onClick={() => {
-          setPreviewImage(img.imgUrl);
+          setPreviewImage(imgUrl);
         }}
       />
 
