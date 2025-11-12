@@ -55,10 +55,11 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
       body: JSON.stringify(data),
     });
     const dataRes = await fetchEditProductApi.json();
+    console.log(dataRes.data);
     if (dataRes.success) {
       toast.success(dataRes.message);
       setAllProduct((prev) => {
-        prev.map((product) =>
+       return prev.map((product) =>
           product._id === dataRes.data._id ? dataRes.data : product
         );
       });

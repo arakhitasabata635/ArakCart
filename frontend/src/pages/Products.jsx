@@ -30,9 +30,9 @@ const Products = () => {
     fetchAllProduct();
   }, []);
   return (
-    <div className="p-5">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+    <div className="reletive bg-gray-200 flex flex-col overflow-y-auto h-[calc(100vh-64px)]">
+      {/* 🔹 Sticky Header */}
+      <div className="sticky top-0 z-20 backdrop-blur-md bg-white/90 border-b shadow-sm flex items-center justify-between p-4">
         <h2 className="text-xl md:text-2xl font-bold text-gray-800">
           All Products
         </h2>
@@ -40,21 +40,34 @@ const Products = () => {
         <button
           onClick={() => setUploadProduct(true)}
           className="px-5 py-2 rounded-md font-semibold text-white text-sm
-          bg-gradient-to-r from-blue-600 to-blue-400 shadow-md
-          hover:scale-[1.05] hover:from-blue-700 hover:to-blue-500
-          transition-all duration-200"
+      bg-gradient-to-r from-blue-600 to-blue-400 shadow-md
+      hover:scale-[1.05] hover:from-blue-700 hover:to-blue-500
+      transition-all duration-200"
         >
           + Add Product
         </button>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {allProduct?.map((product, indx) => (
-          <AdminProductCard key={indx} product={product} setAllProduct={setAllProduct} />
-        ))}
-      </div>
+      {/* 🔹 Product Section */}
+      <main>
+        <div className="flex flex-wrap justify-center gap-6 mt-6">
+          {allProduct?.map((product, i) => (
+            <AdminProductCard
+              key={i}
+              product={product}
+              setAllProduct={setAllProduct}
+            />
+          ))}
+        </div>
+      </main>
 
-      {uploadProduct && <UploadProduct setUploadProduct={setUploadProduct} setAllProduct={setAllProduct}/>}
+      {/* 🔹 Upload Modal */}
+      {uploadProduct && (
+        <UploadProduct
+          setUploadProduct={setUploadProduct}
+          setAllProduct={setAllProduct}
+        />
+      )}
     </div>
   );
 };
