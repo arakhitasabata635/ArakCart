@@ -54,7 +54,6 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
 
   //delete img
   const removeImage = (index) => {
-    console.log(index);
     setSelectedImgfiles((prev) => prev.filter((_, i) => i !== index));
   };
 

@@ -18,7 +18,7 @@ const AdminProductCard = ({ product, setAllProduct }) => {
       <img
         src={product.productImages[0]?.imgUrl}
         alt={product.productName}
-        className="h-full w-full object-cover group-hover:scale-105 transition duration-300"
+        className="h-full w-full object-contain group-hover:scale-105 transition duration-300"
       />
 
       {/* Hover Buttons */}
