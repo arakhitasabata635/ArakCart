@@ -138,7 +138,6 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
               accept="image/*"
               multiple
               className="hidden"
-              // onChange={handleImageUpload}
               onChange={handleSelectImages}
             />
           </label>
@@ -148,9 +147,10 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
             <div className="grid grid-cols-3 gap-2 mt-2">
               {selectedImgFiles.map((file, index) => (
                 <ProductImage
-                  imgUrl={URL.createObjectURL(file)}
                   key={index}
-                  setData={setData}
+                  imgUrl={URL.createObjectURL(file)}
+                  index={index}
+                  setSelectedImgfiles={setSelectedImgfiles}
                 />
               ))}
             </div>
