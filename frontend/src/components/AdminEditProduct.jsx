@@ -5,8 +5,11 @@ import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import ProductImage from "./ProductImage";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
+import deleteImageFromCloudnary from "../../helpers/deleteImageFromCloudnary";
 
 const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
+  const [selectedImgFiles, setSelectedImgfiles] = useState([]);
+  const [oldImgToBeDelete, setOldImgToBeDelete] = useState([]);
   const [data, setData] = useState({
     _id: product._id,
     productName: product?.productName,
@@ -18,6 +21,13 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
     description: product?.description,
   });
 
+  const handleSelectImages = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+    // store all selected files in state
+    setSelectedImgfiles((prev) => [...prev, ...files]);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => {
@@ -27,49 +37,76 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
       };
     });
   };
+  const handleUploadAllImages = async () => {
+    if (selectedImgFiles.length === 0) return [];
+    try {
+      const uploadResults = await Promise.all(
+        selectedImgFiles.map((file) => uploadImgCloudnary(file))
+      );
+      setSelectedImgfiles([]);
+      return uploadResults.map((res) => ({
+        imgUrl: res.url,
+        public_id: res.public_id,
+      }));
+    } catch (err) {
+      console.log("error while uploading img", err);
+    }
+  };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const uploadRes = await uploadImgCloudnary(file);
+  const removeImage = (index) => {
+    setOldImgToBeDelete((prev) => [
+      ...prev,
+      data.productImages[index].public_id,
+    ]);
     setData((prev) => {
       return {
         ...prev,
-        productImages: [
-          ...prev.productImages,
-          { imgUrl: uploadRes.url, public_id: uploadRes.public_id },
-        ],
+        productImages: prev.productImages.filter((_, i) => i !== index),
       };
     });
   };
   const heandleOnSubmit = async (e) => {
-    e.preventDefault();
-    console.log("hii");
+    try {
+      e.preventDefault();
+      const allImgs = (await handleUploadAllImages()) || [];
+      const finaldata = {
+        ...data,
+        productImages: [...data.productImages, ...allImgs],
+      };
 
-    const fetchEditProductApi = await fetch(apiSummary.editProduct.url, {
-      method: apiSummary.editProduct.method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(data),
-    });
-    const dataRes = await fetchEditProductApi.json();
-    console.log(dataRes.data);
-    if (dataRes.success) {
-      toast.success(dataRes.message);
-      setAllProduct((prev) => {
-       return prev.map((product) =>
-          product._id === dataRes.data._id ? dataRes.data : product
-        );
+      const fetchEditProductApi = await fetch(apiSummary.editProduct.url, {
+        method: apiSummary.editProduct.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(finaldata),
       });
-      setEditProduct(false);
-    }
-    if (dataRes.error) {
-      toast.error(dataRes.message);
+      const dataRes = await fetchEditProductApi.json();
+      if (dataRes.success) {
+        toast.success(dataRes.message);
+        //delete old img from cloudnary
+        Promise.all(
+          oldImgToBeDelete.map((public_id) =>
+            deleteImageFromCloudnary(public_id)
+          )
+        );
+
+        setAllProduct((prev) => {
+          return prev.map((product) =>
+            product._id === dataRes.data._id ? dataRes.data : product
+          );
+        });
+        setEditProduct(false);
+      }
+      if (dataRes.error) {
+        toast.error(dataRes.message);
+      }
+    } catch (err) {
+      toast.error("Something went wrong while updating the product");
+      console.error(err);
     }
   };
-
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
       <form
@@ -130,16 +167,30 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
               accept="image/*"
               multiple
               className="hidden"
-              onChange={handleImageUpload}            
+              onChange={handleSelectImages}
             />
           </label>
 
           {/* Preview Images */}
           {data.productImages.length > 0 ? (
-            <div className="grid grid-cols-3 gap-2 mt-2">
+            <div className="grid grid-cols-4 gap-1 mt-2">
               {data.productImages?.map((img, index) => (
-                <ProductImage img={img} key={index} setData={setData} />
+                <ProductImage
+                  key={index}
+                  img={img}
+                  index={index}
+                  removeImage={removeImage}
+                />
               ))}
+              {selectedImgFiles.length > 0 &&
+                selectedImgFiles.map((file, index) => (
+                  <ProductImage
+                    key={index}
+                    img={URL.createObjectURL(file)}
+                    index={index}
+                    setSelectedImgfiles={setSelectedImgfiles}
+                  />
+                ))}
             </div>
           ) : (
             <p className="text-red-500 "> *please upload product image.</p>

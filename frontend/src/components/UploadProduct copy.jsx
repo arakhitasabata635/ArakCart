@@ -52,6 +52,12 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
     }
   };
 
+  //delete img
+  const removeImage = (index) => {
+    console.log(index);
+    setSelectedImgfiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const heandleOnSubmit = async (e) => {
     e.preventDefault();
     const allImgs = await handleUploadAllImages();
@@ -148,9 +154,9 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
               {selectedImgFiles.map((file, index) => (
                 <ProductImage
                   key={index}
-                  imgUrl={URL.createObjectURL(file)}
                   index={index}
-                  setSelectedImgfiles={setSelectedImgfiles}
+                  img={URL.createObjectURL(file)}
+                  removeImage={removeImage}
                 />
               ))}
             </div>
