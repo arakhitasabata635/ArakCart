@@ -6,13 +6,16 @@
     transform: translate(100px, -60px) scale(0.95);
     opacity: 0;
   }
+
   60% {
     transform: translate(0, 0) scale(1.02);
     opacity: 1;
   }
+
   80% {
     transform: scale(0.98);
   }
+
   100% {
     transform: scale(1);
   }
@@ -23,8 +26,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; scale: 0.95; }
-  to { opacity: 1; scale: 1; }
+  from {
+    opacity: 0;
+    scale: 0.95;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
 }
 
 .animate-fadeIn {
@@ -32,8 +42,15 @@
 }
 
 @keyframes logoFade {
-  0% { opacity: 0; transform: translateY(-6px) scale(0.95); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .animate-logoFade {
@@ -47,6 +64,7 @@
     opacity: 0;
     transform: scale(.85);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -57,3 +75,12 @@
   animation: fadeIn .3s ease-out;
 }
 
+/* category product */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

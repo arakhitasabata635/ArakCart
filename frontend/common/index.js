@@ -40,6 +40,10 @@ const apiSummary = {
   editProduct:{
     url: `${backendPortUrl}/api/edit-product`,
     method: "post"
+  },
+   getCategory:{
+    url: `${backendPortUrl}/api/get-categoryProduct`,
+    method: "get"
   }
 };
 
