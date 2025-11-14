@@ -1,16 +1,21 @@
 import express from "express";
-
-import userSignUpController from "../controllers/userSignUp.js";
-import userLoginController from "../controllers/userLogin.js";
-import userDetailsController from "../controllers/userDetails.js";
-import authToken from "../middlewares/authToken.js";
-import userLogoutController from "../controllers/userLogout.js";
-import allUsersController from "../controllers/allUsers.js";
-import updateUserController from "../controllers/updateUser.js";
+import userSignUpController from "../controllers/user/userSignUp.js";
+import userLoginController from "../controllers/user/userLogin.js";
+import userDetailsController from "../controllers/user/userDetails.js";
+import userLogoutController from "../controllers/user/userLogout.js";
+import allUsersController from "../controllers/user/allUsers.js";
+import updateUserController from "../controllers/user/updateUser.js";
 import deleteCloudinaryImage from "../controllers/deleteImgFromCloudnary.js";
-import uploadProductControler from "../controllers/uploadProduct.js";
-import allProductlistControler from "../controllers/allProduct.js";
-import editProductControler from "../controllers/editProduct.js";
+
+import uploadProductControler from "../controllers/product/uploadProduct.js";
+import allProductlistControler from "../controllers/product/allProduct.js";
+import editProductControler from "../controllers/product/editProduct.js";
+
+import authToken from "../middlewares/authToken.js";
+
+
+
+
 
 const router = express.Router();
 

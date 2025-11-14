@@ -1,7 +1,6 @@
-import ProductModel from "../models/productModel.js";
+import ProductModel from "../../models/productModel.js";
 const editProductControler = async (req, res) => {
   try {
-    console.log("hii");
     const newproduct = req.body;
     const editProduct = await ProductModel.findByIdAndUpdate(
       newproduct._id,

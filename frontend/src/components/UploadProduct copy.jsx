@@ -48,7 +48,7 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
         public_id: res.public_id,
       }));
     } catch (err) {
-      console.log("error while uploading img", err);
+      toast.error("error while uploading img");
     }
   };
 
@@ -75,7 +75,7 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
     const dataRes = await fetchUploadProductApi.json();
     if (dataRes.success) {
       toast.success(dataRes.message);
-      setAllProduct((prev) => [...prev, dataRes.data]);
+      setAllProduct((prev) => [dataRes.data,...prev]);
       setUploadProduct(false);
     }
     if (dataRes.error) {

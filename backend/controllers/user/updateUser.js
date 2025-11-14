@@ -1,9 +1,8 @@
-import userModel from "../models/userModel.js";
+import userModel from "../../models/userModel.js";
 
 const updateUserController = async (req, res) => {
   try {
     const user = req.body;
-    console.log(user);
     const sessionUser = await userModel.findById(req.userId);
     if (sessionUser.role === "owner") {
       const updatedUser = await userModel.findByIdAndUpdate(
