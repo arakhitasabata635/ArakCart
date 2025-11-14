@@ -12,10 +12,7 @@ import allProductlistControler from "../controllers/product/allProduct.js";
 import editProductControler from "../controllers/product/editProduct.js";
 
 import authToken from "../middlewares/authToken.js";
-
-
-
-
+import getCategoryProduct from "../controllers/product/getCategoryProduct.js";
 
 const router = express.Router();
 
@@ -35,5 +32,6 @@ router.delete("/delete-image", authToken, deleteCloudinaryImage);
 router.post("/upload-product", authToken, uploadProductControler);
 router.get("/get-products", authToken, allProductlistControler);
 router.post("/edit-product", authToken, editProductControler);
+router.get("/get-categoryProduct",getCategoryProduct)
 
 export default router;
