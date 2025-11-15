@@ -12,6 +12,7 @@ import mobileImg2 from "../assest/banner/img2_mobile.webp";
 import mobileImg3 from "../assest/banner/img3_mobile.jpg";
 import mobileImg4 from "../assest/banner/img4_mobile.jpg";
 import mobileImg5 from "../assest/banner/img5_mobile.png";
+import HorizontalCardProduct from "../components/HorizontalCardProduct";
 
 const Home = () => {
   const mobileImages = [
@@ -29,6 +30,7 @@ const Home = () => {
         mobileImages={mobileImages}
         desktopImages={desktopImages}
       />
+      <HorizontalCardProduct category={"airpodes"} heading={"Top's Airpodes"}/>
     </>
   );
 };
