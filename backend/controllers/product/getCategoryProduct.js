@@ -6,7 +6,7 @@ const getCategoryProduct = async (req, res) => {
     const allCategoryProduct = [];
 
     for (const category of allCategoryPresent) {
-      const product = await ProductModel.findOne({category});
+      const product = await ProductModel.findOne({ category });
       if (product) {
         allCategoryProduct.push(product);
       }

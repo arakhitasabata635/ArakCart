@@ -6,7 +6,7 @@ const productCategory = [
   "mouse",
   "printer",
   "processor",
-  " refrigerator",
+  "refrigerator",
   "FaSpeakerDeck",
   "trimer",
   "televesion",

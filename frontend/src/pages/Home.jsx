@@ -30,7 +30,7 @@ const Home = () => {
         mobileImages={mobileImages}
         desktopImages={desktopImages}
       />
-      <HorizontalCardProduct category={"airpodes"} heading={"Top's Airpodes"}/>
+      <HorizontalCardProduct category={"refrigerator"} heading={"Top's Airpodes"}/>
     </>
   );
 };

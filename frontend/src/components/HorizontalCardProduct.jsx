@@ -2,22 +2,29 @@ import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import fetchCategoryWiseProduct from "../../helpers/fetchCategoryWiseProduct";
+import { useEffect } from "react";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const scrollRef = useRef();
 
   const scrollLeft = () => {
-    scrollRef.current.scrollBy({ left: -250, behavior: "smooth" });
+    scrollRef.current.scrollBy({ left: -400, behavior: "smooth" });
   };
 
   const scrollRight = () => {
-    scrollRef.current.scrollBy({ left: 250, behavior: "smooth" });
+    scrollRef.current.scrollBy({ left: 400, behavior: "smooth" });
   };
 
-  const fetchData = async()=>{
-    const categoryProducts = fetchCategoryWiseProduct 
-  }
+  const fetchData = async () => {
+    const categoryProducts = await fetchCategoryWiseProduct(category);
+    setData(categoryProducts.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="container mx-auto px-4 mt-6">
@@ -46,14 +53,14 @@ const HorizontalCardProduct = ({ category, heading }) => {
         {/* Mobile arrows */}
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-1/2 -translate-y-1/2 p-2 bg-white rounded-full shadow md:hidden z-10"
+          className="absolute left-0 top-1/2 -translate-y-1/2 p-2 text-white bg-black/40 rounded-full shadow md:hidden z-10"
         >
           <FaChevronLeft size={16} />
         </button>
 
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-1/2 -translate-y-1/2 p-2 bg-white rounded-full shadow md:hidden z-10"
+          className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-white bg-black/40 rounded-full shadow md:hidden z-10"
         >
           <FaChevronRight size={16} />
         </button>
@@ -79,11 +86,11 @@ const HorizontalCardProduct = ({ category, heading }) => {
                 {/* Product Info */}
                 <div className="flex flex-col justify-between">
                   <p className="font-medium text-sm line-clamp-1">
-                    {product.name}
+                    {product.productName}
                   </p>
 
                   <p className="text-xs text-gray-500 capitalize">
-                    {product.brand}
+                    {product.brandName}
                   </p>
 
                   <div className="flex items-center gap-2 mt-1">

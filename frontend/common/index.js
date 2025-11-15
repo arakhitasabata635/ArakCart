@@ -47,7 +47,7 @@ const apiSummary = {
   },
   categoryWiseProduct:{
     url: `${backendPortUrl}/api/category-products`,
-    method: "get"
+    method: "post"
   }
 };
 

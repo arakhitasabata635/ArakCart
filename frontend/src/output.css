@@ -789,6 +789,12 @@
       background-color: color-mix(in oklab, var(--color-black) 0%, transparent);
     }
   }
+  .bg-black\/30 {
+    background-color: color-mix(in srgb, #000 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-black) 30%, transparent);
+    }
+  }
   .bg-black\/40 {
     background-color: color-mix(in srgb, #000 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1640,6 +1646,11 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
+  .md\:bg-gray-100 {
+    @media (width >= 48rem) {
+      background-color: var(--color-gray-100);
+    }
+  }
   .md\:text-2xl {
     @media (width >= 48rem) {
       font-size: var(--text-2xl);
@@ -1650,6 +1661,15 @@
     @media (width >= 48rem) {
       font-size: var(--text-xl);
       line-height: var(--tw-leading, var(--text-xl--line-height));
+    }
+  }
+  .md\:hover\:bg-gray-200 {
+    @media (width >= 48rem) {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-gray-200);
+        }
+      }
     }
   }
   .lg\:pointer-events-auto {

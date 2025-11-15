@@ -4,7 +4,6 @@ const getCategoryWiseProduct = async (req, res) => {
   try {
     const { category } = req?.body;
     const categoryProducts = await ProductModel.find({ category });
-
     res.status(200).json({
       message: "all products",
       error: false,
