@@ -13,6 +13,7 @@ import editProductControler from "../controllers/product/editProduct.js";
 
 import authToken from "../middlewares/authToken.js";
 import getCategoryProduct from "../controllers/product/getCategoryProduct.js";
+import getCategoryWiseProduct from "../controllers/product/getCategoryWiseProduct.js";
 
 const router = express.Router();
 
@@ -33,5 +34,6 @@ router.post("/upload-product", authToken, uploadProductControler);
 router.get("/get-products", authToken, allProductlistControler);
 router.post("/edit-product", authToken, editProductControler);
 router.get("/get-categoryProduct",getCategoryProduct)
+router.get("/category-products",getCategoryWiseProduct)
 
 export default router;
