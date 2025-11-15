@@ -38,7 +38,7 @@ function App() {
       <Context.Provider value={{ fetchUserDetails }}>
         <ToastContainer position="top-right" autoClose={1000} />
         <Header />
-        <main>
+        <main className="bg-[#e3e6e6]">
           <Outlet />
         </main>
         {!hideFooter && <Footer></Footer>}

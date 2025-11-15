@@ -5,7 +5,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import fetchCategoryWiseProduct from "../../helpers/fetchCategoryWiseProduct";
 import { useEffect } from "react";
 
-const HorizontalCardProduct = ({ category, heading }) => {
+const VerticalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const scrollRef = useRef();
 
@@ -27,9 +27,9 @@ const HorizontalCardProduct = ({ category, heading }) => {
   }, []);
 
   return (
-    <div className="container bg-white mx-auto px-4 py-4 rounded-lg mt-6">
+    <div className="container bg-white mx-auto px-4 py-3 rounded-lg mt-6">
       <div className="flex justify-between items-center mb-3">
-        <h2 className="text-lg font-bold md:text-xl ">{heading}</h2>
+        <h2 className="text-lg md:text-xl font-bold capitalize">{heading}</h2>
 
         {/* Desktop Arrows */}
         <div className="hidden md:flex gap-3">
@@ -57,44 +57,40 @@ const HorizontalCardProduct = ({ category, heading }) => {
           {data?.map((product) => (
             <div
               key={product._id}
-              className="min-w-[260px] bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300 border  border-gray-400
+              className="flex-shrink-0 w-[280px]  bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300  border border-gray-200
                         p-3 cursor-pointer hover:-translate-y-1"
             >
-              <div className="flex gap-3 items-center">
-                {/* Product Image */}
+              {/* Image */}
+              <div className="w-full h-[150px] flex items-center justify-center overflow-hidden">
                 <img
                   src={product.productImages[0].imgUrl}
-                  alt={product.name}
-                  className="w-20 h-20 rounded-lg object-contain hover:scale-105 transition duration-300 bg-gray-50 p-1"
+                  alt={product.productName}
+                  className="h-full object-contain"
                 />
-
-                {/* Product Info */}
-                <div className="flex flex-col justify-between">
-                  <p className="font-medium text-sm line-clamp-1">
-                    {product.productName}
-                  </p>
-
-                  <p className="text-xs text-gray-500 capitalize">
-                    {product.brandName}
-                  </p>
-
-                  <div className="flex items-center gap-2 mt-1">
-                    <p className="text-green-600 font-semibold text-sm">
-                      ₹{product.sellingPrice}
-                    </p>
-                    <p className="text-gray-400 text-sm line-through">
-                      ₹{product.price}
-                    </p>
-                  </div>
-                </div>
               </div>
 
-              {/* Add to Cart Button */}
+              {/* Name */}
+              <p className="text-sm font-medium mt-3 line-clamp-2">
+                {product.productName}
+              </p>
+
+              {/* Brand */}
+              <p className="text-xs text-gray-500">{product.brandName}</p>
+
+              {/* Prices */}
+              <div className="flex justify-between items-center gap-2 mt-2 pr-8 ">
+                <p className="text-lg font-semibold text-green-600">₹{product.sellingPrice}</p>
+                <p className="text-sm text-gray-500 line-through">
+                  ₹{product.price}
+                </p>
+              </div>
+
+              {/* Button */}
               <button
-                className="mt-3 w-full py-1.5 rounded-lg bg-blue-600 text-white text-sm 
-                           hover:bg-blue-700 transition-all"
+                className="mt-3 w-full bg-blue-600 text-white py-1.5 rounded-lg 
+                         text-sm font-medium hover:bg-blue-700 transition"
               >
-                Add To Cart
+                Add to Cart
               </button>
             </div>
           ))}
@@ -104,4 +100,4 @@ const HorizontalCardProduct = ({ category, heading }) => {
   );
 };
 
-export default HorizontalCardProduct;
+export default VerticalCardProduct;

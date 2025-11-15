@@ -13,6 +13,7 @@ import mobileImg3 from "../assest/banner/img3_mobile.jpg";
 import mobileImg4 from "../assest/banner/img4_mobile.jpg";
 import mobileImg5 from "../assest/banner/img5_mobile.png";
 import HorizontalCardProduct from "../components/HorizontalCardProduct";
+import VerticalCardProduct from "../components/VerticalCardProduct";
 
 const Home = () => {
   const mobileImages = [
@@ -30,7 +31,17 @@ const Home = () => {
         mobileImages={mobileImages}
         desktopImages={desktopImages}
       />
-      <HorizontalCardProduct category={"refrigerator"} heading={"Top's Airpodes"}/>
+      <HorizontalCardProduct category={"airpode"} heading={"Top's Airpodes"} />
+      <HorizontalCardProduct category={"watches"} heading={"Popular Watches"} />
+      <VerticalCardProduct category={"refrigerator"} heading={"refrigerator"} />
+      <VerticalCardProduct category={"mobile"} heading={"mobiles"} />
+      <VerticalCardProduct category={"earphone"} heading={"earphone"} />
+      <VerticalCardProduct category={"televesion"} heading={"televesion"} />
+      <VerticalCardProduct category={"trimer"} heading={"trimer"} />
+      <VerticalCardProduct category={"FaSpeakerDeck"} heading={"speaker"} />
+      <VerticalCardProduct category={"mouse"} heading={"mouse"} />
+      <VerticalCardProduct category={"camera"} heading={"camera"} />
+      <VerticalCardProduct category={"printer"} heading={"printer"} />
     </>
   );
 };

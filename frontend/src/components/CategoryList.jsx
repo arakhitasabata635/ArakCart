@@ -31,7 +31,7 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <div className="container mx-auto w-full relative mt-6 pb-2">
+    <div className="container mx-auto w-full relative pt-6 pb-2">
   {loading ? (
     <CategoryLoading />
   ) : (
