@@ -27,7 +27,7 @@ const HomePageBanner = ({ mobileImages, desktopImages }) => {
 
   return (
     <>
-      <div className="container mx-auto px-4 mt-6">
+      <div className="container relative mx-auto px-4 mt-6">
         <div className="relative h-[180px] md:h-[320px] w-full overflow-hidden rounded-xl shadow-lg bg-amber-200">
           <div
             className="flex w-full h-full min-w-full min-h-full transition-transform duration-700 ease-in-out"
@@ -45,7 +45,7 @@ const HomePageBanner = ({ mobileImages, desktopImages }) => {
           {/* Left Button */}
           <button
             onClick={prevSlide}
-            className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
+            className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full group-hover:opacity-100 transition"
           >
             <IoChevronBack size={22} />
           </button>
@@ -53,7 +53,7 @@ const HomePageBanner = ({ mobileImages, desktopImages }) => {
           {/* Right Button */}
           <button
             onClick={nextSlide}
-            className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
+            className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full group-hover:opacity-100 transition"
           >
             <IoChevronForward size={22} />
           </button>
