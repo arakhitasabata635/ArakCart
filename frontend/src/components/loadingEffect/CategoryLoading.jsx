@@ -1,7 +1,7 @@
 export default function CategoryLoading() {
   return (
-    <div className="flex gap-4 overflow-x-auto no-scrollbar px-1">
-      {[...Array(13)].map((_, i) => (
+    <div className="flex justify-center gap-4 overflow-x-auto no-scrollbar px-1">
+      {[...Array(10)].map((_, i) => (
         <div
           key={i}
           className="min-w-[120px] flex flex-col items-center cursor-pointer 

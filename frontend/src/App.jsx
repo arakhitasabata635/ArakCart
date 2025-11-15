@@ -1,7 +1,7 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import apiSummary from "../common";
@@ -12,6 +12,7 @@ import { setUserDetails } from "./store/userSlice";
 function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith("/admin");
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const fetchUserDetails = async () => {

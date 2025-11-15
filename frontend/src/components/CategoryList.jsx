@@ -31,57 +31,61 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <div className="w-full relative mt-6 pb-2">
-      <h2 className="text-xl font-semibold mb-3 px-1">Categories</h2>
-      {loading ? (
-        <CategoryLoading />
-      ) : (
-        <>
-          {/* Mobile arrows */}
-          <button
-            onClick={scrollLeft}
-            className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full 
+    <div className="container mx-auto w-full relative mt-6 pb-2">
+  {loading ? (
+    <CategoryLoading />
+  ) : (
+    <>
+      {/* Mobile Arrows */}
+      <button
+        onClick={scrollLeft}
+        className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full 
                    bg-white shadow-md md:hidden z-10"
-          >
-            <FaChevronLeft size={20} />
-          </button>
+      >
+        <FaChevronLeft size={20} />
+      </button>
 
-          <button
-            onClick={scrollRight}
-            className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full 
+      <button
+        onClick={scrollRight}
+        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full 
                    bg-white shadow-md md:hidden z-10"
-          >
-            <FaChevronRight size={20} />
-          </button>
-          <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto no-scrollbar px-1"
-          >
-            {categoryProduct?.map((product) => (
-              <Link
-                to={`/category-products/${product.category}`}
-                key={product._id}
-                className="min-w-[120px] flex flex-col items-center cursor-pointer 
+      >
+        <FaChevronRight size={20} />
+      </button>
+
+      {/* Category Scroll List */}
+      <div
+        ref={scrollRef}
+        className="flex gap-5 overflow-x-auto no-scrollbar px-2"
+      >
+        {categoryProduct?.map((product) => (
+          <Link
+            to={`/category-products/${product.category}`}
+            key={product._id}
+            className="min-w-[120px] flex flex-col items-center cursor-pointer 
                        transition-all duration-300 hover:-translate-y-1"
-              >
-                {/* Round Image */}
-                <div className="h-24 w-24 rounded-full overflow-hidden shadow-lg shadow-gray-300 flex items-center justify-center bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                  <img
-                    src={product.productImages[0].imgUrl}
-                    alt={product.category}
-                    className="max-h-[70%] max-w-[70%] object-scale-down transition duration-300 hover:scale-105"
-                  />
-                </div>
+          >
+            {/* Round Image */}
+            <div className="h-24 w-24 rounded-full overflow-hidden shadow-md shadow-gray-300 
+                            flex items-center justify-center bg-white 
+                            hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <img
+                src={product.productImages[0].imgUrl}
+                alt={product.category}
+                className="h-[70%] w-[70%] object-contain transition duration-300 hover:scale-105"
+              />
+            </div>
 
-                <p className="mt-2 text-sm font-medium text-gray-700 text-center capitalize">
-                  {product.category}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
+            <p className="mt-2 text-sm font-medium text-gray-700 text-center capitalize">
+              {product.category}
+            </p>
+          </Link>
+        ))}
+      </div>
+    </>
+  )}
+</div>
+
   );
 };
 
