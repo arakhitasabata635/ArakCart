@@ -3,10 +3,12 @@ import apiSummary from "../../common";
 import { toast } from "react-toastify";
 import AdminProductCard from "../components/AdminProductCard";
 import UploadProduct from "../components/UploadProduct copy";
+import VerticalCardShimmer from "../components/loadingEffect/VerticalCardShimmer";
 
 const Products = () => {
   const [uploadProduct, setUploadProduct] = useState(false);
   const [allProduct, setAllProduct] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchAllProduct = async () => {
     const fetchApi = await fetch(apiSummary.allProducts.url, {
@@ -20,6 +22,7 @@ const Products = () => {
     if (apiRes.success) {
       toast.success(apiRes.message);
       setAllProduct(apiRes.data || []);
+      setIsLoading(false)
     }
     if (apiRes.error) {
       toast.error(apiRes.message);
@@ -51,13 +54,23 @@ const Products = () => {
       {/* 🔹 Product Section */}
       <main>
         <div className="flex flex-wrap justify-center gap-6 mt-6">
-          {allProduct?.map((product, i) => (
-            <AdminProductCard
-              key={i}
-              product={product}
-              setAllProduct={setAllProduct}
-            />
-          ))}
+          {isLoading ? (
+            <>
+              {[...Array(10)].map((_, i) => (
+                <VerticalCardShimmer key={i} />
+              ))}
+            </>
+          ) : (
+            <>
+              {allProduct?.map((product, i) => (
+                <AdminProductCard
+                  key={i}
+                  product={product}
+                  setAllProduct={setAllProduct}
+                />
+              ))}
+            </>
+          )}
         </div>
       </main>
 

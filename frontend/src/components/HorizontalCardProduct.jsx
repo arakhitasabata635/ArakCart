@@ -5,6 +5,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import fetchCategoryWiseProduct from "../../helpers/fetchCategoryWiseProduct";
 import { useEffect } from "react";
 import HorizontalCardShimmer from "./loadingEffect/HorizontalCardShimmer";
+import { Link } from "react-router-dom";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -66,7 +67,8 @@ const HorizontalCardProduct = ({ category, heading }) => {
           ) : (
             <>
               {data?.map((product) => (
-                <div
+                <Link
+                to={`/product-details/${product._id}`}
                   key={product._id}
                   className="min-w-[260px] bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300 border  border-gray-400
                         p-3 cursor-pointer hover:-translate-y-1"
@@ -107,7 +109,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
                   >
                     Add To Cart
                   </button>
-                </div>
+                </Link>
               ))}
             </>
           )}

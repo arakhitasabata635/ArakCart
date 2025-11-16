@@ -41,7 +41,7 @@ const AdminProductCard = ({ product, setAllProduct }) => {
 
     {/* Product Details */}
     <div className="p-3 flex flex-col items-center justify-between flex-1 text-center">
-      <h3 className="text-sm sm:text-base font-semibold text-gray-800 truncate w-full">
+      <h3 className="text-sm sm:text-base font-semibold text-gray-800 line-clamp-2 w-full">
         {product.productName}
       </h3>
       <p className="text-xs sm:text-sm text-gray-500">{product.category}</p>
