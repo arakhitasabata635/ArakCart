@@ -4,9 +4,11 @@ import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import fetchCategoryWiseProduct from "../../helpers/fetchCategoryWiseProduct";
 import { useEffect } from "react";
+import HorizontalCardShimmer from "./loadingEffect/HorizontalCardShimmer";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const scrollRef = useRef();
 
   const scrollLeft = () => {
@@ -20,6 +22,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
   const fetchData = async () => {
     const categoryProducts = await fetchCategoryWiseProduct(category);
     setData(categoryProducts.data);
+    setIsLoading(false)
   };
 
   useEffect(() => {
@@ -54,50 +57,60 @@ const HorizontalCardProduct = ({ category, heading }) => {
           ref={scrollRef}
           className="flex gap-4 overflow-x-auto no-scrollbar "
         >
-          {data?.map((product) => (
-            <div
-              key={product._id}
-              className="min-w-[260px] bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300 border  border-gray-400
+          {isLoading ? (
+            <>
+              {[...Array(10)].map((_, i) => (
+                <HorizontalCardShimmer key={i} />
+              ))}
+            </>
+          ) : (
+            <>
+              {data?.map((product) => (
+                <div
+                  key={product._id}
+                  className="min-w-[260px] bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300 border  border-gray-400
                         p-3 cursor-pointer hover:-translate-y-1"
-            >
-              <div className="flex gap-3 items-center">
-                {/* Product Image */}
-                <img
-                  src={product.productImages[0].imgUrl}
-                  alt={product.name}
-                  className="w-20 h-20 rounded-lg object-contain hover:scale-105 transition duration-300 bg-gray-50 p-1"
-                />
+                >
+                  <div className="flex gap-3 items-center">
+                    {/* Product Image */}
+                    <img
+                      src={product.productImages[0].imgUrl}
+                      alt={product.name}
+                      className="w-20 h-20 rounded-lg object-contain hover:scale-105 transition duration-300 bg-gray-50 p-1"
+                    />
 
-                {/* Product Info */}
-                <div className="flex flex-col justify-between">
-                  <p className="font-medium text-sm line-clamp-1">
-                    {product.productName}
-                  </p>
+                    {/* Product Info */}
+                    <div className="flex flex-col justify-between">
+                      <p className="font-medium text-sm line-clamp-1">
+                        {product.productName}
+                      </p>
 
-                  <p className="text-xs text-gray-500 capitalize">
-                    {product.brandName}
-                  </p>
+                      <p className="text-xs text-gray-500 capitalize">
+                        {product.brandName}
+                      </p>
 
-                  <div className="flex items-center gap-2 mt-1">
-                    <p className="text-green-600 font-semibold text-sm">
-                      ₹{product.sellingPrice}
-                    </p>
-                    <p className="text-gray-400 text-sm line-through">
-                      ₹{product.price}
-                    </p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <p className="text-green-600 font-semibold text-sm">
+                          ₹{product.sellingPrice}
+                        </p>
+                        <p className="text-gray-400 text-sm line-through">
+                          ₹{product.price}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Add to Cart Button */}
-              <button
-                className="mt-3 w-full py-1.5 rounded-lg bg-blue-600 text-white text-sm 
+                  {/* Add to Cart Button */}
+                  <button
+                    className="mt-3 w-full py-1.5 rounded-lg bg-blue-600 text-white text-sm 
                            hover:bg-blue-700 transition-all"
-              >
-                Add To Cart
-              </button>
-            </div>
-          ))}
+                  >
+                    Add To Cart
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>
