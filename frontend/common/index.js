@@ -48,6 +48,10 @@ const apiSummary = {
   categoryWiseProduct:{
     url: `${backendPortUrl}/api/category-products`,
     method: "post"
+  },
+  productDetails:{
+    url: `${backendPortUrl}/api/product-details`,
+    method: "post"
   }
 };
 

@@ -1,9 +1,9 @@
 import ProductModel from "../../models/productModel.js";
 
-const singleProductDetails = async () => {
+const singleProductDetails = async (req, res) => {
   try {
     const { id } = req.body;
-    const details = await ProductModel.findById({ id });
+    const details = await ProductModel.findById({ _id: id });
     res.status(200).json({
       message: "Product Details",
       error: false,
@@ -19,4 +19,4 @@ const singleProductDetails = async () => {
   }
 };
 
-export default singleProductDetails
+export default singleProductDetails;
