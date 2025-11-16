@@ -14,6 +14,7 @@ import editProductControler from "../controllers/product/editProduct.js";
 import authToken from "../middlewares/authToken.js";
 import getCategoryProduct from "../controllers/product/getCategoryProduct.js";
 import getCategoryWiseProduct from "../controllers/product/getCategoryWiseProduct.js";
+import singleProductDetails from "../controllers/product/singleProductDetails.js";
 
 const router = express.Router();
 
@@ -35,5 +36,6 @@ router.get("/get-products", authToken, allProductlistControler);
 router.post("/edit-product", authToken, editProductControler);
 router.get("/get-categoryProduct",getCategoryProduct)
 router.post("/category-products",getCategoryWiseProduct)
+router.post("/product-details",singleProductDetails)
 
 export default router;
