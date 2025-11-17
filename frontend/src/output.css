@@ -1018,14 +1018,29 @@
   .bg-\[\#\] {
     background-color: #;
   }
+  .bg-\[\#d8d8d8d1\] {
+    background-color: #d8d8d8d1;
+  }
   .bg-\[\#e3e6e6\] {
     background-color: #e3e6e6;
+  }
+  .bg-\[\#e6e2e3\] {
+    background-color: #e6e2e3;
   }
   .bg-\[\#f1f2f4\] {
     background-color: #f1f2f4;
   }
   .bg-\[\#f4f4f4d6\] {
     background-color: #f4f4f4d6;
+  }
+  .bg-\[e6\] {
+    background-color: e6;
+  }
+  .bg-\[e6e2e3\] {
+    background-color: e6e2e3;
+  }
+  .bg-\[e6e2e\] {
+    background-color: e6e2e;
   }
   .bg-amber-200 {
     background-color: var(--color-amber-200);

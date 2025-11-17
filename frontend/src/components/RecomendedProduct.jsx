@@ -1,0 +1,87 @@
+import React from "react";
+import { useRef } from "react";
+import { useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import fetchCategoryWiseProduct from "../../helpers/fetchCategoryWiseProduct";
+import { useEffect } from "react";
+import VerticalCardShimmer from "./loadingEffect/VerticalCardShimmer";
+import { Link } from "react-router-dom";
+
+const RecomendedProduct = ({ category, heading }) => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const fetchData = async () => {
+    const categoryProducts = await fetchCategoryWiseProduct(category);
+    setData(categoryProducts.data);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  return (
+    <div className="container bg-white mx-auto px-4 py-3 rounded-lg mt-6">
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-lg md:text-xl font-bold capitalize">{heading}</h2>
+      </div>
+      {/* Scroll Container */}
+      <div className="flex gap-4 flex-wrap ">
+        {isLoading ? (
+          <>
+            {[...Array(10)].map((_, i) => (
+              <VerticalCardShimmer key={i} />
+            ))}
+          </>
+        ) : (
+          <>
+            {data?.map((product) => (
+              <Link
+                to={`/product-details/${product._id}`}
+                key={product._id}
+                className="flex-shrink-0 w-[280px]  bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300  border border-gray-200
+                        p-3 cursor-pointer hover:-translate-y-1"
+              >
+                {/* Image */}
+                <div className="w-full h-[150px] flex items-center justify-center overflow-hidden">
+                  <img
+                    src={product.productImages[0].imgUrl}
+                    alt={product.productName}
+                    className="h-full object-contain"
+                  />
+                </div>
+
+                {/* Name */}
+                <p className="text-sm font-medium mt-3 line-clamp-2">
+                  {product.productName}
+                </p>
+
+                {/* Brand */}
+                <p className="text-xs text-gray-500">{product.brandName}</p>
+
+                {/* Prices */}
+                <div className="flex justify-between items-center gap-2 mt-2 pr-8 ">
+                  <p className="text-lg font-semibold text-green-600">
+                    ₹{product.sellingPrice}
+                  </p>
+                  <p className="text-sm text-gray-500 line-through">
+                    ₹{product.price}
+                  </p>
+                </div>
+
+                {/* Button */}
+                <button
+                  className="mt-3 w-full bg-blue-600 text-white py-1.5 rounded-lg 
+                         text-sm font-medium hover:bg-blue-700 transition"
+                >
+                  Add to Cart
+                </button>
+              </Link>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default RecomendedProduct;

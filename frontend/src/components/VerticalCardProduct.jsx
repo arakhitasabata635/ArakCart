@@ -5,10 +5,11 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import fetchCategoryWiseProduct from "../../helpers/fetchCategoryWiseProduct";
 import { useEffect } from "react";
 import VerticalCardShimmer from "./loadingEffect/VerticalCardShimmer";
+import { Link } from "react-router-dom";
 
 const VerticalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading]= useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const scrollRef = useRef();
 
   const scrollLeft = () => {
@@ -22,7 +23,7 @@ const VerticalCardProduct = ({ category, heading }) => {
   const fetchData = async () => {
     const categoryProducts = await fetchCategoryWiseProduct(category);
     setData(categoryProducts.data);
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -66,7 +67,8 @@ const VerticalCardProduct = ({ category, heading }) => {
           ) : (
             <>
               {data?.map((product) => (
-                <div
+                <Link
+                  to={`/product-details/${product._id}`}
                   key={product._id}
                   className="flex-shrink-0 w-[280px]  bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300  border border-gray-200
                         p-3 cursor-pointer hover:-translate-y-1"
@@ -105,7 +107,7 @@ const VerticalCardProduct = ({ category, heading }) => {
                   >
                     Add to Cart
                   </button>
-                </div>
+                </Link>
               ))}
             </>
           )}
