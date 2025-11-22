@@ -15,6 +15,7 @@ import authToken from "../middlewares/authToken.js";
 import getCategoryProduct from "../controllers/product/getCategoryProduct.js";
 import getCategoryWiseProduct from "../controllers/product/getCategoryWiseProduct.js";
 import singleProductDetails from "../controllers/product/singleProductDetails.js";
+import addToCartControler from "../controllers/user/addToCartControler.js";
 
 const router = express.Router();
 
@@ -34,8 +35,9 @@ router.delete("/delete-image", authToken, deleteCloudinaryImage);
 router.post("/upload-product", authToken, uploadProductControler);
 router.get("/get-products", authToken, allProductlistControler);
 router.post("/edit-product", authToken, editProductControler);
-router.get("/get-categoryProduct",getCategoryProduct)
-router.post("/category-products",getCategoryWiseProduct)
-router.post("/product-details",singleProductDetails)
+router.get("/get-categoryProduct", getCategoryProduct);
+router.post("/category-products", getCategoryWiseProduct);
+router.post("/product-details", singleProductDetails);
+router.post("/Add-cart", authToken, addToCartControler);
 
 export default router;
