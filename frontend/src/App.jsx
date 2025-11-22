@@ -1,18 +1,17 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import apiSummary from "../common";
 import Context from "./context";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "./store/userSlice";
-
+import { setCart } from "./store/cartSlice";
 function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith("/admin");
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const fetchUserDetails = async () => {
@@ -28,9 +27,26 @@ function App() {
       dispatch(setUserDetails(dataApi.data));
     }
   };
+
+  const fetchCartProducts = async () => {
+    const fetchApi = await fetch(apiSummary.cartProducts.url, {
+      method: apiSummary.cartProducts.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const dataRes = await fetchApi.json();
+    console.log(dataRes.data);
+    if (dataRes.success) {
+      dispatch(setCart(dataRes.data));
+    }
+  };
   useEffect(() => {
     //user details
     fetchUserDetails();
+    //cart
+    fetchCartProducts();
   }, []);
 
   return (

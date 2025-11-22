@@ -42,7 +42,7 @@ router.post("/product-details", singleProductDetails);
 
 //cart
 router.post("/Add-cart", authToken, addToCartControler);
-router.post("/cart-items", authToken, getCartProducts);
+router.get("/cart-products", authToken, getCartProducts);
 
 
 export default router;
