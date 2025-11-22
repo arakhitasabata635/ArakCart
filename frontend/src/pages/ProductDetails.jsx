@@ -154,7 +154,9 @@ const ProductDetails = () => {
 
                 {/* BUTTONS */}
                 <div className="flex flex-col sm:flex-row gap-3 mt-3">
-                  <button className="flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition">
+                  <button
+                  onClick={(e)=>addToCart(e,product._id)}
+                   className="flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition">
                     Add to Cart
                   </button>
                   <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">

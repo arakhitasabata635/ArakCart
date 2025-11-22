@@ -1,9 +1,9 @@
 import cartModel from "../../models/productCartModel.js";
 
-const addToCartControler = async () => {
+const addToCartControler = async (req,res) => {
   try {
     const currentUser = req.userId;
-    const productId = req.body;
+    const {productId} = req.body;
 
     const isProductAvailable = await cartModel.findOne({
       productId,
@@ -23,7 +23,7 @@ const addToCartControler = async () => {
       userId: currentUser,
     };
 
-    const newAddToCart = new addToCartModel(payload);
+    const newAddToCart = new cartModel(payload);
     const saveProduct = await newAddToCart.save();
 
     return res.json({

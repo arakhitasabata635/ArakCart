@@ -70,6 +70,7 @@ const RecomendedProduct = ({ category, heading }) => {
 
                 {/* Button */}
                 <button
+                onClick={(e)=>addToCart(e,product._id)}
                   className="mt-3 w-full bg-blue-600 text-white py-1.5 rounded-lg 
                          text-sm font-medium hover:bg-blue-700 transition"
                 >

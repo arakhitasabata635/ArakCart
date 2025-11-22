@@ -6,6 +6,7 @@ import fetchCategoryWiseProduct from "../../helpers/fetchCategoryWiseProduct";
 import { useEffect } from "react";
 import HorizontalCardShimmer from "./loadingEffect/HorizontalCardShimmer";
 import { Link } from "react-router-dom";
+import addToCart from "../../helpers/addToCart";
 
 const HorizontalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -23,7 +24,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
   const fetchData = async () => {
     const categoryProducts = await fetchCategoryWiseProduct(category);
     setData(categoryProducts.data);
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -68,7 +69,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
             <>
               {data?.map((product) => (
                 <Link
-                to={`/product-details/${product._id}`}
+                  to={`/product-details/${product._id}`}
                   key={product._id}
                   className="min-w-[260px] bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300 border  border-gray-400
                         p-3 cursor-pointer hover:-translate-y-1"
@@ -104,6 +105,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
 
                   {/* Add to Cart Button */}
                   <button
+                    onClick={(e) => addToCart(e, product._id)}
                     className="mt-3 w-full py-1.5 rounded-lg bg-blue-600 text-white text-sm 
                            hover:bg-blue-700 transition-all"
                   >
