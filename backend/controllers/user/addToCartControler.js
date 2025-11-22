@@ -33,7 +33,7 @@ const addToCartControler = async (req,res) => {
       error: false,
     });
   } catch (err) {
-    res.status(400).json({
+   return res.status(400).json({
       message: err.message || err,
       error: true,
       success: false,
