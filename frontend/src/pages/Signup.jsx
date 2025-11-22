@@ -53,7 +53,7 @@ const Signup = () => {
 
     const resData = await jsonResponsData.json();
 
-    if (resData.sucess) {
+    if (resData.success) {
       toast.success(resData.message);
       navigate("/login");
     }

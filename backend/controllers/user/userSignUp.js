@@ -35,7 +35,7 @@ const userSignUpController = async (req, res) => {
     const saveUser = await userData.save().select("-password");
     res.status(201).json({
       data: saveUser,
-      sucess: true,
+      success: true,
       error: false,
       message: "user created sucessfully!",
     });

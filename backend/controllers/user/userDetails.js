@@ -6,7 +6,7 @@ const userDetailsController = async (req, res) => {
 
     res.status(200).json({
       data: user,
-      sucess: true,
+      success: true,
       error: false,
       message: "user details"
     });
