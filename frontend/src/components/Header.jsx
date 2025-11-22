@@ -1,16 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import {  FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import Logo from "../assest/logo-with-text.svg";
 import { useDispatch, useSelector } from "react-redux";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
+import { logout } from "../store/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
-
   const cartCount = useSelector((state) => state?.cart?.count);
 
   // const cartCount = 10;clg
@@ -23,6 +23,7 @@ const Header = () => {
     const data = await fetchData.json();
     if (data.success) {
       toast.success(data.message);
+      dispatch(logout());
       navigate("/login");
     }
     if (data.error) {

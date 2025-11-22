@@ -6,21 +6,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "./store/userSlice";
+import { fetchCart } from "./store/cartSlice";
 function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith("/admin");
 
   const dispatch = useDispatch();
   useEffect(() => {
-    const load = async () => {
-      const user = await dispatch(fetchUser()).unwrap();
-
-      if (user) {
-        dispatch(fetchCart());
-      }
-    };
-
-    load();
+    dispatch(fetchUser());
+    dispatch(fetchCart());
   }, []);
 
   return (

@@ -1,13 +1,17 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import apiSummary from "../../common";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "../store/userSlice";
+import { fetchCart } from "../store/cartSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // get the user inputs
   const handleOnChange = (e) => {
@@ -32,8 +36,9 @@ const Login = () => {
     const resData = await jsonResponsData.json();
     if (resData.success) {
       toast.success(resData.message);
+      dispatch(fetchUser());
+      dispatch(fetchCart());
       navigate("/");
-      fetchUserDetails();
     }
     if (resData.error) {
       toast.error(resData.message);

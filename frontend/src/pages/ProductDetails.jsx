@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import apiSummary from "../../common";
 import ProductDetailsLoading from "../components/loadingEffect/ProductDetailsLoading";
 import RecomendedProduct from "../components/RecomendedProduct";
+import addToCart from "../../helpers/addToCart";
 
 const ProductDetails = () => {
   const { id } = useParams();
