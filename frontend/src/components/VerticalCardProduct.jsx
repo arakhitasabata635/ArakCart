@@ -6,6 +6,7 @@ import fetchCategoryWiseProduct from "../../helpers/fetchCategoryWiseProduct";
 import { useEffect } from "react";
 import VerticalCardShimmer from "./loadingEffect/VerticalCardShimmer";
 import { Link } from "react-router-dom";
+import addToCart from "../../helpers/addToCart";
 
 const VerticalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);

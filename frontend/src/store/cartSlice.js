@@ -12,7 +12,7 @@ export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
 });
 
 const initialState = {
-  items: [],
+  products: [],
   count: 0,
 };
 
@@ -21,11 +21,11 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCartLocal(state, action) {
-      state.items.push(action.payload);
+      state.products.push(action.payload);
       state.count += 1;
     },
     removeFromCartLocal(state, action) {
-      state.items = state.items.filter((item) => item._id !== action.payload);
+      state.products = state.products.filter((product) => product._id !== action.payload);
       state.count = state.items.length;
     },
   },
