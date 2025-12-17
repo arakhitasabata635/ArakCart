@@ -4,8 +4,7 @@ import { FaEye, FaEyeSlash, FaUserAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import apiSummary from "../../common";
 import { useDispatch } from "react-redux";
-import { fetchUser } from "../store/userSlice";
-import { fetchCart } from "../store/cartSlice";
+import { fetchCartCount, fetchUser } from "../store/userSlice";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,6 +23,7 @@ const Login = () => {
   // heandle on submit
   const hendleOnSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const jsonResponsData = await fetch(apiSummary.login.url, {
       method: apiSummary.login.method,
       headers: {
@@ -37,7 +37,7 @@ const Login = () => {
     if (resData.success) {
       toast.success(resData.message);
       dispatch(fetchUser());
-      dispatch(fetchCart());
+      dispatch(fetchCartCount());
       navigate("/");
     }
     if (resData.error) {
