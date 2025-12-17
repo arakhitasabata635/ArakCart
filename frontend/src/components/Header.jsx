@@ -11,7 +11,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
-  const cartCount = useSelector((state) => state?.cart?.count);
+  const cartCount = useSelector((state) => state?.user?.cartCount);
 
   const handleLogout = async () => {
     const fetchData = await fetch(apiSummary.logout_user.url, {

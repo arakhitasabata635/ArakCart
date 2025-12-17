@@ -20,14 +20,6 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCartLocal(state, action) {
-      state.products.push(action.payload);
-      state.count += 1;
-    },
-    removeFromCartLocal(state, action) {
-      state.products = state.products.filter((product) => product._id !== action.payload);
-      state.count = state.items.length;
-    },
   },
    extraReducers: (builder) => {
     builder.addCase(fetchCart.fulfilled, (state, action) => {

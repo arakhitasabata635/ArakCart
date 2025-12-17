@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import addToCart from "../../helpers/addToCart";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { addToCartLocal } from "../store/cartSlice";
+import { addToCartLocal } from "../store/userSlice";
 
 const VerticalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);

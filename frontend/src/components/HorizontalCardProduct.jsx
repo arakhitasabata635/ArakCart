@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import HorizontalCardShimmer from "./loadingEffect/HorizontalCardShimmer";
 import { Link } from "react-router-dom";
 import addToCart from "../../helpers/addToCart";
-import { addToCartLocal } from "../store/cartSlice";
+import { addToCartLocal } from "../store/userSlice";
 import { toast } from "react-toastify";
 
 const HorizontalCardProduct = ({ category, heading }) => {
