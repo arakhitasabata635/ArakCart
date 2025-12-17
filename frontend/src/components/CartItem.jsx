@@ -1,23 +1,43 @@
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
+  const discount = item.price - item.sellingPrice;
+
   return (
-    <div className="flex items-center gap-4 border rounded-lg p-3 shadow-sm bg-white">
+    <div className="flex items-center gap-5 border rounded-xl p-4 shadow hover:shadow-md bg-white transition-all duration-200">
 
       {/* IMAGE */}
-      <img
-        src={item.productImages[0].imgUrl}
-        alt={item.productName}
-        className="w-16 h-16 object-contain rounded border p-1 bg-gray-50"
-      />
+      <div className="relative">
+        <img
+          src={item.productImages[0].imgUrl}
+          alt={item.productName}
+          className="w-20 h-20 object-contain rounded-lg bg-gray-50 p-2 border"
+        />
 
-      {/* INFO */}
-      <div className="flex-1">
-        <p className="font-semibold text-sm line-clamp-1">
+        {/* DISCOUNT BADGE */}
+        {discount > 0 && (
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full shadow">
+            {Math.round((discount / item.price) * 100)}% OFF
+          </span>
+        )}
+      </div>
+
+      {/* PRODUCT INFO */}
+      <div className="flex-1 space-y-1">
+        <p className="font-semibold text-sm line-clamp-1 text-gray-800">
           {item.productName}
         </p>
-        <p className="text-gray-500 text-xs capitalize">
-          {item.brandName}
+
+        <p className="text-gray-500 text-xs">
+          Brand: <span className="capitalize">{item.brandName}</span>
+        </p>
+
+        <p className="text-gray-500 text-xs">
+          Category: {item.category}
+        </p>
+
+        <p className="text-xs text-gray-600 line-clamp-1">
+          {item.description}
         </p>
 
         <div className="flex items-center gap-2">
@@ -28,22 +48,37 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
             ₹{item.price}
           </p>
         </div>
+
+        <p className="text-xs text-gray-500">
+          Qty × Price: {item.qty} × ₹{item.sellingPrice} ={" "}
+          <span className="font-semibold text-gray-700">
+            ₹{item.qty * item.sellingPrice}
+          </span>
+        </p>
+
+        {discount > 0 && (
+          <p className="text-green-600 text-xs font-medium">
+            You saved ₹{discount * item.qty} 🎉
+          </p>
+        )}
       </div>
 
-      {/* QUANTITY */}
+      {/* QUANTITY BUTTONS */}
       <div className="flex items-center gap-2">
         <button
           onClick={() => onDecrease(item)}
-          className="p-1 border rounded text-gray-600 hover:bg-gray-100"
+          className="p-1.5 border rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black transition"
         >
           <FaMinus size={10} />
         </button>
 
-        <span className="font-semibold w-5 text-center">{item.qty}</span>
+        <span className="font-semibold w-6 text-center text-gray-700">
+          {item.qty}
+        </span>
 
         <button
           onClick={() => onIncrease(item)}
-          className="p-1 border rounded text-gray-600 hover:bg-gray-100"
+          className="p-1.5 border rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black transition"
         >
           <FaPlus size={10} />
         </button>
@@ -52,7 +87,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
       {/* REMOVE */}
       <button
         onClick={() => onRemove(item)}
-        className="p-2 text-red-500 hover:bg-red-100 rounded"
+        className="p-2 rounded-lg text-red-500 hover:bg-red-100 hover:text-red-600 transition"
       >
         <FaTrash size={14} />
       </button>
