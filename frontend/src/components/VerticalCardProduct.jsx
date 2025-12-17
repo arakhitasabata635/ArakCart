@@ -1,4 +1,3 @@
-import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -7,11 +6,15 @@ import { useEffect } from "react";
 import VerticalCardShimmer from "./loadingEffect/VerticalCardShimmer";
 import { Link } from "react-router-dom";
 import addToCart from "../../helpers/addToCart";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addToCartLocal } from "../store/cartSlice";
 
 const VerticalCardProduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const scrollRef = useRef();
+  const dispatch = useDispatch();
 
   const scrollLeft = () => {
     scrollRef.current.scrollBy({ left: -400, behavior: "smooth" });
@@ -103,7 +106,18 @@ const VerticalCardProduct = ({ category, heading }) => {
 
                   {/* Button */}
                   <button
-                  onClick={(e)=>addToCart(e,product._id)}
+                  onClick={async (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const dataRes = await addToCart(product._id);
+                      if (dataRes.success) {
+                        toast.success(dataRes.message);
+                        dispatch(addToCartLocal());
+                      }
+                      if(dataRes.error){
+                        toast.error(dataRes.message);
+                      }
+                    }}
                     className="mt-3 w-full bg-blue-600 text-white py-1.5 rounded-lg 
                          text-sm font-medium hover:bg-blue-700 transition"
                   >

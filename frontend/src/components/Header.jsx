@@ -99,7 +99,7 @@ const Header = () => {
           {user?._id && (
             <>
               {/* User */}
-              <div className="relative group ">
+              <div className="relative group">
                 {user?.profilePic ? (
                   <div
                     className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-500 
