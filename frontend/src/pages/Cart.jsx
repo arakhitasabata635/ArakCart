@@ -1,7 +1,24 @@
 import { useState } from "react";
 import CartItem from "../components/CartItem";
+import { useEffect } from "react";
+import apiSummary from "../../common";
 
 const Cart = () => {
+
+  const fetchCartData = async () => {
+    const response = await fetch(apiSummary.cartProducts.url, {
+      method: apiSummary.cartProducts.method,
+      credentials: "include",
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+
+  useEffect(() => {
+    fetchCartData();
+  },[])
+
+
   const [cart, setCart] = useState([
     {
       _id: "1",

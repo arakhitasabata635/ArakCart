@@ -1,12 +1,21 @@
 import cartModel from "../../models/productCartModel.js";
 
 const fetchAllCartProducts = async (req, res) => {
- try {
+  try {
     const userId = req.userId;
-
-    const cartUser = await cartModel.findOne({ userId }).populate("items.productId");
-    console.log(cartUser);
-    const cartProductList = cartUser.items;
+    let cartProductList ;
+    const cartUser = await cartModel
+      .findOne({ userId })
+      .populate("items.productId");
+    if (!cartUser) {
+      cartProductList = [];
+    } else {
+      cartProductList = cartUser.items.map((items) => ({
+        product: items.productId,
+        quantity: items.quantity,
+      }
+    ));
+    }
     return res.json({
       data: cartProductList,
       success: true,
@@ -19,6 +28,6 @@ const fetchAllCartProducts = async (req, res) => {
       error: true,
     });
   }
-}
+};
 
-export default fetchAllCartProducts
+export default fetchAllCartProducts;

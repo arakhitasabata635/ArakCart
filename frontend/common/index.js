@@ -60,6 +60,10 @@ const apiSummary = {
   cartCount:{
     url: `${backendPortUrl}/api/cart-itemCount`,
     method: "get"
+  },
+   cartProducts:{
+    url: `${backendPortUrl}/api/cart-products`,
+    method: "get"
   }
 };
 
