@@ -13,8 +13,6 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const cartCount = useSelector((state) => state?.cart?.count);
 
-  // const cartCount = 10;clg
-  console.log(cartCount);
   const handleLogout = async () => {
     const fetchData = await fetch(apiSummary.logout_user.url, {
       method: apiSummary.logout_user.method,
@@ -172,7 +170,7 @@ const Header = () => {
           ) : (
             <Link
               to="/login"
-              className="hidden sm:block bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-blue-500 transition-all hover:scale-105"
+              className="block bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-blue-700 hover:to-blue-500 transition-all hover:scale-105"
             >
               Login
             </Link>
