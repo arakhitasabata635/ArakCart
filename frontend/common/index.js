@@ -58,7 +58,7 @@ const apiSummary = {
     method: "post"
   },
   cartProducts:{
-    url: `${backendPortUrl}/api/cart-products`,
+    url: `${backendPortUrl}/api/cart-itemCount`,
     method: "get"
   }
 };

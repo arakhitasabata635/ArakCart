@@ -1,13 +1,13 @@
 import cartModel from "../../models/productCartModel.js";
 
-const getCartProducts = async (req, res) => {
+const getCartitemCount = async (req, res) => {
   try {
     const userId = req.userId;
 
-    const cartItems = await cartModel.find({ userId }).populate("productId");
-
+    const [cartUser] = await cartModel.find({ userId });
+    const cartCount = cartUser.items.length
     return res.json({
-      data: cartItems,
+      data: cartCount,
       success: true,
       error: false,
     });
@@ -20,4 +20,4 @@ const getCartProducts = async (req, res) => {
   }
 };
 
-export default getCartProducts;
+export default getCartitemCount;

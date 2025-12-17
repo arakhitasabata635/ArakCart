@@ -16,7 +16,7 @@ import getCategoryProduct from "../controllers/product/getCategoryProduct.js";
 import getCategoryWiseProduct from "../controllers/product/getCategoryWiseProduct.js";
 import singleProductDetails from "../controllers/product/singleProductDetails.js";
 import addToCartControler from "../controllers/user/addToCartControler.js";
-import getCartProducts from "../controllers/user/getCartProducts.js";
+import getCartitemCount from "../controllers/user/getCartitemCount.js";
 
 const router = express.Router();
 
@@ -42,7 +42,7 @@ router.post("/product-details", singleProductDetails);
 
 //cart
 router.post("/Add-cart", authToken, addToCartControler);
-router.get("/cart-products", authToken, getCartProducts);
+router.get("/cart-itemCount", authToken, getCartitemCount);
 
 
 export default router;
