@@ -1,39 +1,39 @@
 import cartModel from "../../models/productCartModel.js";
 
-const addToCartControler = async (req,res) => {
+const addToCartControler = async (req, res) => {
   try {
     const currentUser = req.userId;
-    const {productId} = req.body;
+    const { productId } = req.body;
 
-    const isProductAvailable = await cartModel.findOne({
-      productId,
+    const exists = await cartModel.findOne({
       userId: currentUser,
+      "items.productId": productId,
     });
 
-    if (isProductAvailable) {
-      return res.json({
-        message: "Already Added",
-        success: false,
+    if(exists){
+      return res.status(400).json({
+        message: "Product already exists in cart",
         error: true,
+        success: false,
       });
     }
 
-    const payload = {
-      productId,
-      userId: currentUser,
-    };
-
-    const newAddToCart = new cartModel(payload);
-    const saveProduct = await newAddToCart.save();
-
+    const addProduct = await cartModel.findOneAndUpdate(
+      { userId: currentUser },
+      {
+        $setOnInsert: { userId: currentUser },
+        $addToSet: { items: { productId: productId, quantity: 1 } },
+      },
+      { upsert: true, new: true }
+    );
     return res.json({
-      data: saveProduct,
+      data: addProduct,
       message: "Product Added in Cart",
       success: true,
       error: false,
     });
   } catch (err) {
-   return res.status(400).json({
+    return res.status(400).json({
       message: err.message || err,
       error: true,
       success: false,
