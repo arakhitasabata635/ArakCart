@@ -25,7 +25,6 @@ const addToCartControler = async (req,res) => {
 
     const newAddToCart = new cartModel(payload);
     const saveProduct = await newAddToCart.save();
-    console.log(saveProduct);
 
     return res.json({
       data: saveProduct,
