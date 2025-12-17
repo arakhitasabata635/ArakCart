@@ -2,22 +2,17 @@ import mongoose from "mongoose";
 
 const productCartSchema = new mongoose.Schema(
   {
-    productId: {
-      ref: "products",
-      type: String,
-    },
-     quantity: {
-        type: Number,
-        default: 1,
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", unique: true },
+    items: [
+      {
+        product: { type: mongoose.Schema.Types.ObjectId, ref: "products" },
+        quantity: { type: Number, required: true, default: 1 },
       },
-    userId: String,
+    ],
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
-productCartSchema.index({ userId: 1, productId: 1 }, { unique: true });
-
+productCartSchema.index({ userId: 1 });
 const cartModel = mongoose.model("addToCart", productCartSchema);
 
 export default cartModel;
