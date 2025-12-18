@@ -68,7 +68,7 @@ const discount = item.price - item.sellingPrice;
       <div className="flex items-center gap-2">
         <button
           onClick={() => onDecrease(item)}
-          className="p-1.5 border rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black transition"
+          className="p-1.5 border rounded-lg text-gray-600 hover:bg-gray-200 hover:text-black transition"
         >
           <FaMinus size={10} />
         </button>
@@ -79,7 +79,7 @@ const discount = item.price - item.sellingPrice;
 
         <button
           onClick={() => onIncrease(item)}
-          className="p-1.5 border rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black transition"
+          className="p-1.5 border rounded-lg text-gray-600 hover:bg-gray-200 hover:text-black transition"
         >
           <FaPlus size={10} />
         </button>

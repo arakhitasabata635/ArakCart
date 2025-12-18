@@ -15,10 +15,10 @@ import authToken from "../middlewares/authToken.js";
 import getCategoryProduct from "../controllers/product/getCategoryProduct.js";
 import getCategoryWiseProduct from "../controllers/product/getCategoryWiseProduct.js";
 import singleProductDetails from "../controllers/product/singleProductDetails.js";
-import addToCartControler from "../controllers/user/addToCartControler.js";
-import getCartitemCount from "../controllers/user/getCartitemCount.js";
-import fetchAllCartProducts from "../controllers/user/fetchAllCartProducts.js";
-import removeFromCart from "../controllers/user/removeFromCart.js";
+import addToCartControler from "../controllers/cart/addToCartControler.js";
+import getCartitemCount from "../controllers/cart/getCartitemCount.js";
+import fetchAllCartProducts from "../controllers/cart/fetchAllCartProducts.js";
+import removeFromCart from "../controllers/cart/removeFromCart.js";
 
 const router = express.Router();
 
