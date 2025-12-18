@@ -1,6 +1,6 @@
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 
-const CartItem = ({ item, qty }) => {
+const CartItem = ({ item, qty , removeItem }) => {
 
 const discount = item.price - item.sellingPrice;
 
@@ -87,7 +87,7 @@ const discount = item.price - item.sellingPrice;
 
       {/* REMOVE */}
       <button
-        onClick={() => onRemove(item)}
+        onClick={() => removeItem(item)}
         className="p-2 rounded-lg text-red-500 hover:bg-red-100 hover:text-red-600 transition"
       >
         <FaTrash size={14} />

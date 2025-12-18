@@ -64,6 +64,10 @@ const apiSummary = {
    cartProducts:{
     url: `${backendPortUrl}/api/cart-products`,
     method: "get"
+  },
+   deleteFromCart:{
+    url: `${backendPortUrl}/api/remove-from-cart`,
+    method: "post"
   }
 };
 

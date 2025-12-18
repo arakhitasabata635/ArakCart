@@ -20,25 +20,35 @@ const Cart = () => {
     fetchCartData();
   }, []);
 
-  const removeItem = (item) => {
-    setCart((prev) => prev.filter((p) => p._id !== item._id));
+  const removeItem = async(item) => {
+      const fetchApi = await fetch(apiSummary.deleteFromCart.url, {
+        method: apiSummary.deleteFromCart.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ productId: item._id }),
+      });
+      const data = await fetchApi.json();
+      console.log(data);
+    // setCart((prev) => prev.filter((p) => p._id !== item._id));
   };
 
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.quantity * item.product.sellingPrice,
     0
-  )  ;
+  );
 
-  const totalMRP = cart.reduce((sum, item) => sum + item.quantity * item.product.price, 0);
+  const totalMRP = cart.reduce(
+    (sum, item) => sum + item.quantity * item.product.price,
+    0
+  );
   const discount = totalMRP - totalPrice;
 
   return (
     <div className="min-h-screen py-8 px-4">
-
       <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-10">
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
           {/* LEFT AREA */}
           <div className="lg:col-span-2">
             <h2 className="text-3xl font-semibold mb-6">
@@ -56,7 +66,7 @@ const Cart = () => {
                 <CartItem
                   key={i.product._id}
                   item={i.product}
-                  qty = {i.quantity}
+                  qty={i.quantity}
                   removeItem={removeItem}
                 />
               ))}
@@ -65,7 +75,6 @@ const Cart = () => {
 
           {/* RIGHT AREA */}
           <div className="bg-gray-50 border rounded-xl p-6 h-fit sticky top-28">
-
             <h3 className="text-2xl font-semibold mb-5">Order Summary</h3>
 
             <div className="space-y-3 text-gray-700">
@@ -95,7 +104,6 @@ const Cart = () => {
             <button className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 rounded-lg">
               Place Order
             </button>
-
           </div>
         </div>
       </div>
