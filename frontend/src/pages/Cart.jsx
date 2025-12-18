@@ -25,12 +25,11 @@ const Cart = () => {
   };
 
   const totalPrice = cart.reduce(
-    (sum, item) => sum + item.qty * item.sellingPrice,
+    (sum, item) => sum + item.quantity * item.product.sellingPrice,
     0
-  );
+  )  ;
 
-  const totalMRP = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
-
+  const totalMRP = cart.reduce((sum, item) => sum + item.quantity * item.product.price, 0);
   const discount = totalMRP - totalPrice;
 
   return (
@@ -57,7 +56,8 @@ const Cart = () => {
                 <CartItem
                   key={i.product._id}
                   item={i.product}
-                  onRemove={removeItem}
+                  qty = {i.quantity}
+                  removeItem={removeItem}
                 />
               ))}
             </div>

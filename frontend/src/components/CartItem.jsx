@@ -1,7 +1,8 @@
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 
-const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
-  const discount = item.price - item.sellingPrice;
+const CartItem = ({ item, qty }) => {
+
+const discount = item.price - item.sellingPrice;
 
   return (
     <div className="flex items-center gap-5 border rounded-xl p-4 shadow hover:shadow-md bg-white transition-all duration-200">
@@ -50,15 +51,15 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         </div>
 
         <p className="text-xs text-gray-500">
-          Qty × Price: {item.qty} × ₹{item.sellingPrice} ={" "}
+           {qty} × ₹{item.sellingPrice} ={" "}
           <span className="font-semibold text-gray-700">
-            ₹{item.qty * item.sellingPrice}
+            ₹{item.sellingPrice * qty}
           </span>
         </p>
 
         {discount > 0 && (
           <p className="text-green-600 text-xs font-medium">
-            You saved ₹{discount * item.qty} 🎉
+            You saved ₹{discount * qty} 🎉
           </p>
         )}
       </div>
@@ -73,7 +74,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         </button>
 
         <span className="font-semibold w-6 text-center text-gray-700">
-          {item.qty}
+          {qty}
         </span>
 
         <button
