@@ -19,6 +19,7 @@ import addToCartControler from "../controllers/cart/addToCartControler.js";
 import getCartitemCount from "../controllers/cart/getCartitemCount.js";
 import fetchAllCartProducts from "../controllers/cart/fetchAllCartProducts.js";
 import removeFromCart from "../controllers/cart/removeFromCart.js";
+import updateCartItemCount from "../controllers/cart/updateCartItemCount.js";
 
 const router = express.Router();
 
@@ -47,6 +48,7 @@ router.post("/Add-cart", authToken, addToCartControler);
 router.post("/remove-from-cart", authToken, removeFromCart);
 router.get("/cart-itemCount", authToken, getCartitemCount);
 router.get("/cart-products", authToken, fetchAllCartProducts);
+router.post("/update-cart-item-count", authToken, updateCartItemCount);
 
 
 export default router;
