@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import CartItem from "../components/CartItem";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 import apiSummary from "../../common";
 import { removeFromCartLocal } from "../store/userSlice";
+import { CartLoading } from "../components/loadingEffect/CartLoading";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
   const fetchCartData = async () => {
     const response = await fetch(apiSummary.cartProducts.url, {
       method: apiSummary.cartProducts.method,
@@ -15,28 +17,30 @@ const Cart = () => {
     });
 
     const data = await response.json();
-    console.log(data);
-    if (data.success) setCart(data.data);
+    if (data.success) {
+      setCart(data.data);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchCartData();
   }, []);
 
-  const removeItem = async(item) => {
-      const fetchApi = await fetch(apiSummary.deleteFromCart.url, {
-        method: apiSummary.deleteFromCart.method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ productId: item._id }),
-      });
-      const data = await fetchApi.json();
-      if(data.success){
-        setCart((prev) => prev.filter((p) => p.product._id !== item._id));
-        dispatch(removeFromCartLocal())
-      }
+  const removeItem = async (item) => {
+    const fetchApi = await fetch(apiSummary.deleteFromCart.url, {
+      method: apiSummary.deleteFromCart.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ productId: item._id }),
+    });
+    const data = await fetchApi.json();
+    if (data.success) {
+      setCart((prev) => prev.filter((p) => p.product._id !== item._id));
+      dispatch(removeFromCartLocal());
+    }
   };
 
   const totalPrice = cart.reduce(
@@ -59,23 +63,27 @@ const Cart = () => {
             <h2 className="text-3xl font-semibold mb-6">
               Shopping Cart ({cart.length})
             </h2>
-
-            {cart.length === 0 && (
-              <p className="text-gray-600 text-center py-10 border rounded-lg">
-                Your cart is empty.
-              </p>
+            {loading ? (
+              [...Array(3)].map((_, i) => <CartLoading key={i} />)
+            ) : (
+              <>
+                {cart.length === 0 && (
+                  <p className="text-gray-600 text-center py-10 border rounded-lg">
+                    Your cart is empty.
+                  </p>
+                )}
+                <div className="space-y-5">
+                  {cart.map((i) => (
+                    <CartItem
+                      key={i.product._id}
+                      item={i.product}
+                      qty={i.quantity}
+                      removeItem={removeItem}
+                    />
+                  ))}
+                </div>
+              </>
             )}
-
-            <div className="space-y-5">
-              {cart.map((i) => (
-                <CartItem
-                  key={i.product._id}
-                  item={i.product}
-                  qty={i.quantity}
-                  removeItem={removeItem}
-                />
-              ))}
-            </div>
           </div>
 
           {/* RIGHT AREA */}
