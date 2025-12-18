@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import CartItem from "../components/CartItem";
+import {useDispatch} from "react-redux"
 import apiSummary from "../../common";
+import { removeFromCartLocal } from "../store/userSlice";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
 
+  const dispatch = useDispatch()
   const fetchCartData = async () => {
     const response = await fetch(apiSummary.cartProducts.url, {
       method: apiSummary.cartProducts.method,
@@ -30,8 +33,10 @@ const Cart = () => {
         body: JSON.stringify({ productId: item._id }),
       });
       const data = await fetchApi.json();
-      console.log(data);
-    // setCart((prev) => prev.filter((p) => p._id !== item._id));
+      if(data.success){
+        setCart((prev) => prev.filter((p) => p.product._id !== item._id));
+        dispatch(removeFromCartLocal())
+      }
   };
 
   const totalPrice = cart.reduce(
