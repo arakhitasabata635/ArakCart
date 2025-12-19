@@ -73,6 +73,10 @@ const apiSummary = {
     url: `${backendPortUrl}/api/update-cart-item-count`,
     method: "post",
   },
+  search_products:{
+    url: `${backendPortUrl}/api/search`,
+    method: "get",
+  }
 };
 
 export default apiSummary;

@@ -29,6 +29,14 @@ const Header = () => {
     }
   };
 
+  const searchProduct = (e) => {
+    if (e.target.value === "") {
+      navigate(`/`);
+    } else {
+      navigate(`/search?query=${e.target.value}`);
+    }
+  };
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto h-16 flex items-center justify-between px-3">
@@ -68,8 +76,8 @@ const Header = () => {
             >
               {/* Input */}
               <input
+                onChange={searchProduct}
                 type="search"
-                aria-label="Search products"
                 placeholder="Search products..."
                 className="w-full pr-14 pl-4 py-2 rounded-full
                    text-sm placeholder-gray-400
