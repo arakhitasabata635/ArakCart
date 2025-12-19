@@ -240,6 +240,9 @@
   .invisible {
     visibility: hidden;
   }
+  .visible {
+    visibility: visible;
+  }
   .absolute {
     position: absolute;
   }
@@ -303,8 +306,14 @@
   .right-3 {
     right: calc(var(--spacing) * 3);
   }
+  .right-5 {
+    right: calc(var(--spacing) * 5);
+  }
   .bottom-3 {
     bottom: calc(var(--spacing) * 3);
+  }
+  .bottom-5 {
+    bottom: calc(var(--spacing) * 5);
   }
   .left-2 {
     left: calc(var(--spacing) * 2);
@@ -615,6 +624,9 @@
   .w-64 {
     width: calc(var(--spacing) * 64);
   }
+  .w-72 {
+    width: calc(var(--spacing) * 72);
+  }
   .w-\[50\%\] {
     width: 50%;
   }
@@ -745,6 +757,9 @@
   }
   .justify-end {
     justify-content: flex-end;
+  }
+  .justify-items-start {
+    justify-items: start;
   }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
