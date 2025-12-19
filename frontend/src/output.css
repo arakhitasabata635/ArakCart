@@ -47,7 +47,6 @@
     --container-sm: 24rem;
     --container-md: 28rem;
     --container-xl: 36rem;
-    --container-3xl: 48rem;
     --container-6xl: 72rem;
     --container-7xl: 80rem;
     --text-xs: 0.75rem;
@@ -663,6 +662,9 @@
   .animate-pulse {
     animation: var(--animate-pulse);
   }
+  .cursor-not-allowed {
+    cursor: not-allowed;
+  }
   .cursor-pointer {
     cursor: pointer;
   }
@@ -1224,6 +1226,12 @@
   }
   .opacity-0 {
     opacity: 0%;
+  }
+  .opacity-1 {
+    opacity: 1%;
+  }
+  .opacity-40 {
+    opacity: 40%;
   }
   .opacity-90 {
     opacity: 90%;

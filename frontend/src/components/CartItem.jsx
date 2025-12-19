@@ -1,12 +1,37 @@
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
+import apiSummary from "../../common";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
-const CartItem = ({ item, qty , removeItem }) => {
+const CartItem = ({ item, qty, removeItem, setCart }) => {
+  const discount = item.price - item.sellingPrice;
 
-const discount = item.price - item.sellingPrice;
+  const [updateCount, setUpdateCount] = useState(false);
+
+  const updateCartItemCount = async (productId, action) => {
+    setUpdateCount(true);
+    const fetchApi = await fetch(apiSummary.updateCartitemCount.url, {
+      method: apiSummary.updateCartitemCount.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, action }),
+      credentials: "include",
+    });
+    const data = await fetchApi.json();
+    if (data.success) {
+      toast.success(data.message);
+      setCart((prev) =>
+        prev.map((i) =>
+          i.product._id === item._id ? { ...i, quantity: data.quantity } : i
+        )
+      );
+      setUpdateCount(false);
+    }
+  };
 
   return (
     <div className="flex items-center gap-5 border rounded-xl p-4 shadow hover:shadow-md bg-white transition-all duration-200">
-
       {/* IMAGE */}
       <div className="relative">
         <img
@@ -33,25 +58,19 @@ const discount = item.price - item.sellingPrice;
           Brand: <span className="capitalize">{item.brandName}</span>
         </p>
 
-        <p className="text-gray-500 text-xs">
-          Category: {item.category}
-        </p>
+        <p className="text-gray-500 text-xs">Category: {item.category}</p>
 
-        <p className="text-xs text-gray-600 line-clamp-1">
-          {item.description}
-        </p>
+        <p className="text-xs text-gray-600 line-clamp-1">{item.description}</p>
 
         <div className="flex items-center gap-2">
           <p className="text-green-600 font-bold text-sm">
             ₹{item.sellingPrice}
           </p>
-          <p className="line-through text-gray-400 text-xs">
-            ₹{item.price}
-          </p>
+          <p className="line-through text-gray-400 text-xs">₹{item.price}</p>
         </div>
 
         <p className="text-xs text-gray-500">
-           {qty} × ₹{item.sellingPrice} ={" "}
+          {qty} × ₹{item.sellingPrice} ={" "}
           <span className="font-semibold text-gray-700">
             ₹{item.sellingPrice * qty}
           </span>
@@ -64,11 +83,17 @@ const discount = item.price - item.sellingPrice;
         )}
       </div>
 
-      {/* QUANTITY BUTTONS */}
+      {/* qty BUTTONS */}
       <div className="flex items-center gap-2">
         <button
-          onClick={() => onDecrease(item)}
-          className="p-1.5 border rounded-lg text-gray-600 hover:bg-gray-200 hover:text-black transition"
+          disabled={qty === 1 || updateCount}
+          onClick={() => updateCartItemCount(item._id, "dec")}
+          className={` ${
+            qty === 1 || updateCount
+              ? "opacity-40 cursor-not-allowed"
+              : "hover:bg-gray-100"
+          }
+            p-2 border rounded-full cursor-pointer text-gray-600 hover:bg-gray-200 hover:text-black transition`}
         >
           <FaMinus size={10} />
         </button>
@@ -78,8 +103,12 @@ const discount = item.price - item.sellingPrice;
         </span>
 
         <button
-          onClick={() => onIncrease(item)}
-          className="p-1.5 border rounded-lg text-gray-600 hover:bg-gray-200 hover:text-black transition"
+          disabled={updateCount}
+          onClick={() => updateCartItemCount(item._id, "inc")}
+          className={` ${
+            updateCount ? "opacity-40 cursor-not-allowed" : "hover:bg-gray-100"
+          }
+            p-2 border rounded-full cursor-pointer text-gray-600 hover:bg-gray-200 hover:text-black transition`}
         >
           <FaPlus size={10} />
         </button>
@@ -88,7 +117,7 @@ const discount = item.price - item.sellingPrice;
       {/* REMOVE */}
       <button
         onClick={() => removeItem(item)}
-        className="p-2 rounded-lg text-red-500 hover:bg-red-100 hover:text-red-600 transition"
+        className="p-2 rounded-lg cursor-pointer text-red-500 hover:bg-red-100 hover:text-red-600 transition"
       >
         <FaTrash size={14} />
       </button>

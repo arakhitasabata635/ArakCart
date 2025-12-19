@@ -53,6 +53,7 @@ const Cart = () => {
     0
   );
   const discount = totalMRP - totalPrice;
+  
 
   return (
     <div className="min-h-screen py-8 px-4">
@@ -73,11 +74,12 @@ const Cart = () => {
                   </p>
                 )}
                 <div className="space-y-5">
-                  {cart.map((i) => (
+                  {cart?.map((i) => (
                     <CartItem
                       key={i.product._id}
                       item={i.product}
                       qty={i.quantity}
+                      setCart={setCart}
                       removeItem={removeItem}
                     />
                   ))}

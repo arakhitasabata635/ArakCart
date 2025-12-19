@@ -1,3 +1,5 @@
+import cartModel from "../../models/productCartModel.js";
+
 const updateCartItemCount = async (req, res) => {
   try {
     const { productId, action } = req.body;
@@ -6,8 +8,7 @@ const updateCartItemCount = async (req, res) => {
     const cart = await cartModel.findOne({ userId });
 
     if (!cart) return res.json({ success: false, message: "Cart not found" });
-
-    const item = cart.items.find((i) => i.product._id.toString() === productId);
+    const item = cart.items.find((i) => i.productId.toString() === productId);
 
     if (!item)
       return res.json({ success: false, message: "Product not found" });
@@ -18,8 +19,9 @@ const updateCartItemCount = async (req, res) => {
     await cart.save();
 
     return res.json({
-      success: true,
-      message: "Quantity updated",
+      success: true,  
+      error: false,
+      message: "Quantity updated sucessfully",
       quantity: item.quantity,
     });
   } catch (err) {

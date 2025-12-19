@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiSummary from "../../common";
 import ProductDetailsLoading from "../components/loadingEffect/ProductDetailsLoading";
 import RecomendedProduct from "../components/RecomendedProduct";
 import addToCart from "../../helpers/addToCart";
+import { addToCartLocal } from "../store/userSlice";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [isloading, setIsLoading] = useState(true);
   const [bigImg, setBigImg] = useState(0);
+
+  const dispatch = useDispatch();
 
   const productDetails = async () => {
     const fetchApi = await fetch(apiSummary.productDetails.url, {
@@ -156,8 +161,20 @@ const ProductDetails = () => {
                 {/* BUTTONS */}
                 <div className="flex flex-col sm:flex-row gap-3 mt-3">
                   <button
-                  onClick={(e)=>addToCart(e,product._id)}
-                   className="flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition">
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const dataRes = await addToCart(product._id);
+                      if (dataRes.success) {
+                        toast.success(dataRes.message);
+                        dispatch(addToCartLocal());
+                      }
+                      if (dataRes.error) {
+                        toast.error(dataRes.message);
+                      }
+                    }}
+                    className="flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition"
+                  >
                     Add to Cart
                   </button>
                   <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">

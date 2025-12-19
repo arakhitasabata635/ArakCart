@@ -17,58 +17,62 @@ const apiSummary = {
     url: `${backendPortUrl}/api/userLogout`,
     method: "get",
   },
-  allUser:{
+  allUser: {
     url: `${backendPortUrl}/api/admin/users`,
-    method: "get"
+    method: "get",
   },
-   updateUser:{
+  updateUser: {
     url: `${backendPortUrl}/api/admin/update-user`,
-    method: "post"
+    method: "post",
   },
-  delImgCloudnary:{
+  delImgCloudnary: {
     url: `${backendPortUrl}/api/delete-image`,
-    method: "delete"
+    method: "delete",
   },
-  UploadProduct:{
+  UploadProduct: {
     url: `${backendPortUrl}/api/upload-product`,
-    method: "post"
+    method: "post",
   },
-   allProducts:{
+  allProducts: {
     url: `${backendPortUrl}/api/get-products`,
-    method: "get"
+    method: "get",
   },
-  editProduct:{
+  editProduct: {
     url: `${backendPortUrl}/api/edit-product`,
-    method: "post"
+    method: "post",
   },
-   getCategory:{
+  getCategory: {
     url: `${backendPortUrl}/api/get-categoryProduct`,
-    method: "get"
+    method: "get",
   },
-  categoryWiseProduct:{
+  categoryWiseProduct: {
     url: `${backendPortUrl}/api/category-products`,
-    method: "post"
+    method: "post",
   },
-  productDetails:{
+  productDetails: {
     url: `${backendPortUrl}/api/product-details`,
-    method: "post"
+    method: "post",
   },
-  addtoCart:{
+  addtoCart: {
     url: `${backendPortUrl}/api/Add-cart`,
-    method: "post"
+    method: "post",
   },
-  cartCount:{
+  cartCount: {
     url: `${backendPortUrl}/api/cart-itemCount`,
-    method: "get"
+    method: "get",
   },
-   cartProducts:{
+  cartProducts: {
     url: `${backendPortUrl}/api/cart-products`,
-    method: "get"
+    method: "get",
   },
-   deleteFromCart:{
+  deleteFromCart: {
     url: `${backendPortUrl}/api/remove-from-cart`,
-    method: "post"
-  }
+    method: "post",
+  },
+  updateCartitemCount: {
+    url: `${backendPortUrl}/api/update-cart-item-count`,
+    method: "post",
+  },
 };
 
 export default apiSummary;
