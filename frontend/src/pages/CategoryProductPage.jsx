@@ -10,9 +10,9 @@ const CategoryProductPage = () => {
   const [products, setProducts] = useState([]);
 
   const [selectedCategories, setSelectedCategories] = useState(
-    category ? [category] : []
+    category ? category.split(",") : []
   );
-
+  console.log( selectedCategories);
   const handleCategoryChange = (cat) => {
     setSelectedCategories((prev) =>
       prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
@@ -38,13 +38,13 @@ const CategoryProductPage = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
     navigate(`/category-products?category=${selectedCategories.join(",")}`);
+    fetchProducts();
   }, [selectedCategories]);
 
   return (
     <div className="h-screen bg-gray-100 ">
-      <div className="max-w-7xl mx-auto flex gap-4 h-full">
+      <div className="max-w-7xl mx-auto flex gap-2 h-full">
         {/* LEFT FILTER → STICKY */}
         <aside className="w-64 bg-white p-5 rounded-xl shadow-lg sticky top-20 h-fit self-start">
           <h3 className="text-xl font-semibold mb-5">Filters</h3>
@@ -82,10 +82,10 @@ const CategoryProductPage = () => {
         </aside>
 
         {/* RIGHT SECTION */}
-        <div className="flex-1 flex flex-col bg-white ">
+        <div className="flex-1 flex flex-col bg-white relative ">
           {/* FIXED HEADING */}
-          <h2 className="text-2xl font-bold mb-4 capitalize sticky top-20 bg-white p-2 z-10">
-            {category} Products
+          <h2 className="text-2xl font-bold mt-2 capitalize sticky top-0.5 bg-white p-2 z-10">
+            Search Results :- {products.length}
           </h2>
 
           {/* SCROLLABLE PRODUCTS ONLY */}
