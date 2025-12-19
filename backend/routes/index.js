@@ -21,6 +21,7 @@ import fetchAllCartProducts from "../controllers/cart/fetchAllCartProducts.js";
 import removeFromCart from "../controllers/cart/removeFromCart.js";
 import updateCartItemCount from "../controllers/cart/updateCartItemCount.js";
 import searchProduct from "../controllers/product/searchProduct.js";
+import categoryWiseProducts from "../controllers/product/categoryWiseProducts.js";
 
 const router = express.Router();
 
@@ -44,6 +45,7 @@ router.get("/get-categoryProduct", getCategoryProduct);
 router.post("/category-products", getCategoryWiseProduct);
 router.post("/product-details", singleProductDetails);
 router.get("/search", searchProduct)
+router.get("/category-products", categoryWiseProducts);
 
 //cart
 router.post("/Add-cart", authToken, addToCartControler);
