@@ -60,7 +60,7 @@ const CategoryList = () => {
       >
         {categoryProduct?.map((product) => (
           <Link
-            to={`/category-products/${product.category}`}
+            to={`/category-products?category=${product.category}`}
             key={product._id}
             className="min-w-[120px] flex flex-col items-center cursor-pointer 
                        transition-all duration-300 hover:-translate-y-1"
