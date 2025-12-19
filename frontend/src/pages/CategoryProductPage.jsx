@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import productCategory from "../../common/productCategory";
 import apiSummary from "../../common";
@@ -12,7 +12,6 @@ const CategoryProductPage = () => {
   const [selectedCategories, setSelectedCategories] = useState(
     category ? category.split(",") : []
   );
-  console.log( selectedCategories);
   const handleCategoryChange = (cat) => {
     setSelectedCategories((prev) =>
       prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
@@ -42,6 +41,20 @@ const CategoryProductPage = () => {
     fetchProducts();
   }, [selectedCategories]);
 
+  const handleSortChange = (sortValue) => {
+    if (sortValue === "low") {
+      const sortedProducts = [...products].sort(
+        (a, b) => a.sellingPrice - b.sellingPrice
+      );
+      setProducts(sortedProducts);
+    } else if (sortValue === "high") {
+      const sortedProducts = [...products].sort(
+        (a, b) => b.sellingPrice - a.sellingPrice
+      );
+      setProducts(sortedProducts);
+    }
+  }
+
   return (
     <div className="h-screen bg-gray-100 ">
       <div className="max-w-7xl mx-auto flex gap-2 h-full">
@@ -54,12 +67,12 @@ const CategoryProductPage = () => {
             <h4 className="font-semibold text-gray-800 mb-2">Sort by price</h4>
 
             <label className="flex items-center gap-2 text-sm">
-              <input type="radio" name="sort" value="low" />
+              <input onClick={(e)=>handleSortChange(e.target.value)} type="radio" name="sort" value="low" />
               Price: Low to High
             </label>
 
             <label className="flex items-center gap-2 text-sm mt-2">
-              <input type="radio" name="sort" value="high" />
+              <input onClick={(e)=>handleSortChange(e.target.value)} type="radio" name="sort" value="high" />
               Price: High to Low
             </label>
           </div>
@@ -98,7 +111,8 @@ const CategoryProductPage = () => {
 
             <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
               {products.map((product) => (
-                <div
+                <Link
+                to={`/product-details/${product._id}`}
                   key={product._id}
                   className="bg-white p-4 rounded-xl border hover:shadow-xl transition"
                 >
@@ -132,7 +146,7 @@ const CategoryProductPage = () => {
                     )}
                     % off
                   </span>
-                </div>
+                </Link>
               ))}
             </div>
           </main>
