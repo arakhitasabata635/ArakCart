@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import Logo from "../assest/logo-with-text.svg";
@@ -6,12 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
 import { logout } from "../store/userSlice";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state?.user?.user);
   const cartCount = useSelector((state) => state?.user?.cartCount);
+
+  const [searchParams] = useSearchParams();
+  const [query, setQuery] = useState("");
 
   const handleLogout = async () => {
     const fetchData = await fetch(apiSummary.logout_user.url, {
@@ -30,13 +34,18 @@ const Header = () => {
   };
 
   const searchProduct = (e) => {
+    setQuery(e.target.value);
     if (e.target.value === "") {
       navigate(`/`);
     } else {
       navigate(`/search?query=${e.target.value}`);
     }
   };
+  useEffect(() => {
+    setQuery(searchParams.get("query") || "");
+  }, [searchParams]);
 
+  
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto h-16 flex items-center justify-between px-3">
@@ -78,6 +87,7 @@ const Header = () => {
               <input
                 onChange={searchProduct}
                 type="search"
+                value={query}
                 placeholder="Search products..."
                 className="w-full pr-14 pl-4 py-2 rounded-full
                    text-sm placeholder-gray-400
@@ -87,7 +97,6 @@ const Header = () => {
               {/* Search Icon */}
               <button
                 type="button"
-                aria-label="Search"
                 className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2
                    bg-gray-100 text-gray-600
                    group-focus-within:bg-gradient-to-r
