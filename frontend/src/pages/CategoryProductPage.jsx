@@ -1,6 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import productCategory from "../../common/productCategory";
+import apiSummary from "../../common";
 
 const CategoryProductPage = () => {
   const [searchParams] = useSearchParams();
@@ -18,10 +19,29 @@ const CategoryProductPage = () => {
     );
   };
 
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(
+        `${apiSummary.category_prouct.url}?category=${selectedCategories.join(
+          ","
+        )}`,
+        {
+          method: apiSummary.category_prouct.method,
+          "application/json": "Content-Type",
+        }
+      );
+      const data = await response.json();
+      setProducts(data.data || []);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
   useEffect(() => {
+    fetchProducts();
     navigate(`/category-products?category=${selectedCategories.join(",")}`);
   }, [selectedCategories]);
-  
+
   return (
     <div className="h-screen bg-gray-100 ">
       <div className="max-w-7xl mx-auto flex gap-4 h-full">

@@ -76,6 +76,10 @@ const apiSummary = {
   search_products:{
     url: `${backendPortUrl}/api/search`,
     method: "get",
+  },
+  category_prouct:{
+    url: `${backendPortUrl}/api/category-products`,
+    method: "get",
   }
 };
 
