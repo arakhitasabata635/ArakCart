@@ -4,13 +4,13 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ForgotPassword from "../pages/ForgotPassword";
-import AdminPannel from "../pages/adminPannel";
 import AllUsers from "../pages/AllUsers";
 import Products from "../pages/Products";
 import CategoryProductPage from "../pages/CategoryProductPage";
 import ProductDetails from "../pages/ProductDetails";
 import Cart from "../pages/Cart";
 import SearchProucts from "../pages/SearchProucts";
+import UserDetails from "../pages/UserDetails";
 
 const router = createBrowserRouter([
   {
@@ -50,8 +50,8 @@ const router = createBrowserRouter([
         element: <SearchProucts />,
       },
       {
-        path: "admin",
-        element: <AdminPannel />,
+        path: "user-details",
+        element: <UserDetails />,
         children: [
           {
             path: "users",

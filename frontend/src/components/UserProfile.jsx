@@ -1,4 +1,3 @@
-import React from "react";
 import { FaBox, FaUsers } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch } from "react-redux";

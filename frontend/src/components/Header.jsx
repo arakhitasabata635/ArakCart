@@ -131,8 +131,8 @@ const Header = () => {
                   </span>
                 )}
               </Link>
-              {/* User */}
-              <div className="relative group"  onClick={() => setUserDrawer(true)}>
+              {/* User- details*/}
+              <Link to={"/user-details"} className="relative group">
                 {user?.profilePic ? (
                   <div
                     className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-500 
@@ -154,25 +154,7 @@ const Header = () => {
                     {user?.name?.charAt(0) || "U"}
                   </span>
                 )}
-
-                {/* Admin Popup — Desktop Only (hidden on small screens) */}
-                {(user?.role === "admin" || user?.role === "owner") && (
-                  <div
-                    className="absolute right-0 mt-3 w-44 rounded-lg bg-white shadow-xl border 
-    opacity-0 invisible transition-all duration-200
-    group-hover:opacity-100 group-hover:visible 
-    hidden lg:block lg:pointer-events-auto pointer-events-none z-50"
-                  >
-                    <Link
-                      to="/admin"
-                      className="block px-4 py-2 text-gray-700 text-sm font-medium 
-      hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-200"
-                    >
-                      🔐 Admin Panel
-                    </Link>
-                  </div>
-                )}
-              </div>
+              </Link>
             </>
           )}
 

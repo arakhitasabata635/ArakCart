@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import UserProfile from "../components/UserProfile";
 
-const AdminPannel = () => {
+const UserDetails = () => {
   const admin = useSelector((state) => state?.user?.user);
 
   return (
@@ -17,4 +17,4 @@ const AdminPannel = () => {
   );
 };
 
-export default AdminPannel;
+export default UserDetails;
