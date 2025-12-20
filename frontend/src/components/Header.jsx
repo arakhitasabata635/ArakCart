@@ -14,6 +14,8 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const cartCount = useSelector((state) => state?.user?.cartCount);
 
+  const [userDrawer, setUserDrawer] = useState(false);
+
   const [searchParams] = useSearchParams();
   const [query, setQuery] = useState("");
 
@@ -130,7 +132,7 @@ const Header = () => {
                 )}
               </Link>
               {/* User */}
-              <div className="relative group">
+              <div className="relative group"  onClick={() => setUserDrawer(true)}>
                 {user?.profilePic ? (
                   <div
                     className="w-9 h-9 rounded-full overflow-hidden border-2 border-blue-500 

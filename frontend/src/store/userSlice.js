@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import apiSummary from "../../common";
+import { toast } from "react-toastify";
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
   const res = await fetch(apiSummary.current_user.url, {
@@ -11,7 +12,8 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
   return data.success ? data.data : null;
 });
 
-export const fetchCartCount = createAsyncThunk("user/fetchCartCount",
+export const fetchCartCount = createAsyncThunk(
+  "user/fetchCartCount",
   async () => {
     const res = await fetch(apiSummary.cartCount.url, {
       method: apiSummary.cartCount.method,
@@ -23,6 +25,15 @@ export const fetchCartCount = createAsyncThunk("user/fetchCartCount",
   }
 );
 
+export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
+  const res = await fetch(apiSummary.logout_user.url, {
+    method: apiSummary.logout_user.method,
+    credentials: "include",
+  });
+
+  return await res.json();
+});
+
 const initialState = {
   user: null,
   cartCount: 0,
@@ -32,9 +43,6 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logout(state) {
-      state.user = null;
-    },
     addToCartLocal(state) {
       state.cartCount += 1;
     },
@@ -42,16 +50,26 @@ const userSlice = createSlice({
       state.cartCount -= 1;
     },
   },
-extraReducers: (builder) => {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload;
       })
       .addCase(fetchCartCount.fulfilled, (state, action) => {
         state.cartCount = action.payload;
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          toast.success(action.payload.message);
+          state.user = null;
+          state.cartCount = 0;
+        } else {
+          toast.error(action.payload.message);
+        }
       });
   },
 });
 
-export const { logout , addToCartLocal, removeFromCartLocal } = userSlice.actions;
+export const { logout, addToCartLocal, removeFromCartLocal } =
+  userSlice.actions;
 export default userSlice.reducer;
