@@ -29,7 +29,7 @@ const AllUsers = () => {
     fetchAllUsers();
   }, []);
   return (
-    <section className="p-6">
+    <section className="md:p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-semibold text-gray-800">All Users</h2>
         <p className="text-sm text-gray-500">{alluser?.length} users</p>
@@ -37,7 +37,7 @@ const AllUsers = () => {
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {/* Table wrapper for horizontal scroll on mobile */}
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto no-scrollbar">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>

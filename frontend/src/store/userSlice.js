@@ -37,6 +37,7 @@ export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
 const initialState = {
   user: null,
   cartCount: 0,
+  fetchingUserLoading: true,
 };
 
 const userSlice = createSlice({
@@ -54,6 +55,7 @@ const userSlice = createSlice({
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.fetchingUserLoading = false;
       })
       .addCase(fetchCartCount.fulfilled, (state, action) => {
         state.cartCount = action.payload;

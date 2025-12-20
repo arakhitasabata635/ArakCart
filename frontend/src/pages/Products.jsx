@@ -53,7 +53,7 @@ const Products = () => {
 
       {/* 🔹 Product Section */}
       <main>
-        <div className="flex flex-wrap justify-center gap-6 mt-6">
+        <div className="flex flex-wrap justify-center gap-0.5 md:gap-6 mt-6">
           {isLoading ? (
             <>
               {[...Array(10)].map((_, i) => (

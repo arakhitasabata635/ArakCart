@@ -3,13 +3,12 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchCartCount, fetchUser } from "./store/userSlice";
 function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith("/admin");
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser());
@@ -19,7 +18,7 @@ function App() {
   return (
     <>
       <ToastContainer position="top-right" autoClose={1000} />
-      <Header />
+      <Header/>
       <main className="bg-[#e3e6e6]">
         <Outlet />
       </main>
