@@ -45,7 +45,6 @@ const Header = () => {
     setQuery(searchParams.get("query") || "");
   }, [searchParams]);
 
-  
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="container mx-auto h-16 flex items-center justify-between px-3">
@@ -54,7 +53,7 @@ const Header = () => {
           <img
             src={Logo}
             alt="ArakCart Logo"
-            className="w-28 transition-all duration-300 
+            className="w-22 sm:w-28 transition-all duration-300 
              group-hover:scale-[1.07] group-hover:drop-shadow-md
              animate-logoFade"
           />
@@ -63,7 +62,7 @@ const Header = () => {
           <span className="absolute inset-0 rounded-lg scale-0 bg-blue-500/10 group-active:scale-100 transition-transform duration-300"></span>
         </Link>
         {/* Search Bar (Hidden on Mobile) */}
-        <div className="hidden md:flex flex-1 max-w-xl mx-6">
+        <div className=" md:flex flex-1 max-w-xl mx-1 sm:mx-6">
           <div className="relative w-full group">
             {/* Gradient focus border */}
             <div
@@ -89,7 +88,7 @@ const Header = () => {
                 type="search"
                 value={query}
                 placeholder="Search products..."
-                className="w-full pr-14 pl-4 py-2 rounded-full
+                className="w-full pr-1 sm:pr-14 pl-4 py-2 rounded-full
                    text-sm placeholder-gray-400
                    bg-white focus:outline-none"
               />
@@ -97,7 +96,7 @@ const Header = () => {
               {/* Search Icon */}
               <button
                 type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2
+                className=" hidden sm:block absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2
                    bg-gray-100 text-gray-600
                    group-focus-within:bg-gradient-to-r
                    group-focus-within:from-blue-600
@@ -112,9 +111,24 @@ const Header = () => {
           </div>
         </div>
         {/* Icons + Login */}
-        <div className="flex items-center gap-5">
+        <div className="flex pl-1 items-center gap-4">
           {user?._id && (
             <>
+              {/* Cart */}
+              <Link to="/cart" className="relative">
+                <FaShoppingCart
+                  className=" text-gray-700 transition  hover:text-blue-600 hover:scale-105"
+                  size={22}
+                />
+                {cartCount > 0 && (
+                  <span
+                    className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs
+              w-5 h-5 flex items-center justify-center rounded-full"
+                  >
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
               {/* User */}
               <div className="relative group">
                 {user?.profilePic ? (
@@ -157,22 +171,6 @@ const Header = () => {
                   </div>
                 )}
               </div>
-
-              {/* Cart */}
-              <Link to="/cart" className="relative">
-                <FaShoppingCart
-                  className=" text-gray-700 transition  hover:text-blue-600 hover:scale-105"
-                  size={22}
-                />
-                {cartCount > 0 && (
-                  <span
-                    className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs
-              w-5 h-5 flex items-center justify-center rounded-full"
-                  >
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
             </>
           )}
 

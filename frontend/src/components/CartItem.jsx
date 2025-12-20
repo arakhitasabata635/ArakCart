@@ -31,7 +31,7 @@ const CartItem = ({ item, qty, removeItem, setCart }) => {
   };
 
   return (
-    <div className="flex items-center gap-5 border rounded-xl p-4 shadow hover:shadow-md bg-white transition-all duration-200">
+    <div className="flex  items-center gap-3 sm:gap-5 border rounded-xl p-2 sm:p-4 shadow hover:shadow-md bg-white transition-all duration-200">
       {/* IMAGE */}
       <div className="relative">
         <img
@@ -58,9 +58,9 @@ const CartItem = ({ item, qty, removeItem, setCart }) => {
           Brand: <span className="capitalize">{item.brandName}</span>
         </p>
 
-        <p className="text-gray-500 text-xs">Category: {item.category}</p>
+        <p className="text-gray-500 hidden md:block text-xs">Category: {item.category}</p>
 
-        <p className="text-xs text-gray-600 line-clamp-1">{item.description}</p>
+        <p className="text-xs hidden md:block text-gray-600 line-clamp-1">{item.description}</p>
 
         <div className="flex items-center gap-2">
           <p className="text-green-600 font-bold text-sm">
@@ -84,7 +84,7 @@ const CartItem = ({ item, qty, removeItem, setCart }) => {
       </div>
 
       {/* qty BUTTONS */}
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row items-center gap-2">
         <button
           disabled={qty === 1 || updateCount}
           onClick={() => updateCartItemCount(item._id, "dec")}
