@@ -9,6 +9,11 @@ const productSchema = new mongoose.Schema(
     price: Number,
     sellingPrice: Number,
     description: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   {
     timestamps: true,
