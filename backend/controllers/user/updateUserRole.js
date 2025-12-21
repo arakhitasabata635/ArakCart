@@ -1,6 +1,6 @@
 import userModel from "../../models/userModel.js";
 
-const updateUserController = async (req, res) => {
+const updateUserRole = async (req, res) => {
   try {
     const user = req.body;
     const sessionUser = await userModel.findById(req.userId);
@@ -34,4 +34,4 @@ const updateUserController = async (req, res) => {
   }
 };
 
-export default updateUserController;
+export default updateUserRole;
