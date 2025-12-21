@@ -2,7 +2,9 @@ import ProductModel from "../../models/productModel.js";
 
 const allProductlistControler = async (req, res) => {
   try {
-    const allProducts = await ProductModel.find().sort({ createdAt: -1 });
+    const userId = req.userId;
+    
+    const allProducts = await ProductModel.find({ userId }).sort({ createdAt: -1 });
 
     res.status(200).json({
       message: "All products",

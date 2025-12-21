@@ -50,7 +50,7 @@ const UserProfile = ({ setUserDrawer }) => {
             <div
               onClick={() => {
                 navigate("/user-details/products");
-                setUserDrawer(false);
+                setUserDrawer?.(false);
               }}
               className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition"
             >
@@ -61,7 +61,7 @@ const UserProfile = ({ setUserDrawer }) => {
         <button
           onClick={async () => {
             await dispatch(logoutUser());
-            setUserDrawer(false)
+            setUserDrawer?.(false)
             navigate("/login");
           }}
           className="flex items-center gap-3 py-2 px-3 text-[15px] font-medium rounded-lg hover:bg-blue-500 transition"

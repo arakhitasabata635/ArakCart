@@ -10,6 +10,7 @@ function App() {
   const location = useLocation();
   const hideFooter = location.pathname.startsWith("/admin");
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchUser());
     dispatch(fetchCartCount());

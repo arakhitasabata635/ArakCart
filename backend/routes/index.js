@@ -57,5 +57,4 @@ router.post("/update-cart-item-count", authToken, updateCartItemCount);
 
 //order
 router.post("/payment/create-checkout-session", authToken, createPayCheckoutSession);
-
 export default router;
