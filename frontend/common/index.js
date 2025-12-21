@@ -80,6 +80,10 @@ const apiSummary = {
   category_prouct:{
     url: `${backendPortUrl}/api/category-products`,
     method: "get",
+  },
+  createPayCheckoutSession:{
+    url: `${backendPortUrl}/api/payment/create-checkout-session`,
+    method: "post",
   }
 };
 

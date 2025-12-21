@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import apiSummary from "../../common";
 import { removeFromCartLocal } from "../store/userSlice";
 import { CartLoading } from "../components/loadingEffect/CartLoading";
+import handlePayment from "../../helpers/handlePayment";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
@@ -53,7 +54,6 @@ const Cart = () => {
     0
   );
   const discount = totalMRP - totalPrice;
-  
 
   return (
     <div className="min-h-screen sm:py-8 sm:px-4">
@@ -116,7 +116,10 @@ const Cart = () => {
               </div>
             </div>
 
-            <button className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 rounded-lg">
+            <button
+              onClick={() => handlePayment(cart)}
+              className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 rounded-lg"
+            >
               Place Order
             </button>
           </div>

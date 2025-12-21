@@ -22,7 +22,7 @@ import removeFromCart from "../controllers/cart/removeFromCart.js";
 import updateCartItemCount from "../controllers/cart/updateCartItemCount.js";
 import searchProduct from "../controllers/product/searchProduct.js";
 import categoryWiseProducts from "../controllers/product/categoryWiseProducts.js";
-import createOrderCheckoutSession from "../controllers/order/createOrderCheckoutSession.js";
+import createPayCheckoutSession from "../controllers/order/createPayCheckoutSession.js";
 
 const router = express.Router();
 
@@ -56,6 +56,6 @@ router.get("/cart-products", authToken, fetchAllCartProducts);
 router.post("/update-cart-item-count", authToken, updateCartItemCount);
 
 //order
-router.post("/create-checkout-session", authToken, createOrderCheckoutSession);
+router.post("/payment/create-checkout-session", authToken, createPayCheckoutSession);
 
 export default router;
