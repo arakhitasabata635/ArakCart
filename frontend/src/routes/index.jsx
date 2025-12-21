@@ -11,6 +11,8 @@ import ProductDetails from "../pages/ProductDetails";
 import Cart from "../pages/Cart";
 import SearchProucts from "../pages/SearchProucts";
 import UserDetails from "../pages/UserDetails";
+import PaymentSuccess from "../pages/PaymentSuccess";
+import PaymentFail from "../pages/PaymentFail";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +64,14 @@ const router = createBrowserRouter([
             element: <Products />,
           },
         ],
+      },
+      {
+        path: "payment/success",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "payment/fail",
+        element: <PaymentFail />,
       },
     ],
   },

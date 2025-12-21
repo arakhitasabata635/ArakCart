@@ -5,9 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const createPayCheckoutSession = async (req, res) => {
   try {
     const { items } = req.body;
-
     const user = await userModel.findById(req.userId);
-    console.log(items[0].product.productImages[0]);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
