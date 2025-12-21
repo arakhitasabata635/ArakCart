@@ -22,6 +22,7 @@ import removeFromCart from "../controllers/cart/removeFromCart.js";
 import updateCartItemCount from "../controllers/cart/updateCartItemCount.js";
 import searchProduct from "../controllers/product/searchProduct.js";
 import categoryWiseProducts from "../controllers/product/categoryWiseProducts.js";
+import createOrderCheckoutSession from "../controllers/order/createOrderCheckoutSession.js";
 
 const router = express.Router();
 
@@ -44,7 +45,7 @@ router.post("/edit-product", authToken, editProductControler);
 router.get("/get-categoryProduct", getCategoryProduct);
 router.post("/category-products", getCategoryWiseProduct);
 router.post("/product-details", singleProductDetails);
-router.get("/search", searchProduct)
+router.get("/search", searchProduct);
 router.get("/category-products", categoryWiseProducts);
 
 //cart
@@ -54,5 +55,7 @@ router.get("/cart-itemCount", authToken, getCartitemCount);
 router.get("/cart-products", authToken, fetchAllCartProducts);
 router.post("/update-cart-item-count", authToken, updateCartItemCount);
 
+//order
+router.post("/create-checkout-session", authToken, createOrderCheckoutSession);
 
 export default router;

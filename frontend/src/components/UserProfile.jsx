@@ -61,6 +61,7 @@ const UserProfile = ({ setUserDrawer }) => {
         <button
           onClick={async () => {
             await dispatch(logoutUser());
+            setUserDrawer(false)
             navigate("/login");
           }}
           className="flex items-center gap-3 py-2 px-3 text-[15px] font-medium rounded-lg hover:bg-blue-500 transition"
