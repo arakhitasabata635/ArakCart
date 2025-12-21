@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import imageToBase64 from "../../helpers/imageToBase64";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
+import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,19 +13,14 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    profilePic: "",
+    profilePic: {},
   });
   // image to base64
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-
-    const imagePic = await imageToBase64(file);
-    setData((prev) => ({
-      ...prev,
-      profilePic: imagePic,
-    }));
+    const files = e.target.files;
+    if (files.length === 0) return;
+    setData((prev) => ({ ...prev, profilePic: files }));
   };
-
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -33,26 +28,38 @@ const Signup = () => {
       [name]: value,
     }));
   };
+  const imgInCloudnary = async () => {
+    if (!data.profilePic[0].type) return;
+    const uploadResults = await uploadImgCloudnary(data.profilePic[0]);
+    return uploadResults;
+  };
   //heandle on submit
   const navigate = useNavigate();
+
   const hendleOnSubmit = async (e) => {
     e.preventDefault();
-
     if (data.password !== confirmPassword.current.value) {
       toast.error("Passwords do not match!");
       return;
     }
-
+    const uploadResults = await imgInCloudnary();
+    console.log(uploadResults);
+    const finalData = {
+      ...data,
+      profilePic: {
+        imgUrl: uploadResults.url,
+        public_id: uploadResults.public_id,
+      },
+    };
     const jsonResponsData = await fetch(apiSummary.SignUP.url, {
       method: apiSummary.SignUP.method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(finalData),
     });
 
     const resData = await jsonResponsData.json();
-
     if (resData.success) {
       toast.success(resData.message);
       navigate("/login");
@@ -78,9 +85,9 @@ const Signup = () => {
       flex flex-col items-center justify-center gap-1 transition-all
       hover:scale-105 hover:shadow-lg relative"
             >
-              {data.profilePic ? (
+              {data.profilePic[0]?.type ? (
                 <img
-                  src={data.profilePic}
+                  src={URL.createObjectURL(data.profilePic[0])}
                   alt="Profile"
                   className="w-full h-full object-cover animate-fadeIn"
                 />

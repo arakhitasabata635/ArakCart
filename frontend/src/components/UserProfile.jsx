@@ -13,9 +13,9 @@ const UserProfile = ({ setUserDrawer }) => {
       {/* Profile Section */}
       <div className="text-center">
         <div className="w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-          {user?.profilePic ? (
+          {user?.profilePic?.imgUrl ? (
             <img
-              src={user?.profilePic}
+              src={user?.profilePic?.imgUrl}
               alt={user?.name}
               className="w-full h-full object-cover"
             />
