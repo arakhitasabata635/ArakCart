@@ -55,6 +55,8 @@ const Cart = () => {
   );
   const discount = totalMRP - totalPrice;
 
+  console.log(cart);
+
   return (
     <div className="min-h-screen sm:py-8 sm:px-4">
       <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-10">
