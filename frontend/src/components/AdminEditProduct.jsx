@@ -11,7 +11,7 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
   const [selectedImgFiles, setSelectedImgfiles] = useState([]);
   const [oldImgToBeDelete, setOldImgToBeDelete] = useState([]);
   const [data, setData] = useState({
-    _id: product._id,
+    _id: product?._id,
     productName: product?.productName,
     brandName: product?.brandName,
     category: product?.category,

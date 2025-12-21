@@ -2,7 +2,9 @@ import ProductModel from "../../models/productModel.js";
 
 const uploadProductControler = async (req, res) => {
   try {
-    const uploadProduct = new ProductModel(req.body);
+    const userId = req.userId;
+    const  productDetails = req.body;
+    const uploadProduct = new ProductModel({ ...productDetails, userId });
     const saveProduct = await uploadProduct.save();
 
     res.status(201).json({
@@ -20,5 +22,4 @@ const uploadProductControler = async (req, res) => {
   }
 };
 
-
-export default uploadProductControler ;
+export default uploadProductControler;
