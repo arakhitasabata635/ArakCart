@@ -2,8 +2,9 @@ import userModel from "../../models/userModel.js";
 
 const allUsersController = async (req, res) => {
   try {
+    const userId = req.userId;
     const allUsers = await userModel
-      .find({ role: { $ne: "owner" } })
+      .find({ role: { $ne: "owner" }, _id: { $ne: userId } })
       .select("-password");
 
     res.status(200).json({
