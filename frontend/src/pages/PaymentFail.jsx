@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const PaymentFail = () => {
   return (
-    <div className="min-h-screen bg-red-50 flex items-center  px-4">
-      <div className="bg-white rounded-xl shadow-lg p-8 max-w-md text-center border border-red-200">
+    <div className="min-h-screen   justify-center bg-green-50 px-4 pt-16">
+      <div className="max-w-md mx-auto  w-full bg-white rounded-xl shadow-lg p-8 text-center">
         <div className="text-red-500 text-6xl mb-4">✖</div>
 
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
@@ -17,7 +17,7 @@ const PaymentFail = () => {
 
         <div className="flex flex-col gap-3">
           <Link
-            to="/checkout"
+            to="/cart"
             className="bg-red-500 hover:bg-red-600 transition text-white py-2 px-4 rounded-lg font-medium"
           >
             Try Again

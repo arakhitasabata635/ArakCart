@@ -10,6 +10,7 @@ const createPayCheckoutSession = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
+      customer_email: user.email,
       line_items: items.map((item) => ({
         price_data: {
           currency: "inr",
@@ -27,7 +28,7 @@ const createPayCheckoutSession = async (req, res) => {
       success_url: `${process.env.FRONTEND_URL}/payment/success`,
       cancel_url: `${process.env.FRONTEND_URL}/payment/fail`,
     });
-    res.json({ url: session.url });
+    res.json({ url: session.url, error: false, success: true });
   } catch (err) {
     return res.status(400).json({
       message: err.message || err,

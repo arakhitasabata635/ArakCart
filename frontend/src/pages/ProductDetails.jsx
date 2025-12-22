@@ -58,7 +58,7 @@ const ProductDetails = () => {
                               order-2 md:order-1
                             "
                 >
-                  {product.productImages.map((img, i) => (
+                  {product?.productImages?.map((img, i) => (
                     <img
                       key={i}
                       src={img.imgUrl}
@@ -182,7 +182,7 @@ const ProductDetails = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      handlePayment([{ product: product, quantity: 1 }]);
+                      handlePayment([{ product: product, quantity: 1 }] );
                     }}
                     className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
                   >
