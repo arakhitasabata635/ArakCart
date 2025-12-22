@@ -74,7 +74,7 @@ const AllUsers = () => {
                       <div className="w-9 h-9 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
                         {user.profilePic ? (
                           <img
-                            src={user.profilePic}
+                            src={user.profilePic.imgUrl}
                             alt={user.name}
                             className="w-full h-full object-cover"
                           />

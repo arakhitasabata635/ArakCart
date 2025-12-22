@@ -79,7 +79,7 @@ const ChangeUserRole = ({ user, setEditingUser, setAlluser }) => {
           <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
             {user?.profilePic ? (
               <img
-                src={user.profilePic}
+                src={user.profilePic.imgUrl}
                 alt={user.name}
                 className="w-full h-full object-cover"
               />
