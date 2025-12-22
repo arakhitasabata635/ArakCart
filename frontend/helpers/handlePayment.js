@@ -11,6 +11,7 @@ const handlePayment = async (items) => {
   });
 
   const data = await res.json();
+  console.log(data);
   window.location.href = data.url;
 };
 
