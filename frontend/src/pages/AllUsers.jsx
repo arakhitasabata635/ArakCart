@@ -4,10 +4,12 @@ import { FaEdit } from "react-icons/fa";
 import moment from "moment";
 import { toast } from "react-toastify";
 import ChengeUserRole from "../components/ChengeUserRole";
+import { useSelector } from "react-redux";
 const AllUsers = () => {
   const [alluser, setAlluser] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
 
+  const sessonUser = useSelector((state) => state?.user?.user);
   //fetch all users
   const fetchAllUsers = async () => {
     const fetchData = await fetch(apiSummary.allUser.url, {
@@ -56,7 +58,11 @@ const AllUsers = () => {
                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Created
                 </th>
-                <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th
+                  className={` ${
+                    sessonUser?.role === "owner" ? "block" : "hidden"
+                  } px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider`}
+                >
                   Actions
                 </th>
               </tr>
@@ -112,11 +118,15 @@ const AllUsers = () => {
                     {moment(user.createdAt).format("LL")}
                   </td>
 
-                  <td className="px-4 py-4 whitespace-nowrap text-center">
+                  <td
+                    className={` ${
+                      sessonUser?.role === "owner" ? "block" : "hidden"
+                    } px-4 py-4 whitespace-nowrap text-center`}
+                  >
                     <button
                       onClick={() => setEditingUser(user)}
                       title="Edit user"
-                      className="inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:bg-blue-100 transition"
+                      className=" inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:bg-blue-100 transition"
                     >
                       <FaEdit />
                     </button>
