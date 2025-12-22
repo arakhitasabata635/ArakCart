@@ -23,6 +23,7 @@ const Cart = () => {
       setLoading(false);
     }
   };
+  console.log(cart);
 
   useEffect(() => {
     fetchCartData();

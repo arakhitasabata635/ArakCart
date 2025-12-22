@@ -7,6 +7,7 @@ import addToCart from "../../helpers/addToCart";
 import { addToCartLocal } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import handlePayment from "../../helpers/handlePayment";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -177,7 +178,14 @@ const ProductDetails = () => {
                   >
                     Add to Cart
                   </button>
-                  <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handlePayment([{ product: product, quantity: 1 }]);
+                    }}
+                    className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+                  >
                     Buy Now
                   </button>
                 </div>
