@@ -4,9 +4,11 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
+import CommonLoader from "../components/loadingEffect/CommonLoader";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const confirmPassword = useRef("");
 
   const [data, setData] = useState({
@@ -28,29 +30,7 @@ const Signup = () => {
       [name]: value,
     }));
   };
-  const imgInCloudnary = async () => {
-    if (!data.profilePic[0].type) return;
-    const uploadResults = await uploadImgCloudnary(data.profilePic[0]);
-    return uploadResults;
-  };
-  //heandle on submit
-  const navigate = useNavigate();
-
-  const hendleOnSubmit = async (e) => {
-    e.preventDefault();
-    if (data.password !== confirmPassword.current.value) {
-      toast.error("Passwords do not match!");
-      return;
-    }
-    const uploadResults = await imgInCloudnary();
-    console.log(uploadResults);
-    const finalData = {
-      ...data,
-      profilePic: {
-        imgUrl: uploadResults.url,
-        public_id: uploadResults.public_id,
-      },
-    };
+  const saveUser = async (finalData) => {
     const jsonResponsData = await fetch(apiSummary.SignUP.url, {
       method: apiSummary.SignUP.method,
       headers: {
@@ -62,14 +42,40 @@ const Signup = () => {
     const resData = await jsonResponsData.json();
     if (resData.success) {
       toast.success(resData.message);
+      setLoading(false);
       navigate("/login");
     }
     if (resData.error) {
+      setLoading(false);
       toast.error(resData.message);
     }
   };
+  //heandle on submit
+  const navigate = useNavigate();
 
-  return (
+  const hendleOnSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (data.password !== confirmPassword.current.value) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+    if (data.profilePic?.[0]) {
+      const uploadResults = await uploadImgCloudnary(data.profilePic[0]);
+      const finalData = {
+        ...data,
+        profilePic: {
+          imgUrl: uploadResults.url,
+          public_id: uploadResults.public_id,
+        },
+      };
+      saveUser(finalData);
+    } else {
+      saveUser(data);
+    }
+  };
+
+  return (<>
     <section className="h-screen flex justify-center items-center bg-slate-50">
       <form
         onSubmit={hendleOnSubmit}
@@ -195,6 +201,8 @@ const Signup = () => {
         </p>
       </form>
     </section>
+    {loading && <CommonLoader />}
+    </>
   );
 };
 
