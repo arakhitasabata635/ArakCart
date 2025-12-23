@@ -4,10 +4,17 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import router from "./routes/index.js";
 import cookieParser from "cookie-parser";
+import webhooks from "./controllers/order/webhooks.js";
 
 dotenv.config();
 
 const app = express();
+// stripe webhook
+app.post(
+  "/api/webhooks",
+  express.raw({ type: "application/json" }),
+  webhooks
+);
 
 // Middlewares
 app.use(
