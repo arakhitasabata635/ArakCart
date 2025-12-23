@@ -1,4 +1,5 @@
 import stripe from "../../config/stripe.js";
+import orderModel from "../../models/orderProductModel.js";
 const endPointSecreateKey = process.env.STRIPE_ENDPOINT_WEBHOOK_SECRET_KEY;
 
 const getProductDetails = async (lineItems) => {
@@ -37,7 +38,21 @@ const webhooks = async (req, res) => {
     const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
 
     const productDetails = await getProductDetails(lineItems);
-    console.log("🛒 Products:", productDetails);
+
+    const orderDetails = {
+      productDetails: productDetails,
+      email: session.customer_email,
+      userId: session.metadata.userId,
+      paymentDetails: {
+        paymentId: session.payment_intent,
+        payment_method_type: session.payment_method_types,
+        payment_status: session.payment_status,
+      },
+      totalAmount: session.amount_total / 100,
+    };
+
+    const order = new orderModel(orderDetails);
+    const saveOrder = await order.save();
   }
   res.status(200).send();
 };
