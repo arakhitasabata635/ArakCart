@@ -1,4 +1,4 @@
-import { FaBox, FaUsers } from "react-icons/fa";
+import { FaBox, FaShoppingCart, FaUsers } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -58,10 +58,19 @@ const UserProfile = ({ setUserDrawer }) => {
             </div>
           </div>
         )}
+         <div
+              onClick={() => {
+                navigate("/orders");
+                setUserDrawer?.(false);
+              }}
+              className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition cursor-pointer"
+            >
+              <FaShoppingCart /> Orders
+            </div>
         <button
           onClick={async () => {
             await dispatch(logoutUser());
-            setUserDrawer?.(false)
+            setUserDrawer?.(false);
             navigate("/login");
           }}
           className="flex items-center gap-3 py-2 px-3 text-[15px] font-medium rounded-lg hover:bg-blue-500 transition"

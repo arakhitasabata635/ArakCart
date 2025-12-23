@@ -13,6 +13,7 @@ import SearchProucts from "../pages/SearchProucts";
 import UserDetails from "../pages/UserDetails";
 import PaymentSuccess from "../pages/PaymentSuccess";
 import PaymentFail from "../pages/PaymentFail";
+import Orders from "../pages/Orders";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "payment/fail",
         element: <PaymentFail />,
+      },
+      {
+        path: "orders",
+        element: <Orders />,
       },
     ],
   },
