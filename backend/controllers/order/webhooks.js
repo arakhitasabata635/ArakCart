@@ -1,9 +1,27 @@
 import stripe from "../../config/stripe.js";
 const endPointSecreateKey = process.env.STRIPE_ENDPOINT_WEBHOOK_SECRET_KEY;
 
-const webhooks = (req, res) => {
-  const sig = req.headers["stripe-signature"];
+const getProductDetails = async (lineItems) => {
+  const allProducts = [];
 
+  if (lineItems?.data?.length)
+    for (const item of lineItems.data) {
+      const product = await stripe.products.retrieve(item.price.product);
+
+      const productData = {
+        productId: product.metadata.productId,
+        name: product.name,
+        price: item.price.unit_amount / 100,
+        quantity: item.quantity,
+        image: product.images,
+      };
+      allProducts.push(productData);
+    }
+  return allProducts;
+};
+
+const webhooks = async (req, res) => {
+  const sig = req.headers["stripe-signature"];
 
   let event;
 
@@ -16,8 +34,10 @@ const webhooks = (req, res) => {
   }
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    console.log("Payment success!", session);
-    // Save DB logic here
+    const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+
+    const productDetails = await getProductDetails(lineItems);
+    console.log("🛒 Products:", productDetails);
   }
   res.status(200).send();
 };
