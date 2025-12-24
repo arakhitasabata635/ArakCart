@@ -1,5 +1,6 @@
 import stripe from "../../config/stripe.js";
 import orderModel from "../../models/orderProductModel.js";
+import sendOrderMail from "../../utils/sendOrderMail.js";
 const endPointSecreateKey = process.env.STRIPE_ENDPOINT_WEBHOOK_SECRET_KEY;
 
 const getProductDetails = async (lineItems) => {
@@ -53,6 +54,12 @@ const webhooks = async (req, res) => {
 
     const order = new orderModel(orderDetails);
     const saveOrder = await order.save();
+    // 📧 SEND EMAIL
+    await sendOrderMail({
+      email: saveOrder.email,
+      orderId: saveOrder._id,
+      totalAmount: saveOrder.totalAmount,
+    });
   }
   res.status(200).send();
 };
