@@ -25,6 +25,10 @@ const apiSummary = {
     url: `${backendPortUrl}/api/admin/update-user`,
     method: "post",
   },
+   updateUserRole: {
+    url: `${backendPortUrl}/api/user-role-update`,
+    method: "post",
+  },
   delImgCloudnary: {
     url: `${backendPortUrl}/api/delete-image`,
     method: "delete",

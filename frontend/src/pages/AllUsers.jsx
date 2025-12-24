@@ -34,7 +34,14 @@ const AllUsers = () => {
     <section className="md:p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-semibold text-gray-800">All Users</h2>
-        <p className="text-sm text-gray-500">{alluser?.length} users</p>
+        <div className="flex items-center gap-2 text-sm">
+          <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
+            Admin {alluser?.filter((u) => u.role === "admin").length}
+          </span>
+          <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded-full">
+            User {alluser?.filter((u) => u.role === "user").length}
+          </span>
+        </div>
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -120,7 +127,7 @@ const AllUsers = () => {
 
                   <td
                     className={` ${
-                      sessonUser?.role === "owner" ? "hidden" : " block"
+                      sessonUser?.role === "owner" ? " block" : "hidden"
                     } px-4 py-4 whitespace-nowrap text-center`}
                   >
                     <button
@@ -141,7 +148,7 @@ const AllUsers = () => {
         <UpdateUserDetails
           setEditingUser={setEditingUser}
           user={editingUser}
-          setAlluser={setAlluser}
+          fetchAllUsers={fetchAllUsers}
         />
       )}
     </section>

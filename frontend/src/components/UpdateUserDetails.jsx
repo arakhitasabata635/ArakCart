@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import deleteImageFromCloudnary from "../../helpers/deleteImageFromCloudnary";
 
-const UpdateUserDetails = ({ user, setEditingUser, setAlluser }) => {
+const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
   const modalRef = useRef();
   const [editUser, setEditUser] = useState(user);
 
@@ -30,15 +30,57 @@ const UpdateUserDetails = ({ user, setEditingUser, setAlluser }) => {
     }
   };
 
+  //update user
+  const updateUser = async (finalData) => {
+    const updateUserFetch = await fetch(apiSummary.updateUser.url, {
+      method: apiSummary.updateUser.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(finalData),
+    });
+    const updateUser = await updateUserFetch.json();
+    if (updateUser.success) {
+      toast.success(updateUser.message);
+      setEditingUser(null);
+    }
+    if (updateUser.error) {
+      toast.error(updateUser.message);
+    }
+  };
+
+  const updateRole = async (editUser) => {
+    const updateUserFetch = await fetch(apiSummary.updateUserRole.url, {
+      method: apiSummary.updateUserRole.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(editUser),
+    });
+    const updateUser = await updateUserFetch.json();
+    if (updateUser.success) {
+      toast.success(updateUser.message);
+      await fetchAllUsers();
+      setEditingUser(null);
+    }
+    if (updateUser.error) {
+      toast.error(updateUser.message);
+    }
+  };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
   const handleSave = async () => {
+    if (user.role !== editUser.role) {
+      await updateRole(editUser);
+    }
     if (!editUser?.profilePic?.imgUrl || editUser?.profilePic[0]) {
       const uploadResults = await uploadImgCloudnary(editUser.profilePic[0]);
-
       if (editUser?.profilePic.imgUrl) {
         await deleteImageFromCloudnary(editUser?.profilePic.public_id);
       }
@@ -49,27 +91,8 @@ const UpdateUserDetails = ({ user, setEditingUser, setAlluser }) => {
           public_id: uploadResults.public_id,
         },
       };
-      const updateUserFetch = await fetch(apiSummary.updateUser.url, {
-        method: apiSummary.updateUser.method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(finalData),
-      });
-      const updateUser = await updateUserFetch.json();
-      if (updateUser.success) {
-        toast.success(updateUser.message);
-        setEditingUser(null);
-      }
-      if (updateUser.error) {
-        toast.error(updateUser.message);
-      }
+      await updateUser(finalData);
     }
-  };
-
-  const heandleOnchange = (e) => {
-    setNewrole(e.target.value);
   };
 
   return (
@@ -111,6 +134,7 @@ const UpdateUserDetails = ({ user, setEditingUser, setAlluser }) => {
               </div>
             )}
             <input
+              disabled={editUser.role === "owner"}
               onChange={handleImageUpload}
               id="profileUpload"
               type="file"
@@ -145,9 +169,10 @@ const UpdateUserDetails = ({ user, setEditingUser, setAlluser }) => {
           <label className="text-sm font-medium text-gray-700">Role</label>
           <select
             id="roleSelect"
+            name="role"
             disabled={editUser.role !== "owner"}
             value={editUser.role}
-            onChange={heandleOnchange}
+            onChange={handleOnChange}
             className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-blue-500"
           >
             {ROLE.map((option, indx) => (
