@@ -34,26 +34,40 @@ const webhooks = async (req, res) => {
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
+  if (event.type === "checkout.session.expired") {
+    console.log("enter");
+    const session = event.data.object;
+    await orderModel.findOneAndUpdate(
+      { sessionId: session.id },
+      {
+        status: "cancelled",
+        paymentDetails: {
+          paymentId: session.payment_intent,
+          payment_method_type: session.payment_method_types,
+          payment_status: session.payment_status,
+        },
+      }
+    );
+  }
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
     const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
 
     const productDetails = await getProductDetails(lineItems);
 
-    const orderDetails = {
-      productDetails: productDetails,
-      email: session.customer_email,
-      userId: session.metadata.userId,
-      paymentDetails: {
-        paymentId: session.payment_intent,
-        payment_method_type: session.payment_method_types,
-        payment_status: session.payment_status,
-      },
-      totalAmount: session.amount_total / 100,
-    };
-
-    const order = new orderModel(orderDetails);
-    const saveOrder = await order.save();
+    const saveOrder = await orderModel.findOneAndUpdate(
+      { sessionId: session.id },
+      {
+        productDetails: productDetails,
+        status: "paid",
+        paymentDetails: {
+          paymentId: session.payment_intent,
+          payment_method_type: session.payment_method_types,
+          payment_status: session.payment_status,
+        },
+        totalAmount: session.amount_total / 100,
+      }
+    );
     // 📧 SEND EMAIL
     await sendOrderMail({
       email: saveOrder.email,

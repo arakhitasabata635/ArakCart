@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import userModel from "../../models/userModel.js";
+import orderModel from "../../models/orderProductModel.js";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const createPayCheckoutSession = async (req, res) => {
@@ -30,7 +31,19 @@ const createPayCheckoutSession = async (req, res) => {
         })),
         success_url: `${process.env.FRONTEND_URL}/payment/success`,
         cancel_url: `${process.env.FRONTEND_URL}/payment/fail`,
+        expires_at: Math.floor(Date.now() / 1000) + 60 * 30,
       });
+
+      const pendingOrder = await orderModel.create({
+        sessionId: session.id,
+        email: user.email,
+        userId: user._id.toString(),
+        totalAmount: items.reduce(
+          (sum, i) => sum + i.product.sellingPrice * i.quantity,
+          0
+        ),
+      });
+
       res.json({ url: session.url, error: false, success: true });
     }
   } catch (err) {
