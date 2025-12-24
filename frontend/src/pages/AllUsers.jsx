@@ -120,7 +120,7 @@ const AllUsers = () => {
 
                   <td
                     className={` ${
-                      sessonUser?.role === "owner" ? "block" : "hidden"
+                      sessonUser?.role === "owner" ? "hidden" : " block"
                     } px-4 py-4 whitespace-nowrap text-center`}
                   >
                     <button
