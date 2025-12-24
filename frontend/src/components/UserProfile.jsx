@@ -3,16 +3,19 @@ import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../store/userSlice";
+import { useState } from "react";
+import UpdateUserDetails from "./UpdateUserDetails";
 
 const UserProfile = ({ setUserDrawer }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [editingUser, setEditingUser] = useState(null);
   const user = useSelector((state) => state?.user?.user);
   return (
     <>
       {/* Profile Section */}
       <div className="text-center">
-        <div className="w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+        <div onClick={()=>setEditingUser(true)} className="w-24 h-24 cursor-pointer mx-auto rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
           {user?.profilePic?.imgUrl ? (
             <img
               src={user?.profilePic?.imgUrl}
@@ -58,15 +61,15 @@ const UserProfile = ({ setUserDrawer }) => {
             </div>
           </div>
         )}
-         <div
-              onClick={() => {
-                navigate("/orders");
-                setUserDrawer?.(false);
-              }}
-              className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition cursor-pointer"
-            >
-              <FaShoppingCart /> Orders
-            </div>
+        <div
+          onClick={() => {
+            navigate("/orders");
+            setUserDrawer?.(false);
+          }}
+          className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition cursor-pointer"
+        >
+          <FaShoppingCart /> Orders
+        </div>
         <button
           onClick={async () => {
             await dispatch(logoutUser());
@@ -79,6 +82,9 @@ const UserProfile = ({ setUserDrawer }) => {
           Logout
         </button>
       </nav>
+      {editingUser && (
+        <UpdateUserDetails setEditingUser={setEditingUser} user={user} />
+      )}
     </>
   );
 };

@@ -1,0 +1,183 @@
+import { useEffect, useRef, useState } from "react";
+import { FaTimes } from "react-icons/fa";
+import ROLE from "../../common/role";
+import apiSummary from "../../common";
+import { toast } from "react-toastify";
+import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
+import deleteImageFromCloudnary from "../../helpers/deleteImageFromCloudnary";
+
+const UpdateUserDetails = ({ user, setEditingUser, setAlluser }) => {
+  const modalRef = useRef();
+  const [editUser, setEditUser] = useState(user);
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setEditUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleImageUpload = async (e) => {
+    const files = e.target.files;
+    if (files.length === 0) return;
+    setEditUser((prev) => ({ ...prev, profilePic: files }));
+  };
+
+  // Close modal when clicking outside content box
+  const handleOutsideClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setEditingUser(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  const handleSave = async () => {
+    if (!editUser?.profilePic?.imgUrl || editUser?.profilePic[0]) {
+      const uploadResults = await uploadImgCloudnary(editUser.profilePic[0]);
+
+      if (editUser?.profilePic.imgUrl) {
+        await deleteImageFromCloudnary(editUser?.profilePic.public_id);
+      }
+    }
+    const finalData = {
+      ...editUser,
+      profilePic: {
+        imgUrl: uploadResults.url,
+        public_id: uploadResults.public_id,
+      },
+    };
+
+    const updateUserFetch = await fetch(apiSummary.updateUser.url, {
+      method: apiSummary.updateUser.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(finalData),
+    });
+    const updateUser = await updateUserFetch.json();
+    if (updateUser.success) {
+      toast.success(updateUser.message);
+      setEditingUser(null);
+    }
+    if (updateUser.error) {
+      toast.error(updateUser.message);
+    }
+  };
+
+  const heandleOnchange = (e) => {
+    setNewrole(e.target.value);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+      {/* Inner Box */}
+      <div
+        ref={modalRef}
+        className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 space-y-6 relative animate-scaleIn"
+      >
+        {/* Close Button */}
+        <button
+          className="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition"
+          onClick={() => setEditingUser(null)}
+        >
+          <FaTimes size={18} />
+        </button>
+
+        {/* Title */}
+        <h3 className="text-xl font-semibold text-gray-800">Update User</h3>
+
+        {/* Profile */}
+        <div className="flex items-center gap-4">
+          <label
+            htmlFor="profileUpload"
+            className="w-16 h-16 rounded-full overflow-hidden bg-gray-200"
+          >
+            {editUser?.profilePic ? (
+              <img
+                src={
+                  editUser.profilePic.imgUrl ||
+                  URL.createObjectURL(editUser.profilePic[0])
+                }
+                alt={editUser.name}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-500 font-semibold">
+                {editUser?.name?.charAt(0)?.toUpperCase() || "U"}
+              </div>
+            )}
+            <input
+              onChange={handleImageUpload}
+              id="profileUpload"
+              type="file"
+              accept="image/*"
+              name="profilePic"
+              className="hidden"
+            />
+          </label>
+
+          <div>
+            <input
+              disabled={editUser.role === "owner"}
+              onChange={handleOnChange}
+              name="name"
+              type="text"
+              value={editUser?.name}
+              className="px-1 text-gray-800 outline-blue-100 font-medium capitalize"
+            />
+            <input
+              onChange={handleOnChange}
+              disabled={editUser.role === "owner"}
+              name="email"
+              type="mail"
+              value={editUser?.email}
+              className="px-1 text-gray-600 outline-blue-100 text-sm"
+            ></input>
+          </div>
+        </div>
+
+        {/* Role Update */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Role</label>
+          <select
+            id="roleSelect"
+            disabled={editUser.role !== "owner"}
+            value={editUser.role}
+            onChange={heandleOnchange}
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-blue-500"
+          >
+            {ROLE.map((option, indx) => (
+              <option key={indx} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-end gap-3 pt-2">
+          <button
+            className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+            onClick={() => setEditingUser(null)}
+          >
+            Cancel
+          </button>
+
+          <button
+            className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UpdateUserDetails;

@@ -3,7 +3,7 @@ import orderModel from "../../models/orderProductModel.js";
 const allOrdersControler = async (req, res) => {
   try {
     const allOrders = await orderModel
-      .find({ userId: req.userId })
+      .find({ userId: req.userId, status: "paid" })
       .sort({ createdAt: -1 });
 
     res.status(200).json({

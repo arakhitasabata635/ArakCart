@@ -3,8 +3,8 @@ import apiSummary from "../../common";
 import { FaEdit } from "react-icons/fa";
 import moment from "moment";
 import { toast } from "react-toastify";
-import ChengeUserRole from "../components/ChengeUserRole";
 import { useSelector } from "react-redux";
+import UpdateUserDetails from "../components/UpdateUserDetails";
 const AllUsers = () => {
   const [alluser, setAlluser] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
@@ -138,7 +138,7 @@ const AllUsers = () => {
         </div>
       </div>
       {editingUser && (
-        <ChengeUserRole
+        <UpdateUserDetails
           setEditingUser={setEditingUser}
           user={editingUser}
           setAlluser={setAlluser}
