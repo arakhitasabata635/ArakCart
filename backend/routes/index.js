@@ -22,8 +22,8 @@ import updateCartItemCount from "../controllers/cart/updateCartItemCount.js";
 import searchProduct from "../controllers/product/searchProduct.js";
 import categoryWiseProducts from "../controllers/product/categoryWiseProducts.js";
 import createPayCheckoutSession from "../controllers/order/createPayCheckoutSession.js";
-import updateUserRole from "../controllers/user/updateUserRole.js";
 import allOrdersControler from "../controllers/order/AllOrders.js";
+import updateUserDetails from "../controllers/user/updateUserDetails.js";
 
 const router = express.Router();
 
@@ -34,7 +34,7 @@ router.get("/userLogout", userLogoutController);
 
 //admin pannel
 router.get("/admin/users", authToken, allUsersController);
-router.post("/admin/update-user", authToken, updateUserRole);
+router.post("/admin/update-user", authToken, updateUserDetails);
 
 //delete img from cloudnary
 router.delete("/delete-image", authToken, deleteCloudinaryImage);

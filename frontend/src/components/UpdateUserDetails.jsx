@@ -42,30 +42,29 @@ const UpdateUserDetails = ({ user, setEditingUser, setAlluser }) => {
       if (editUser?.profilePic.imgUrl) {
         await deleteImageFromCloudnary(editUser?.profilePic.public_id);
       }
-    }
-    const finalData = {
-      ...editUser,
-      profilePic: {
-        imgUrl: uploadResults.url,
-        public_id: uploadResults.public_id,
-      },
-    };
-
-    const updateUserFetch = await fetch(apiSummary.updateUser.url, {
-      method: apiSummary.updateUser.method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(finalData),
-    });
-    const updateUser = await updateUserFetch.json();
-    if (updateUser.success) {
-      toast.success(updateUser.message);
-      setEditingUser(null);
-    }
-    if (updateUser.error) {
-      toast.error(updateUser.message);
+      const finalData = {
+        ...editUser,
+        profilePic: {
+          imgUrl: uploadResults.url,
+          public_id: uploadResults.public_id,
+        },
+      };
+      const updateUserFetch = await fetch(apiSummary.updateUser.url, {
+        method: apiSummary.updateUser.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(finalData),
+      });
+      const updateUser = await updateUserFetch.json();
+      if (updateUser.success) {
+        toast.success(updateUser.message);
+        setEditingUser(null);
+      }
+      if (updateUser.error) {
+        toast.error(updateUser.message);
+      }
     }
   };
 
