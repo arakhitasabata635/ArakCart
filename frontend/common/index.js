@@ -84,6 +84,10 @@ const apiSummary = {
   createPayCheckoutSession:{
     url: `${backendPortUrl}/api/payment/create-checkout-session`,
     method: "post",
+  },
+  allOrders:{
+    url: `${backendPortUrl}/api/orders`,
+    method: "get",
   }
 };
 
