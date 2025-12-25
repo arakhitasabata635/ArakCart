@@ -5,7 +5,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const createPayCheckoutSession = async (req, res) => {
   try {
-    const { items } = req.body;
+    const { cartItems, receiver } = req.body;
+
+    if (
+  !receiver ||
+  !receiver.receiverName ||
+  !receiver.phone ||
+  !receiver.address ||
+  !receiver.city ||
+  !receiver.pincode
+) {
+  return res.status(400).json({
+    success: false,
+    error:true,
+    message: "Delivery details are required",
+  });
+}
+
     const user = await userModel.findById(req.userId);
     if (user) {
       const session = await stripe.checkout.sessions.create({
@@ -14,8 +30,9 @@ const createPayCheckoutSession = async (req, res) => {
         customer_email: user.email,
         metadata: {
           userId: user._id.toString(),
+          receiver: JSON.stringify(receiver),
         },
-        line_items: items.map((item) => ({
+        line_items: cartItems.map((item) => ({
           price_data: {
             currency: "inr",
             product_data: {
@@ -38,7 +55,7 @@ const createPayCheckoutSession = async (req, res) => {
         sessionId: session.id,
         email: user.email,
         userId: user._id.toString(),
-        totalAmount: items.reduce(
+        totalAmount: cartItems.reduce(
           (sum, i) => sum + i.product.sellingPrice * i.quantity,
           0
         ),

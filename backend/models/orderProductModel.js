@@ -5,7 +5,7 @@ const orderSchema = new mongoose.Schema(
     sessionId: {
       type: String,
       required: true,
-      index: true, // important for fast lookup
+      index: true,
     },
 
     productDetails: {
@@ -27,6 +27,29 @@ const orderSchema = new mongoose.Schema(
       type: String,
       enum: ["pending", "paid", "cancelled"],
       default: "pending",
+    },
+    receiver: {
+      receiverName: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      phone: {
+        type: String,
+        default: "",
+      },
+      address: {
+        type: String,
+        default: "",
+      },
+      city: {
+        type: String,
+        default: "",
+      },
+      pincode: {
+        type: String,
+        default: "",
+      },
     },
 
     paymentDetails: {

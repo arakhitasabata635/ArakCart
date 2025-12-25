@@ -4,12 +4,13 @@ import { useDispatch } from "react-redux";
 import apiSummary from "../../common";
 import { removeFromCartLocal } from "../store/userSlice";
 import { CartLoading } from "../components/loadingEffect/CartLoading";
-import handlePayment from "../../helpers/handlePayment";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchCartData = async () => {
     const response = await fetch(apiSummary.cartProducts.url, {
@@ -117,7 +118,14 @@ const Cart = () => {
             </div>
 
             <button
-              onClick={() => handlePayment(cart)}
+              onClick={() => {
+                navigate("/order/checkout", {
+                  state: {
+                    totalPrice: totalPrice,
+                    cartItems: cart
+                  },
+                });
+              }}
               className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 rounded-lg"
             >
               Place Order

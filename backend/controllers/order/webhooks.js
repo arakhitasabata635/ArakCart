@@ -35,7 +35,6 @@ const webhooks = async (req, res) => {
     return;
   }
   if (event.type === "checkout.session.expired") {
-    console.log("enter");
     const session = event.data.object;
     await orderModel.findOneAndUpdate(
       { sessionId: session.id },
@@ -54,11 +53,13 @@ const webhooks = async (req, res) => {
     const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
 
     const productDetails = await getProductDetails(lineItems);
+    const receiver = JSON.parse(session.metadata.receiver);
 
     const saveOrder = await orderModel.findOneAndUpdate(
       { sessionId: session.id },
       {
         productDetails: productDetails,
+        receiver: receiver,
         status: "paid",
         paymentDetails: {
           paymentId: session.payment_intent,

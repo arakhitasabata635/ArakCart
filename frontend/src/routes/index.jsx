@@ -14,6 +14,7 @@ import UserDetails from "../pages/UserDetails";
 import PaymentSuccess from "../pages/PaymentSuccess";
 import PaymentFail from "../pages/PaymentFail";
 import Orders from "../pages/Orders";
+import OrderDetails from "../pages/OrderDetails";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,11 @@ const router = createBrowserRouter([
       {
         path: "orders",
         element: <Orders />,
+      },,
+      {
+        path: "/order/checkout",
+        element: <OrderDetails />,
+
       },
     ],
   },
