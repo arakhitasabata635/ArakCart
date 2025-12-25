@@ -8,7 +8,7 @@ const ApplySeller = () => {
     phone: "",
     address: "",
     gstNumber: "",
-    documents: {},
+    documents: [],
   });
   const heandleOnChange = (e) => {
     setSeller({ ...seller, [e.target.name]: e.target.value });
