@@ -15,6 +15,7 @@ import PaymentSuccess from "../pages/PaymentSuccess";
 import PaymentFail from "../pages/PaymentFail";
 import Orders from "../pages/Orders";
 import OrderDetails from "../pages/OrderDetails";
+import ApplySeller from "../pages/ApplySeller";
 
 const router = createBrowserRouter([
   {
@@ -78,11 +79,15 @@ const router = createBrowserRouter([
       {
         path: "orders",
         element: <Orders />,
-      },,
+      },
+      ,
       {
         path: "/order/checkout",
         element: <OrderDetails />,
-
+      },
+      {
+        path: "/user/apply-seller",
+        element: <ApplySeller />,
       },
     ],
   },
