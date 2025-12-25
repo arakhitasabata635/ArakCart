@@ -38,116 +38,143 @@ const OrderDetails = () => {
     }
     await handlePayment(cartItems, receiver);
   };
-  console.log(receiver);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* LEFT: Delivery Details */}
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6">
-            Delivery Details
-          </h2>
+   <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-10 px-4">
+  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm text-gray-600">Receiver Name</label>
-              <input
-                onChange={handleChange}
-                name="receiverName"
-                value={receiver.receiverName}
-                type="text"
-                placeholder="Full name"
-                className="mt-1 w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-            </div>
+    {/* LEFT – Delivery Details */}
+    <div className="lg:col-span-2 bg-white rounded-2xl shadow-md border border-gray-100 p-8">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        📦 Delivery Information
+      </h2>
 
-            <div>
-              <label className="text-sm text-gray-600">Mobile Number</label>
-              <input
-                onChange={handleChange}
-                name="phone"
-                value={receiver.phone}
-                type="number"
-                placeholder="+91 XXXXX XXXXX"
-                className="mt-1 w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            <div className="md:col-span-2">
-              <label className="text-sm text-gray-600">Full Address</label>
-              <textarea
-                onChange={handleChange}
-                name="address"
-                value={receiver.address}
-                rows="3"
-                placeholder="House no, Street, Area"
-                className="mt-1 w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm text-gray-600">City</label>
-              <input
-                onChange={handleChange}
-                name="city"
-                value={receiver.city}
-                type="text"
-                placeholder="City"
-                className="mt-1 w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm text-gray-600">Pincode</label>
-              <input
-                onChange={handleChange}
-                name="pincode"
-                value={receiver.pincode}
-                type="text"
-                placeholder="Pincode"
-                className="mt-1 w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-            </div>
-          </div>
+        <div>
+          <label className="text-sm font-medium text-gray-600">
+            Receiver Name
+          </label>
+          <input
+            name="receiverName"
+            value={receiver.receiverName}
+            onChange={handleChange}
+            placeholder="Full name"
+            className="mt-2 w-full rounded-xl border px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
         </div>
 
-        {/* RIGHT: Order Summary */}
-        <div className="bg-white rounded-xl shadow-sm p-6 h-fit">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">
-            Order Summary
-          </h3>
+        <div>
+          <label className="text-sm font-medium text-gray-600">
+            Mobile Number
+          </label>
+          <input
+            name="phone"
+            value={receiver.phone}
+            onChange={handleChange}
+            placeholder="+91 XXXXX XXXXX"
+            className="mt-2 w-full rounded-xl border px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
-          {/* Price Details */}
-          <div className="border-t mt-4 pt-4 space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Subtotal</span>
-              <span>₹{totalPrice}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Delivery</span>
-              <span className="text-green-600">Free</span>
-            </div>
-            <div className="flex justify-between font-semibold text-gray-800 text-base">
-              <span>Total</span>
-              <span>{totalPrice}</span>
-            </div>
-          </div>
+        <div className="md:col-span-2">
+          <label className="text-sm font-medium text-gray-600">
+            Full Address
+          </label>
+          <textarea
+            rows="3"
+            name="address"
+            value={receiver.address}
+            onChange={handleChange}
+            placeholder="House no, Street, Area"
+            className="mt-2 w-full rounded-xl border px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
-          {/* Place Order Button */}
-          <button
-            onClick={handleProceed}
-            className="mt-6 w-full bg-blue-600 hover:bg-blue-700 transition text-white py-3 rounded-lg font-medium"
-          >
-            Place Order & Pay
-          </button>
+        <div>
+          <label className="text-sm font-medium text-gray-600">City</label>
+          <input
+            name="city"
+            value={receiver.city}
+            onChange={handleChange}
+            placeholder="City"
+            className="mt-2 w-full rounded-xl border px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
-          <p className="text-xs text-gray-500 text-center mt-3">
-            Secure payment powered by Stripe
-          </p>
+        <div>
+          <label className="text-sm font-medium text-gray-600">Pincode</label>
+          <input
+            name="pincode"
+            value={receiver.pincode}
+            onChange={handleChange}
+            placeholder="Pincode"
+            className="mt-2 w-full rounded-xl border px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
         </div>
       </div>
     </div>
+
+    {/* RIGHT – Order Summary */}
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 sticky top-24 h-fit">
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">
+        🧾 Order Summary
+      </h3>
+
+      {/* Receiver Preview */}
+      <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-4">
+        <p className="text-sm font-semibold text-blue-700 mb-1">
+          Deliver To
+        </p>
+
+        {receiver.receiverName ? (
+          <div className="text-sm text-gray-700 space-y-1">
+            <p className="font-medium">{receiver.receiverName}</p>
+            <p>{receiver.phone}</p>
+            <p className="text-gray-600">
+              {receiver.address}, {receiver.city} – {receiver.pincode}
+            </p>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-400">
+            Enter delivery details to continue
+          </p>
+        )}
+      </div>
+
+      {/* Price */}
+      <div className="border-t pt-4 space-y-3 text-sm">
+        <div className="flex justify-between text-gray-600">
+          <span>Subtotal</span>
+          <span>₹{totalPrice}</span>
+        </div>
+
+        <div className="flex justify-between text-gray-600">
+          <span>Delivery</span>
+          <span className="text-green-600 font-medium">FREE</span>
+        </div>
+
+        <div className="flex justify-between text-lg font-semibold text-gray-800">
+          <span>Total</span>
+          <span>₹{totalPrice}</span>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <button
+        onClick={handleProceed}
+        className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg"
+      >
+        Place Order & Pay
+      </button>
+
+      <p className="text-xs text-center text-gray-500 mt-3">
+        🔒 Secure payment powered by Stripe
+      </p>
+    </div>
+  </div>
+</div>
+
   );
 };
 export default OrderDetails;

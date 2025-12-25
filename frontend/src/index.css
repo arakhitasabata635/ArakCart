@@ -104,10 +104,24 @@
 }
 
 @keyframes slideLeft {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .animate-slideLeft {
   animation: slideLeft .3s ease-out;
+}
+
+@keyframes truckMove {
+  0% { transform: translateX(-60px); }
+  100% { transform: translateX(320px); }
+}
+
+.animate-truck {
+  animation: truckMove 1.4s linear infinite;
 }

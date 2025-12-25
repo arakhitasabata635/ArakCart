@@ -94,8 +94,8 @@ const apiSummary = {
     method: "get",
   },
   sessionOrder: {
-    url: `${backendPortUrl}/api/orders/session`,
-    method: "get",
+    url: `${backendPortUrl}/api/orders/session-order`,
+    method: "post",
   },
 };
 

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaTruck } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import apiSummary from "../../common";
 
@@ -15,7 +15,7 @@ const PaymentSuccess = () => {
     const interval = setInterval(async () => {
       try {
         const fetchApi = await fetch(
-          apiSummary.sessionOrder.url + `${sessionId}`,
+          apiSummary.sessionOrder.url +`/${sessionId}`,
           {
             method: apiSummary.sessionOrder.method,
             credentials: "include",
@@ -33,7 +33,7 @@ const PaymentSuccess = () => {
       } catch (err) {
         console.error(err);
       }
-    }, 2000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [navigate, sessionId]);
@@ -56,24 +56,12 @@ const PaymentSuccess = () => {
         {/* Truck animation */}
         <div className="relative h-12 overflow-hidden">
           {status === "pending" && (
-            <div className="absolute left-0 animate-truck">🚚</div>
+            <div className="relative h-14 overflow-hidden mt-4">
+  <FaTruck className="absolute text-3xl text-blue-600 animate-truck" />
+</div>
           )}
         </div>
       </div>
-
-      {/* Tailwind animation */}
-      <style>
-        {`
-          @keyframes truck {
-            0% { transform: translateX(-50px); }
-            100% { transform: translateX(300px); }
-          }
-          .animate-truck {
-            animation: truck 1.2s linear infinite;
-            font-size: 2rem;
-          }
-        `}
-      </style>
     </div>
   );
 };
