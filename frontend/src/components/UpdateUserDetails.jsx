@@ -5,10 +5,15 @@ import apiSummary from "../../common";
 import { toast } from "react-toastify";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import deleteImageFromCloudnary from "../../helpers/deleteImageFromCloudnary";
+import { useDispatch } from "react-redux";
+import CommonLoader from "./loadingEffect/CommonLoader";
+import { fetchUser } from "../store/userSlice";
 
 const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
   const modalRef = useRef();
   const [editUser, setEditUser] = useState(user);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -43,9 +48,15 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
     const updateUser = await updateUserFetch.json();
     if (updateUser.success) {
       toast.success(updateUser.message);
+      dispatch(fetchUser());
+      setLoading(false);
       setEditingUser(null);
+      if (editUser?.profilePic.imgUrl) {
+        await deleteImageFromCloudnary(editUser?.profilePic.public_id);
+      }
     }
     if (updateUser.error) {
+      setLoading(false);
       toast.error(updateUser.message);
     }
   };
@@ -76,14 +87,12 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
   }, []);
 
   const handleSave = async () => {
+    setLoading(true);
     if (user.role !== editUser.role) {
       await updateRole(editUser);
     }
     if (!editUser?.profilePic?.imgUrl || editUser?.profilePic[0]) {
       const uploadResults = await uploadImgCloudnary(editUser.profilePic[0]);
-      if (editUser?.profilePic.imgUrl) {
-        await deleteImageFromCloudnary(editUser?.profilePic.public_id);
-      }
       const finalData = {
         ...editUser,
         profilePic: {
@@ -96,111 +105,114 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-      {/* Inner Box */}
-      <div
-        ref={modalRef}
-        className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 space-y-6 relative animate-scaleIn"
-      >
-        {/* Close Button */}
-        <button
-          className="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition"
-          onClick={() => setEditingUser(null)}
+    <>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+        {/* Inner Box */}
+        <div
+          ref={modalRef}
+          className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 space-y-6 relative animate-scaleIn"
         >
-          <FaTimes size={18} />
-        </button>
-
-        {/* Title */}
-        <h3 className="text-xl font-semibold text-gray-800">Update User</h3>
-
-        {/* Profile */}
-        <div className="flex items-center gap-4">
-          <label
-            htmlFor="profileUpload"
-            className="w-16 h-16 rounded-full overflow-hidden bg-gray-200"
-          >
-            {editUser?.profilePic ? (
-              <img
-                src={
-                  editUser.profilePic.imgUrl ||
-                  URL.createObjectURL(editUser.profilePic[0])
-                }
-                alt={editUser.name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-500 font-semibold">
-                {editUser?.name?.charAt(0)?.toUpperCase() || "U"}
-              </div>
-            )}
-            <input
-              disabled={editUser.role === "owner"}
-              onChange={handleImageUpload}
-              id="profileUpload"
-              type="file"
-              accept="image/*"
-              name="profilePic"
-              className="hidden"
-            />
-          </label>
-
-          <div>
-            <input
-              disabled={editUser.role === "owner"}
-              onChange={handleOnChange}
-              name="name"
-              type="text"
-              value={editUser?.name}
-              className="px-1 text-gray-800 outline-blue-100 font-medium capitalize"
-            />
-            <input
-              onChange={handleOnChange}
-              disabled={editUser.role === "owner"}
-              name="email"
-              type="mail"
-              value={editUser?.email}
-              className="px-1 text-gray-600 outline-blue-100 text-sm"
-            ></input>
-          </div>
-        </div>
-
-        {/* Role Update */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Role</label>
-          <select
-            id="roleSelect"
-            name="role"
-            disabled={editUser.role !== "owner"}
-            value={editUser.role}
-            onChange={handleOnChange}
-            className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-blue-500"
-          >
-            {ROLE.map((option, indx) => (
-              <option key={indx} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex justify-end gap-3 pt-2">
+          {/* Close Button */}
           <button
-            className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+            className="absolute top-3 right-3 text-gray-500 hover:text-red-500 transition"
             onClick={() => setEditingUser(null)}
           >
-            Cancel
+            <FaTimes size={18} />
           </button>
 
-          <button
-            className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
-            onClick={handleSave}
-          >
-            Save
-          </button>
+          {/* Title */}
+          <h3 className="text-xl font-semibold text-gray-800">Update User</h3>
+
+          {/* Profile */}
+          <div className="flex items-center gap-4">
+            <label
+              htmlFor="profileUpload"
+              className="w-16 h-16 rounded-full overflow-hidden bg-gray-200"
+            >
+              {editUser?.profilePic ? (
+                <img
+                  src={
+                    editUser.profilePic.imgUrl ||
+                    URL.createObjectURL(editUser.profilePic[0])
+                  }
+                  alt={editUser.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-500 font-semibold">
+                  {editUser?.name?.charAt(0)?.toUpperCase() || "U"}
+                </div>
+              )}
+              <input
+                disabled={editUser.role === "owner"}
+                onChange={handleImageUpload}
+                id="profileUpload"
+                type="file"
+                accept="image/*"
+                name="profilePic"
+                className="hidden"
+              />
+            </label>
+
+            <div>
+              <input
+                disabled={editUser.role === "owner"}
+                onChange={handleOnChange}
+                name="name"
+                type="text"
+                value={editUser?.name}
+                className="px-1 text-gray-800 outline-blue-100 font-medium capitalize"
+              />
+              <input
+                onChange={handleOnChange}
+                disabled={editUser.role === "owner"}
+                name="email"
+                type="mail"
+                value={editUser?.email}
+                className="px-1 text-gray-600 outline-blue-100 text-sm"
+              ></input>
+            </div>
+          </div>
+
+          {/* Role Update */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Role</label>
+            <select
+              id="roleSelect"
+              name="role"
+              disabled={editUser.role !== "owner"}
+              value={editUser.role}
+              onChange={handleOnChange}
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-blue-500"
+            >
+              {ROLE.map((option, indx) => (
+                <option key={indx} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex justify-end gap-3 pt-2">
+            <button
+              className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+              onClick={() => setEditingUser(null)}
+            >
+              Cancel
+            </button>
+
+            <button
+              className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+              onClick={handleSave}
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      {loading && <CommonLoader />}
+    </>
   );
 };
 

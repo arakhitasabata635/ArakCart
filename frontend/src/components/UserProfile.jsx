@@ -1,4 +1,4 @@
-import { FaBox, FaShoppingCart, FaUsers } from "react-icons/fa";
+import { FaBox, FaShoppingCart, FaStore, FaUsers } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,10 @@ const UserProfile = ({ setUserDrawer }) => {
     <>
       {/* Profile Section */}
       <div className="text-center">
-        <div onClick={()=>setEditingUser(true)} className="w-24 h-24 cursor-pointer mx-auto rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+        <div
+          onClick={() => setEditingUser(true)}
+          className="w-24 h-24 cursor-pointer mx-auto rounded-full overflow-hidden bg-gray-100 flex items-center justify-center"
+        >
           {user?.profilePic?.imgUrl ? (
             <img
               src={user?.profilePic?.imgUrl}
@@ -38,7 +41,7 @@ const UserProfile = ({ setUserDrawer }) => {
 
       {/* Navigation Links */}
       <nav className="flex flex-col gap-4 mt-5 text-[15px] font-medium">
-        {(user?.role === "admin" || user?.role === "owner") && (
+        {(user?.role !== "user" ) && (
           <div>
             <div
               onClick={() => {
@@ -70,6 +73,20 @@ const UserProfile = ({ setUserDrawer }) => {
         >
           <FaShoppingCart /> Orders
         </div>
+
+        {user?.role === "user" && (
+          <div
+            onClick={() => {
+              navigate("/user/apply-seller");
+              setUserDrawer?.(false);
+            }}
+            className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition cursor-pointer"
+          >
+            <FaStore />
+            Become a Seller
+          </div>
+        )}
+
         <button
           onClick={async () => {
             await dispatch(logoutUser());
