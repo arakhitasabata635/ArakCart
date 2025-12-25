@@ -10,7 +10,6 @@ const updateUserDetails = async (req, res) => {
       const updatedUser = await userModel
         .findByIdAndUpdate(editUser._id, editUser, { new: true })
         .select("-password");
-        console.log(updatedUser);
 
       res.status(200).json({
         message: "User details updated successfully!",

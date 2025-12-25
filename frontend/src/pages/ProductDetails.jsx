@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import apiSummary from "../../common";
 import ProductDetailsLoading from "../components/loadingEffect/ProductDetailsLoading";
 import RecomendedProduct from "../components/RecomendedProduct";
@@ -14,7 +14,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [isloading, setIsLoading] = useState(true);
   const [bigImg, setBigImg] = useState(0);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const productDetails = async () => {
@@ -179,10 +179,13 @@ const ProductDetails = () => {
                     Add to Cart
                   </button>
                   <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handlePayment([{ product: product, quantity: 1 }] );
+                    onClick={() => {
+                      navigate("/order/checkout", {
+                        state: {
+                          totalPrice: product.sellingPrice,
+                          cartItems: [{ product: product, quantity: 1 }],
+                        },
+                      });
                     }}
                     className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
                   >
