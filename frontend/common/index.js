@@ -25,7 +25,7 @@ const apiSummary = {
     url: `${backendPortUrl}/api/admin/update-user`,
     method: "post",
   },
-   updateUserRole: {
+  updateUserRole: {
     url: `${backendPortUrl}/api/user-role-update`,
     method: "post",
   },
@@ -77,22 +77,26 @@ const apiSummary = {
     url: `${backendPortUrl}/api/update-cart-item-count`,
     method: "post",
   },
-  search_products:{
+  search_products: {
     url: `${backendPortUrl}/api/search`,
     method: "get",
   },
-  category_prouct:{
+  category_prouct: {
     url: `${backendPortUrl}/api/category-products`,
     method: "get",
   },
-  createPayCheckoutSession:{
+  createPayCheckoutSession: {
     url: `${backendPortUrl}/api/payment/create-checkout-session`,
     method: "post",
   },
-  allOrders:{
+  allOrders: {
     url: `${backendPortUrl}/api/orders`,
     method: "get",
-  }
+  },
+  sessionOrder: {
+    url: `${backendPortUrl}/api/orders/session`,
+    method: "get",
+  },
 };
 
 export default apiSummary;

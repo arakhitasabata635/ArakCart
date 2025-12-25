@@ -8,19 +8,19 @@ const createPayCheckoutSession = async (req, res) => {
     const { cartItems, receiver } = req.body;
 
     if (
-  !receiver ||
-  !receiver.receiverName ||
-  !receiver.phone ||
-  !receiver.address ||
-  !receiver.city ||
-  !receiver.pincode
-) {
-  return res.status(400).json({
-    success: false,
-    error:true,
-    message: "Delivery details are required",
-  });
-}
+      !receiver ||
+      !receiver.receiverName ||
+      !receiver.phone ||
+      !receiver.address ||
+      !receiver.city ||
+      !receiver.pincode
+    ) {
+      return res.status(400).json({
+        success: false,
+        error: true,
+        message: "Delivery details are required",
+      });
+    }
 
     const user = await userModel.findById(req.userId);
     if (user) {
@@ -46,7 +46,7 @@ const createPayCheckoutSession = async (req, res) => {
           },
           quantity: item.quantity,
         })),
-        success_url: `${process.env.FRONTEND_URL}/payment/success`,
+        success_url: `${process.env.FRONTEND_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.FRONTEND_URL}/payment/fail`,
         expires_at: Math.floor(Date.now() / 1000) + 60 * 30,
       });
