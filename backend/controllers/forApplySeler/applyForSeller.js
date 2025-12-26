@@ -13,6 +13,12 @@ const applyForSeller = async (req, res) => {
         error: false,
         success: true,
       });
+    } else {
+      res.status(403).json({
+        message: "Access denied",
+        error: true,
+        success: false,
+      });
     }
   } catch (err) {
     res.status(400).json({

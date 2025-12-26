@@ -3,9 +3,12 @@ import { toast } from "react-toastify";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import apiSummary from "../../common";
+import CommonLoader from "./loadingEffect/CommonLoader";
 
-const RenderApplyForm = () => {
+const RenderApplyForm = ({ sellerApplyStatus }) => {
   const user = useSelector((state) => state?.user?.user);
+  const [loading, setLoading] = useState(false);
   const [selectedImgFiles, setSelectedImgfiles] = useState([]);
   const [seller, setSeller] = useState({
     userId: "",
@@ -37,13 +40,13 @@ const RenderApplyForm = () => {
         public_id: res.public_id,
       }));
     } catch (err) {
-      console.log(err);
       toast.error("error while uploading img");
     }
   };
 
   const heandleOnSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const allImgs = await handleUploadAllImages();
     const finaldata = {
       ...seller,
@@ -61,6 +64,8 @@ const RenderApplyForm = () => {
     const dataRes = await fetchApi.json();
     if (dataRes.success) {
       toast.success(dataRes.message);
+      setLoading(false);
+      sellerApplyStatus();
     }
     if (dataRes.error) {
       toast.error(dataRes.message);
@@ -231,6 +236,7 @@ const RenderApplyForm = () => {
           </p>
         </div>
       </div>
+      {loading && <CommonLoader />}
     </>
   );
 };

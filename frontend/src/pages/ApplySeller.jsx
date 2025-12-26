@@ -20,9 +20,13 @@ const ApplySeller = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
-        {result?.status === "not_applied" && <RenderApplyForm />}
+        {result?.status === "not_applied" && (
+          <RenderApplyForm sellerApplyStatus={sellerApplyStatus} />
+        )}
         {result?.status === "pending" && <RenderPending result={result} />}
-        {result?.status === "rejected" && <RenderRejected result={result} setResult={setResult} />}
+        {result?.status === "rejected" && (
+          <RenderRejected result={result} setResult={setResult} />
+        )}
       </div>
     </div>
   );

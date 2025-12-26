@@ -97,18 +97,21 @@ const apiSummary = {
     url: `${backendPortUrl}/api/orders/session-order`,
     method: "post",
   },
-  applySeller:{
+  applySeller: {
     url: `${backendPortUrl}/api/apply-seller`,
     method: "post",
   },
-   checkApplyStatus:{
+  checkApplyStatus: {
     url: `${backendPortUrl}/api/apply-status`,
     method: "get",
   },
-  reapplySeller:{
-     url: `${backendPortUrl}/api/seller/reapply`,
-     method: "delete",
-  }
+  reapplySeller: {
+    url: `${backendPortUrl}/api/seller/reapply`,
+    method: "delete",
+  },
+  getAllSellerRequests: {
+    url: `${backendPortUrl}/api/seller-requests`,
+  },
 };
 
 export default apiSummary;
