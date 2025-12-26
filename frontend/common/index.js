@@ -97,6 +97,10 @@ const apiSummary = {
     url: `${backendPortUrl}/api/orders/session-order`,
     method: "post",
   },
+  applySeller:{
+    url: `${backendPortUrl}/api/apply-seller`,
+    method: "post",
+  }
 };
 
 export default apiSummary;

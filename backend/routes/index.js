@@ -26,6 +26,7 @@ import allOrdersControler from "../controllers/order/AllOrders.js";
 import updateUserDetails from "../controllers/user/updateUserDetails.js";
 import updateUserRole from "../controllers/user/updateUserRole.js";
 import sessonOrder from "../controllers/order/sessonOrder.js";
+import applyForSeller from "../controllers/user/applyForSeller.js";
 
 const router = express.Router();
 
@@ -38,6 +39,7 @@ router.get("/userLogout", userLogoutController);
 router.get("/admin/users", authToken, allUsersController);
 router.post("/admin/update-user", authToken, updateUserDetails);
 router.post("/user-role-update", updateUserRole);
+router.post("/apply-seller", authToken, applyForSeller)
 
 //delete img from cloudnary
 router.delete("/delete-image", authToken, deleteCloudinaryImage);
@@ -67,5 +69,6 @@ router.post(
 );
 router.get("/orders", authToken, allOrdersControler);
 router.post("/orders/session-order/:sessionId", authToken, sessonOrder);
+
 
 export default router;

@@ -17,7 +17,7 @@ const Signup = () => {
     password: "",
     profilePic: {},
   });
-  // image to base64
+ 
   const handleImageUpload = async (e) => {
     const files = e.target.files;
     if (files.length === 0) return;

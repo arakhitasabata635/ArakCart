@@ -1,15 +1,74 @@
 import { useState } from "react";
 import { FaStore, FaIdCard, FaCheckCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
+import apiSummary from "../../common";
+import { useSelector } from "react-redux";
+import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
+
 
 const ApplySeller = () => {
+  const user = useSelector((state) => state?.user?.user);
+  const [selectedImgFiles, setSelectedImgfiles] = useState([]);
   const [seller, setSeller] = useState({
+    userId: "",
     shopName: "",
+    ownerName: "",
     ShopMail: "",
     phone: "",
     address: "",
     gstNumber: "",
     documents: [],
   });
+  const handleSelectImages = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    // store all selected files in state
+    setSelectedImgfiles((prev) => [...prev, ...files]);
+  };
+
+  const handleUploadAllImages = async () => {
+    if (selectedImgFiles.length === 0) return [];
+    try {
+      const uploadResults = await Promise.all(
+        selectedImgFiles.map((file) => uploadImgCloudnary(file))
+      );
+      setSelectedImgfiles([]);
+      return uploadResults.map((res) => ({
+        imgUrl: res.url,
+        public_id: res.public_id,
+      }));
+    } catch (err) {
+      console.log(err);
+      toast.error("error while uploading img");
+    }
+  };
+
+  const heandleOnSubmit = async (e) => {
+    e.preventDefault();
+    const allImgs = await handleUploadAllImages();
+    const finaldata = {
+      ...seller,
+      userId: user?._id,
+      documents: allImgs,
+    };
+    const fetchApi = await fetch(apiSummary.applySeller.url, {
+      method: apiSummary.applySeller.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(finaldata),
+    });
+    const dataRes = await fetchApi.json();
+    if (dataRes.success) {
+      toast.success(dataRes.message);
+    }
+    if (dataRes.error) {
+      toast.error(dataRes.message);
+    }
+  };
+
   const heandleOnChange = (e) => {
     setSeller({ ...seller, [e.target.name]: e.target.value });
   };
@@ -71,13 +130,27 @@ const ApplySeller = () => {
               Seller Information
             </h2>
 
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={heandleOnSubmit}>
+              <div>
+                <label className="text-sm text-gray-600">Owner Name</label>
+                <input
+                  name="ownerName"
+                  onChange={heandleOnChange}
+                  value={seller.ownerName}
+                  required
+                  type="text"
+                  placeholder="name as per aadhar"
+                  className="mt-1 w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
               <div>
                 <label className="text-sm text-gray-600">Shop Name</label>
                 <input
                   name="shopName"
                   onChange={heandleOnChange}
                   value={seller.shopName}
+                  required
                   type="text"
                   placeholder="Your shop name"
                   className="mt-1 w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -87,6 +160,7 @@ const ApplySeller = () => {
               <div>
                 <label className="text-sm text-gray-600">Business Email</label>
                 <input
+                  required
                   name="ShopMail"
                   onChange={heandleOnChange}
                   value={seller.ShopMail}
@@ -99,6 +173,7 @@ const ApplySeller = () => {
                 <label className="text-sm text-gray-600">GST Number</label>
                 <input
                   name="gstNumber"
+                  required
                   onChange={heandleOnChange}
                   value={seller.gstNumber}
                   type="text"
@@ -111,6 +186,7 @@ const ApplySeller = () => {
                 <label className="text-sm text-gray-600">Business Phone</label>
                 <input
                   name="phone"
+                  required
                   value={seller.phone}
                   onChange={heandleOnChange}
                   type="text"
@@ -125,6 +201,7 @@ const ApplySeller = () => {
                 </label>
                 <textarea
                   name="address"
+                  required
                   onChange={heandleOnChange}
                   rows="3"
                   placeholder="Shop address"
@@ -136,12 +213,18 @@ const ApplySeller = () => {
                 <label className="text-sm text-gray-600">GST / ID Proof</label>
                 <div className="mt-1 flex items-center gap-3 border rounded-lg px-3 py-2">
                   <FaIdCard className="text-gray-400" />
-                  <input type="file" className="text-sm text-gray-600" />
+                  <input
+                    required
+                    onChange={handleSelectImages}
+                    type="file"
+                    accept="image/*"
+                    className="text-sm text-gray-600"
+                  />
                 </div>
               </div>
 
               <button
-                type="button"
+                type="submit"
                 className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition"
               >
                 Submit for Verification
