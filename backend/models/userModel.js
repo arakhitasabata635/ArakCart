@@ -1,4 +1,4 @@
-import mongoose, { model } from "mongoose";
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
@@ -9,7 +9,16 @@ const userSchema = new mongoose.Schema(
       require: true,
     },
     password: String,
-    profilePic: {},
+    profilePic: {
+      imgUrl: {
+        type: String,
+        default: "",
+      },
+      publicId: {
+        type: String,
+        default: "",
+      },
+    },
     role: {
       type: String,
       enum: ["owner", "admin", "user"],
