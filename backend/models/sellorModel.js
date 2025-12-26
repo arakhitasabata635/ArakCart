@@ -12,6 +12,7 @@ const sellerRequestSchema = new mongoose.Schema(
     ownerName: { type: String, required: true },
     phone: { type: String, required: true },
     gstNumber: { type: String, required: true },
+    ShopMail: { type: String, required: true },
     address: {
       type: String,
     },
