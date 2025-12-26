@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import { FaStoreAlt, FaUser, FaPhone, FaEnvelope } from "react-icons/fa";
 import { toast } from "react-toastify";
 import apiSummary from "../../common";
+import FullImage from "../components/FullImage";
+import RejectSellerModal from "../components/RejectSellerModal";
 
 const SellerRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [rejectOpen, setRejectOpen] = useState(false);
 
   const pendingApplications = async () => {
     const fetchApi = await fetch(apiSummary.getAllSellerRequests.url, {
@@ -43,9 +47,7 @@ const SellerRequests = () => {
               >
                 {/* Header */}
                 <div className="bg-blue-600 text-white p-5 flex justify-between items-center">
-                  <h2 className="text-2xl font-semibold">
-                    {req.shopName}
-                  </h2>
+                  <h2 className="text-2xl font-semibold">{req.shopName}</h2>
                   <span className="bg-yellow-400 text-yellow-900 text-xs font-semibold px-3 py-1 rounded-full">
                     PENDING
                   </span>
@@ -72,8 +74,7 @@ const SellerRequests = () => {
                     </p>
 
                     <p className="col-span-2">
-                      <span className="font-medium">GST:</span>{" "}
-                      {req.gstNumber}
+                      <span className="font-medium">GST:</span> {req.gstNumber}
                     </p>
                   </div>
 
@@ -86,15 +87,26 @@ const SellerRequests = () => {
 
                       <div className="grid grid-cols-3 gap-3">
                         {req.documents.map((img, index) => (
-                          <div
-                            key={index}
-                            className="border rounded-lg overflow-hidden hover:scale-105 transition cursor-pointer"
-                          >
-                            <img
-                              src={img.imgUrl }
-                              alt="document"
-                              className="h-24 w-full object-cover"
-                            />
+                          <div key={index}>
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setPreviewImage(img.imgUrl);
+                              }}
+                              className="border rounded-lg overflow-hidden hover:scale-105 transition cursor-pointer "
+                            >
+                              <img
+                                src={img.imgUrl}
+                                alt="document"
+                                className="h-24 w-full object-cover"
+                              />
+                            </button>
+                            {previewImage && (
+                              <FullImage
+                                previewImage={previewImage}
+                                setPreviewImage={setPreviewImage}
+                              />
+                            )}
                           </div>
                         ))}
                       </div>
@@ -111,6 +123,9 @@ const SellerRequests = () => {
                     </button>
 
                     <button
+                      onClick={() => {
+                        setRejectOpen(true);
+                      }}
                       className="flex-1 bg-red-600 hover:bg-red-700 
                                  text-white py-2.5 rounded-xl font-medium transition"
                     >
@@ -118,6 +133,9 @@ const SellerRequests = () => {
                     </button>
                   </div>
                 </div>
+                {rejectOpen && (
+                  <RejectSellerModal setRejectOpen={setRejectOpen} req={req} />
+                )}
               </div>
             ))}
           </div>
