@@ -134,7 +134,11 @@ const SellerRequests = () => {
                   </div>
                 </div>
                 {rejectOpen && (
-                  <RejectSellerModal setRejectOpen={setRejectOpen} req={req} />
+                  <RejectSellerModal
+                    pendingApplications={pendingApplications}
+                    setRejectOpen={setRejectOpen}
+                    req={req}
+                  />
                 )}
               </div>
             ))}

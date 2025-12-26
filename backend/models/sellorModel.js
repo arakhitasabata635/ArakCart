@@ -23,7 +23,7 @@ const sellerRequestSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    adminNote: String,
+    ownerNote: String,
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

@@ -1,12 +1,30 @@
 import { useState } from "react";
 import { FaExclamationTriangle, FaTimes } from "react-icons/fa";
+import apiSummary from "../../common";
+import { toast } from "react-toastify";
 
-const RejectSellerModal = ({ setRejectOpen, req }) => {
+const RejectSellerModal = ({ pendingApplications, setRejectOpen, req }) => {
   const [reason, setReason] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    
+    const fetchRejectApi = await fetch(apiSummary.rejectSellerApp.url, {
+      method: apiSummary.rejectSellerApp.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ reqiId: req._id, ownerNote: reason }),
+    });
+    const res = await fetchRejectApi.json();
+    if (res.success) {
+      toast.success(res.mesage);
+      setRejectOpen(false);
+      pendingApplications();
+    }
+    if (res.error) {
+      toast.error(res.message);
+    }
   };
 
   return (
