@@ -43,7 +43,7 @@ router.post("/user-role-update", updateUserRole);
 
 //seller request
 router.post("/apply-seller", authToken, applyForSeller)
-router.post("/apply-status", authToken, sellerApplyStatus)
+router.get("/apply-status", authToken, sellerApplyStatus)
 
 //delete img from cloudnary
 router.delete("/delete-image", authToken, deleteCloudinaryImage);

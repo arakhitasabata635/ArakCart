@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaStore, FaIdCard, FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import apiSummary from "../../common";
 import { useSelector } from "react-redux";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 
-
 const ApplySeller = () => {
   const user = useSelector((state) => state?.user?.user);
   const [selectedImgFiles, setSelectedImgfiles] = useState([]);
+  const [result, setResult] = useState({});
   const [seller, setSeller] = useState({
     userId: "",
     shopName: "",
@@ -72,6 +72,17 @@ const ApplySeller = () => {
   const heandleOnChange = (e) => {
     setSeller({ ...seller, [e.target.name]: e.target.value });
   };
+  const sellerApplyStatus = async () => {
+    const fetchApi = await fetch(apiSummary.checkApplyStatus.url, {
+      method: apiSummary.checkApplyStatus.method,
+      credentials: "include",
+    });
+    const res = await fetchApi.json();
+    setResult(res.data);
+  };
+  useEffect(() => {
+    sellerApplyStatus();
+  }, []);
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">

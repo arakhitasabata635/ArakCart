@@ -100,6 +100,10 @@ const apiSummary = {
   applySeller:{
     url: `${backendPortUrl}/api/apply-seller`,
     method: "post",
+  },
+   checkApplyStatus:{
+    url: `${backendPortUrl}/api/apply-status`,
+    method: "get",
   }
 };
 
