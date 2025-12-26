@@ -104,6 +104,10 @@ const apiSummary = {
    checkApplyStatus:{
     url: `${backendPortUrl}/api/apply-status`,
     method: "get",
+  },
+  reapplySeller:{
+     url: `${backendPortUrl}/api/seller/reapply`,
+     method: "delete",
   }
 };
 

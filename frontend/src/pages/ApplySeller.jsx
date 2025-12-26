@@ -22,7 +22,7 @@ const ApplySeller = () => {
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
         {result?.status === "not_applied" && <RenderApplyForm />}
         {result?.status === "pending" && <RenderPending result={result} />}
-        {result?.status === "rejected" && <RenderRejected result={result} />}
+        {result?.status === "rejected" && <RenderRejected result={result} setResult={setResult} />}
       </div>
     </div>
   );

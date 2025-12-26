@@ -2,6 +2,7 @@ import { FaStore, FaIdCard, FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const RenderApplyForm = () => {
   const user = useSelector((state) => state?.user?.user);
