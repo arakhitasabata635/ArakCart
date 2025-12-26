@@ -11,7 +11,7 @@ const sellerRequestSchema = new mongoose.Schema(
     shopName: { type: String, required: true },
     ownerName: { type: String, required: true },
     phone: { type: String, required: true },
-    gstNumber: {type: String, required: true },
+    gstNumber: { type: String, required: true },
     address: {
       type: String,
     },
@@ -22,7 +22,7 @@ const sellerRequestSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-
+    adminNote: String,
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
