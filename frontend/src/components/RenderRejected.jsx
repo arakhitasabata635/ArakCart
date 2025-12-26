@@ -8,7 +8,6 @@ const RenderRejected = ({ result, setResult }) => {
       method: apiSummary.reapplySeller.method,
       credentials: "include",
     });
-
     const res = await fetchApi.json();
 
     if (res.success) {
@@ -20,7 +19,6 @@ const RenderRejected = ({ result, setResult }) => {
       toast.error(res.message);
     }
   };
-
   return (
     <div className="p-10 text-center">
       <FaStore className="text-6xl text-red-500 mx-auto mb-4" />
@@ -29,9 +27,9 @@ const RenderRejected = ({ result, setResult }) => {
 
       <p className="text-gray-600 mt-2">Your seller request was rejected.</p>
 
-      {result?.adminNote && (
+      {result?.ownerNote && (
         <div className="mt-6 bg-red-50 border border-red-200 rounded-xl p-4">
-          <p className="text-sm text-red-700">Reason: {result?.adminNote}</p>
+          <p className="text-sm text-red-700">Reason: {result?.ownerNote}</p>
         </div>
       )}
 

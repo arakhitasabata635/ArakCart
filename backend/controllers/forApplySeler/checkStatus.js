@@ -12,11 +12,7 @@ const sellerApplyStatus = async (req, res) => {
     }  
    res.status(200).json({
       success: true,
-      data: {
-        status: request.status,
-        adminNote: request.adminNote || "",
-        appliedAt: request.createdAt,
-      },
+      data: request,
     });
   } catch (err) {
     res.status(400).json({

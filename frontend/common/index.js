@@ -112,6 +112,10 @@ const apiSummary = {
   getAllSellerRequests: {
     url: `${backendPortUrl}/api/seller-requests`,
   },
+  rejectSellerApp:{
+    url:`${backendPortUrl}/api/reject-seller-application`,
+    method: "post"
+  }
 };
 
 export default apiSummary;
