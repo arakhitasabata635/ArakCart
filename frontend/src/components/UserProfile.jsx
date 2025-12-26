@@ -41,7 +41,7 @@ const UserProfile = ({ setUserDrawer }) => {
 
       {/* Navigation Links */}
       <nav className="flex flex-col gap-4 mt-5 text-[15px] font-medium">
-        {(user?.role !== "user" ) && (
+        {user?.role !== "user" && (
           <div>
             <div
               onClick={() => {
@@ -84,6 +84,19 @@ const UserProfile = ({ setUserDrawer }) => {
           >
             <FaStore />
             Become a Seller
+          </div>
+        )}
+        {user?.role === "owner" && (
+          <div
+            onClick={() => {
+              navigate("/owner/seller-requests");
+              setUserDrawer?.(false);
+            }}
+            className="flex items-center gap-3 py-2 px-3 rounded-lg 
+               hover:bg-blue-500 transition cursor-pointer"
+          >
+            <FaStore />
+            Seller Requests
           </div>
         )}
 

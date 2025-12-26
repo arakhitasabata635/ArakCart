@@ -5,11 +5,12 @@ import apiSummary from "../../common";
 import { toast } from "react-toastify";
 import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import deleteImageFromCloudnary from "../../helpers/deleteImageFromCloudnary";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CommonLoader from "./loadingEffect/CommonLoader";
 import { fetchUser } from "../store/userSlice";
 
 const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
+  const sessionUser = useSelector((state) => state?.user?.user);
   const modalRef = useRef();
   const [editUser, setEditUser] = useState(user);
   const [loading, setLoading] = useState(false);
@@ -88,8 +89,9 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
 
   const handleSave = async () => {
     setLoading(true);
-    if (user.role !== editUser.role) {
+    if (sessionUser._id !== editUser._id && sessionUser.role !== "owner") {
       await updateRole(editUser);
+      return;
     }
     if (!editUser?.profilePic?.imgUrl || editUser?.profilePic[0]) {
       const uploadResults = await uploadImgCloudnary(editUser.profilePic[0]);
@@ -103,7 +105,6 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
       await updateUser(finalData);
     }
   };
-
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -129,11 +130,11 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
               htmlFor="profileUpload"
               className="w-16 h-16 rounded-full overflow-hidden bg-gray-200"
             >
-              {editUser?.profilePic ? (
+              {editUser?.profilePic.imgUrl || editUser?.profilePic[0] ? (
                 <img
                   src={
-                    editUser.profilePic.imgUrl ||
-                    URL.createObjectURL(editUser.profilePic[0])
+                    editUser?.profilePic.imgUrl ||
+                    URL.createObjectURL(editUser?.profilePic[0])
                   }
                   alt={editUser.name}
                   className="w-full h-full object-cover"
@@ -144,7 +145,7 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
                 </div>
               )}
               <input
-                disabled={editUser.role === "owner"}
+                disabled={editUser._id !== sessionUser._id}
                 onChange={handleImageUpload}
                 id="profileUpload"
                 type="file"
@@ -156,7 +157,7 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
 
             <div>
               <input
-                disabled={editUser.role === "owner"}
+                disabled={editUser._id !== sessionUser._id}
                 onChange={handleOnChange}
                 name="name"
                 type="text"
@@ -165,7 +166,7 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
               />
               <input
                 onChange={handleOnChange}
-                disabled={editUser.role === "owner"}
+                disabled={editUser._id !== sessionUser._id}
                 name="email"
                 type="mail"
                 value={editUser?.email}
@@ -177,20 +178,25 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
           {/* Role Update */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">Role</label>
-            <select
-              id="roleSelect"
-              name="role"
-              disabled={editUser.role !== "owner"}
-              value={editUser.role}
-              onChange={handleOnChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-blue-500"
-            >
-              {ROLE.map((option, indx) => (
-                <option key={indx} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+            {sessionUser.role === "owner" && editUser.role !== "owner" ? (
+              <select
+                id="roleSelect"
+                name="role"
+                value={editUser.role}
+                onChange={handleOnChange}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-blue-500"
+              >
+                {ROLE.map((option, indx) => (
+                  <option key={indx} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <div className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-blue-500">
+                {editUser.role}
+              </div>
+            )}
           </div>
 
           {/* Action Buttons */}

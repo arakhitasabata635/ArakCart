@@ -85,7 +85,7 @@ const AllUsers = () => {
                   <td className="px-4 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-                        {user.profilePic ? (
+                        {user?.profilePic.imgUrl ? (
                           <img
                             src={user.profilePic.imgUrl}
                             alt={user.name}
