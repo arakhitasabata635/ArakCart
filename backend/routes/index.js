@@ -40,7 +40,7 @@ router.get("/userLogout", userLogoutController);
 //admin pannel
 router.get("/admin/users", authToken, allUsersController);
 router.post("/admin/update-user", authToken, updateUserDetails);
-router.post("/user-role-update", updateUserRole);
+router.post("/user-role-update",authToken, updateUserRole);
 
 //seller request
 router.post("/apply-seller", authToken, applyForSeller);
