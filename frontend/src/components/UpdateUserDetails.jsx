@@ -74,7 +74,7 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
     const updateUser = await updateUserFetch.json();
     if (updateUser.success) {
       toast.success(updateUser.message);
-      await fetchAllUsers();
+      await fetchAllUsers?.();
       setEditingUser(null);
     }
     if (updateUser.error) {

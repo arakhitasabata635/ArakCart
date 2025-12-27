@@ -20,6 +20,22 @@ const SellerRequests = () => {
     if (res.error) toast.error(res.error);
   };
 
+  const approveSeller = async (id) => {
+    const res = await fetch(`${apiSummary.approveSeller.url}/${id}`, {
+      method: apiSummary.approveSeller.method,
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      toast.success("Seller approved successfully 🎉");
+      setRequests((prev) => prev.filter((r) => r._id !== id));
+    } else {
+      toast.error(data.message);
+    }
+  };
+
   useEffect(() => {
     pendingApplications();
   }, []);
@@ -116,6 +132,7 @@ const SellerRequests = () => {
                   {/* Actions */}
                   <div className="flex gap-4 pt-4">
                     <button
+                      onClick={() => approveSeller(req._id)}
                       className="flex-1 bg-green-600 hover:bg-green-700 
                                  text-white py-2.5 rounded-xl font-medium transition"
                     >

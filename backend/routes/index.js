@@ -31,6 +31,7 @@ import sellerApplyStatus from "../controllers/forApplySeler/checkStatus.js";
 import reapplySeller from "../controllers/forApplySeler/reapplySeller.js";
 import allApplications from "../controllers/forApplySeler/allApplications.js";
 import rejectSellerApplication from "../controllers/forApplySeler/rejectSellerApplication.js";
+import applicationApprove from "../controllers/forApplySeler/applicationApprove.js";
 
 const router = express.Router();
 
@@ -50,6 +51,7 @@ router.get("/apply-status", authToken, sellerApplyStatus);
 router.delete("/seller/reapply", authToken, reapplySeller);
 router.get("/seller-requests", authToken, allApplications);
 router.post("/reject-seller-application", authToken, rejectSellerApplication);
+router.post("/approve-seller-application/:id", authToken, applicationApprove);
 
 //delete img from cloudnary
 router.delete("/delete-image", authToken, deleteCloudinaryImage);

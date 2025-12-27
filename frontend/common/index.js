@@ -115,6 +115,10 @@ const apiSummary = {
   rejectSellerApp:{
     url:`${backendPortUrl}/api/reject-seller-application`,
     method: "post"
+  },
+   approveSeller:{
+    url:`${backendPortUrl}/api/approve-seller-application`,
+    method: "post"
   }
 };
 
