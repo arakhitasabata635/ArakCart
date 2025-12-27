@@ -63,6 +63,7 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
   };
 
   const updateRole = async (editUser) => {
+    setLoading(true)
     const updateUserFetch = await fetch(apiSummary.updateUserRole.url, {
       method: apiSummary.updateUserRole.method,
       headers: {
@@ -75,10 +76,12 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
     if (updateUser.success) {
       toast.success(updateUser.message);
       await fetchAllUsers?.();
+      setLoading(false);
       setEditingUser(null);
     }
     if (updateUser.error) {
       toast.error(updateUser.message);
+      setLoading(false);
     }
   };
 
@@ -89,11 +92,7 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
 
   const handleSave = async () => {
     setLoading(true);
-    if (sessionUser._id !== editUser._id && sessionUser.role !== "owner") {
-      await updateRole(editUser);
-      return;
-    }
-    if (!editUser?.profilePic?.imgUrl || editUser?.profilePic[0]) {
+    if (editUser?.profilePic[0].name) {
       const uploadResults = await uploadImgCloudnary(editUser.profilePic[0]);
       const finalData = {
         ...editUser,
@@ -102,8 +101,15 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
           public_id: uploadResults.public_id,
         },
       };
-      await updateUser(finalData);
+      return await updateUser(finalData);
     }
+    await updateUser({
+      ...editUser,
+      profilePic: {
+        imgUrl: "",
+        public_id: "",
+      },
+    });
   };
   return (
     <>
@@ -130,7 +136,7 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
               htmlFor="profileUpload"
               className="w-16 h-16 rounded-full overflow-hidden bg-gray-200"
             >
-              {editUser?.profilePic.imgUrl || editUser?.profilePic[0] ? (
+              {editUser?.profilePic.imgUrl || editUser?.profilePic[0]?.name ? (
                 <img
                   src={
                     editUser?.profilePic.imgUrl ||
@@ -207,13 +213,21 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
             >
               Cancel
             </button>
-
-            <button
-              className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
-              onClick={handleSave}
-            >
-              Save
-            </button>
+            {sessionUser?.role === "owner" ? (
+              <button
+                className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+                onClick={() => updateRole(editUser)}
+              >
+                Save Role
+              </button>
+            ) : (
+              <button
+                className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+                onClick={handleSave}
+              >
+                Save
+              </button>
+            )}
           </div>
         </div>
       </div>

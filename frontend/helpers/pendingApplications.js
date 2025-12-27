@@ -10,6 +10,7 @@ const pendingApplications = async () => {
   if (res.success) return res.data;
   if (res.error) {
     toast.error(res.message);
+    return [];
   }
 };
 export default pendingApplications;
