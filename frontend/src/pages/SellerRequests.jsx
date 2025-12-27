@@ -4,23 +4,16 @@ import { toast } from "react-toastify";
 import apiSummary from "../../common";
 import FullImage from "../components/FullImage";
 import RejectSellerModal from "../components/RejectSellerModal";
-
+import pendingApplications from "../../helpers/pendingApplications";
+import CommonLoader from "../../src/components/loadingEffect/CommonLoader";
 const SellerRequests = () => {
   const [requests, setRequests] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
   const [rejectOpen, setRejectOpen] = useState(false);
-
-  const pendingApplications = async () => {
-    const fetchApi = await fetch(apiSummary.getAllSellerRequests.url, {
-      credentials: "include",
-    });
-    const res = await fetchApi.json();
-
-    if (res.success) setRequests(res.data);
-    if (res.error) toast.error(res.error);
-  };
+  const [loading, setLoading] = useState(false);
 
   const approveSeller = async (id) => {
+    setLoading(true);
     const res = await fetch(`${apiSummary.approveSeller.url}/${id}`, {
       method: apiSummary.approveSeller.method,
       credentials: "include",
@@ -29,15 +22,21 @@ const SellerRequests = () => {
     const data = await res.json();
 
     if (data.success) {
-      toast.success("Seller approved successfully 🎉");
+      toast.success(data.message);
       setRequests((prev) => prev.filter((r) => r._id !== id));
+      setLoading(false);
     } else {
       toast.error(data.message);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    pendingApplications();
+    const fetchReq = async () => {
+      const req = await pendingApplications();
+      setRequests(req);
+    };
+    fetchReq();
   }, []);
 
   return (
@@ -162,6 +161,7 @@ const SellerRequests = () => {
           </div>
         )}
       </div>
+      {loading && <CommonLoader />}
     </div>
   );
 };

@@ -3,7 +3,8 @@ import { FiLogOut } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../store/userSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import pendingApplications from "../../helpers/pendingApplications";
 import UpdateUserDetails from "./UpdateUserDetails";
 
 const UserProfile = ({ setUserDrawer }) => {
@@ -11,6 +12,14 @@ const UserProfile = ({ setUserDrawer }) => {
   const navigate = useNavigate();
   const [editingUser, setEditingUser] = useState(null);
   const user = useSelector((state) => state?.user?.user);
+  let [pendingCount, setPendingCount] = useState([]);
+  useEffect(() => {
+    const fetchReq = async () => {
+      const req = await pendingApplications();
+      setPendingCount(req);
+    };
+    fetchReq();
+  }, []);
   return (
     <>
       {/* Profile Section */}
@@ -92,11 +101,37 @@ const UserProfile = ({ setUserDrawer }) => {
               navigate("/owner/seller-requests");
               setUserDrawer?.(false);
             }}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg 
-               hover:bg-blue-500 transition cursor-pointer"
+            className="
+      relative flex items-center justify-between
+      px-4 py-2.5 rounded-xl cursor-pointer
+      transition-all duration-200
+      hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500
+      hover:shadow-md
+      group
+    "
           >
-            <FaStore />
-            Seller Requests
+            {/* Left */}
+            <div className="flex items-center gap-3 text-white">
+              <FaStore className="text-lg opacity-90 group-hover:scale-110 transition" />
+              <span className="font-medium tracking-wide">Seller Requests</span>
+            </div>
+
+            {/* 🔔 Badge */}
+            {pendingCount?.length > 0 && (
+              <span
+                className="
+          absolute right-3 top-1/2 -translate-y-1/2
+          min-w-[22px] h-[22px] px-1
+          text-xs font-bold text-white
+          bg-red-500 rounded-full
+          flex items-center justify-center
+          shadow
+          animate-pulse
+        "
+              >
+                {pendingCount?.length}
+              </span>
+            )}
           </div>
         )}
 
