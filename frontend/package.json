@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run dev:vite\" \"npm run dev:tailwind\"",
-    "dev:vite": "vite",
-    "dev:tailwind": "npx tailwindcss -i ./src/index.css -o ./src/output.css --watch"
+    "build": "vite build",
+     "dev": "vite",
+     "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.10.1",
