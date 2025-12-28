@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import apiSummary from "../../common";
 import RenderPending from "../components/RenderPending";
-import RenderApplyForm from "../components/renderApplyForm";
 import RenderRejected from "../components/RenderRejected";
+import RenderApplyForm from "../components/RenderApplyForm";
 
 const ApplySeller = () => {
   const [result, setResult] = useState({});
