@@ -210,17 +210,51 @@ const RenderApplyForm = ({ sellerApplyStatus }) => {
             </div>
 
             <div>
-              <label className="text-sm text-gray-600">GST / ID Proof</label>
-              <div className="mt-1 flex items-center gap-3 border rounded-lg px-3 py-2">
+              <label className="text-sm font-medium text-gray-700">
+                GST / ID Proof
+              </label>
+
+              <div
+                className="mt-1 flex items-center gap-3 border border-gray-300 
+                  rounded-lg px-3 py-2 bg-white 
+                  focus-within:border-blue-500 focus-within:ring-1 
+                  focus-within:ring-blue-500 transition"
+              >
                 <FaIdCard className="text-gray-400" />
                 <input
                   required
                   onChange={handleSelectImages}
                   type="file"
                   accept="image/*"
-                  className="text-sm text-gray-600"
+                  multiple
+                  className="text-sm text-gray-600 file:mr-3 file:py-1.5 file:px-3
+                 file:rounded-md file:border-0
+                 file:text-sm file:font-medium
+                 file:bg-blue-50 file:text-blue-600
+                 hover:file:bg-blue-100 cursor-pointer"
                 />
               </div>
+
+              {/* Selected files */}
+              {selectedImgFiles?.length > 0 && (
+                <div className="mt-3 border border-green-200 bg-green-50 rounded-lg p-3">
+                  <p className="text-xs font-semibold text-green-700 mb-2">
+                    Uploaded Documents
+                  </p>
+
+                  <ul className="space-y-1">
+                    {selectedImgFiles.map((file, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center gap-2 text-sm text-green-800"
+                      >
+                        <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                        {file.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
 
             <button
