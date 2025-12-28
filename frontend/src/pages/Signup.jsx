@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import apiSummary from "../../common";
@@ -9,6 +9,8 @@ import CommonLoader from "../components/loadingEffect/CommonLoader";
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [editpic, setEditPic] = useState([]);
+  const [previewUrl, setPreviewUrl] = useState("");
   const confirmPassword = useRef("");
 
   const [data, setData] = useState({
@@ -19,10 +21,17 @@ const Signup = () => {
   });
 
   const handleImageUpload = async (e) => {
-    const files = e.target.files;
+    const files = Array.from(e.target.files);
     if (files.length === 0) return;
-    setData((prev) => ({ ...prev, profilePic: { files } }));
+    setEditPic(files);
   };
+  useEffect(() => {
+    if (!editpic[0]) return;
+    const url = URL.createObjectURL(editpic[0]);
+    setPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [editpic]);
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -60,20 +69,28 @@ const Signup = () => {
       toast.error("Passwords do not match!");
       return;
     }
-    if (data.profilePic?.[0]) {
-      const uploadResults = await uploadImgCloudnary(data.profilePic[0]);
+    if (previewUrl) {
+      const uploadResults = await uploadImgCloudnary(editpic[0]);
+      if (!uploadResults.url) {
+        toast.error("user img not update");
+        setLoading(false);
+        return;
+      }
       const finalData = {
         ...data,
         profilePic: {
           imgUrl: uploadResults.url,
-          public_id: uploadResults.public_id,
+          publicId: uploadResults.public_id,
         },
       };
       saveUser(finalData);
     } else {
       const finalData = {
         ...data,
-        profilePic: {},
+        profilePic: {
+          imgUrl: "",
+          publicId: "",
+        },
       };
       saveUser(finalData);
     }
@@ -96,9 +113,9 @@ const Signup = () => {
       flex flex-col items-center justify-center gap-1 transition-all
       hover:scale-105 hover:shadow-lg relative"
               >
-                {data.profilePic[0]?.type ? (
+                {editpic.length ? (
                   <img
-                    src={URL.createObjectURL(data.profilePic[0])}
+                    src={previewUrl}
                     alt="Profile"
                     className="w-full h-full object-cover animate-fadeIn"
                   />

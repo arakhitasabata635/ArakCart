@@ -71,7 +71,7 @@ const Cart = () => {
               <>
                 {cart.length === 0 && (
                   <p className="text-gray-600 text-center py-10 border rounded-lg">
-                    Your cart is empty.
+                    Your cart is empty. Add items to place an order.
                   </p>
                 )}
                 <div className="space-y-5">
@@ -118,7 +118,9 @@ const Cart = () => {
             </div>
 
             <button
+            disabled={totalPrice === 0}
               onClick={() => {
+                 if (totalPrice === 0) return;
                 navigate("/order/checkout", {
                   state: {
                     totalPrice: totalPrice,
