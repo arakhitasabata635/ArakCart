@@ -4,7 +4,11 @@ const updateUserRole = async (req, res) => {
   try {
     const user = req.body;
     const sessionUser = await userModel.findById(req.userId);
-    if (sessionUser.role === "owner") {
+
+    if (
+      sessionUser.role === "owner" &&
+      sessionUser._id.toString() !== user._id
+    ) {
       const updatedUser = await userModel
         .findByIdAndUpdate(user._id, { role: user.role }, { new: true })
         .select("-password");

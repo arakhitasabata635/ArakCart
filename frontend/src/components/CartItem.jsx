@@ -2,6 +2,7 @@ import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const CartItem = ({ item, qty, removeItem, setCart }) => {
   const discount = item.price - item.sellingPrice;
@@ -33,7 +34,9 @@ const CartItem = ({ item, qty, removeItem, setCart }) => {
   return (
     <div className="flex  items-center gap-3 sm:gap-5 border rounded-xl p-2 sm:p-4 shadow hover:shadow-md bg-white transition-all duration-200">
       {/* IMAGE */}
-      <div className="relative">
+      <Link
+       to={`/product-details/${item._id}`}
+       className="relative">
         <img
           src={item.productImages[0].imgUrl}
           alt={item.productName}
@@ -46,7 +49,7 @@ const CartItem = ({ item, qty, removeItem, setCart }) => {
             {Math.round((discount / item.price) * 100)}% OFF
           </span>
         )}
-      </div>
+      </Link>
 
       {/* PRODUCT INFO */}
       <div className="flex-1 space-y-1">

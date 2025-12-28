@@ -13,6 +13,8 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
   const sessionUser = useSelector((state) => state?.user?.user);
   const modalRef = useRef();
   const [editUser, setEditUser] = useState(user);
+  const [editpic, setEditPic] = useState([]);
+  const [previewUrl, setPreviewUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -24,17 +26,18 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
     }));
   };
   const handleImageUpload = async (e) => {
-    const files = e.target.files;
+    const files = Array.from(e.target.files);
     if (files.length === 0) return;
-    setEditUser((prev) => ({ ...prev, profilePic: files }));
+    setEditPic(files);
   };
+  useEffect(() => {
+    if (!editpic[0]) return;
 
-  // Close modal when clicking outside content box
-  const handleOutsideClick = (e) => {
-    if (modalRef.current && !modalRef.current.contains(e.target)) {
-      setEditingUser(null);
-    }
-  };
+    const url = URL.createObjectURL(editpic[0]);
+    setPreviewUrl(url);
+
+    return () => URL.revokeObjectURL(url);
+  }, [editpic]);
 
   //update user
   const updateUser = async (finalData) => {
@@ -49,21 +52,39 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
     const updateUser = await updateUserFetch.json();
     if (updateUser.success) {
       toast.success(updateUser.message);
+      if (editUser.profilePic.publicId) {
+        await deleteImageFromCloudnary(editUser?.profilePic?.publicId);
+      }
       dispatch(fetchUser());
       setLoading(false);
       setEditingUser(null);
-      if (editUser?.profilePic.imgUrl) {
-        await deleteImageFromCloudnary(editUser?.profilePic.public_id);
+    }
+  };
+  const handleSave = async () => {
+    setLoading(true);
+    if (editpic.length) {
+      const uploadResults = await uploadImgCloudnary(editpic[0]);
+      if (!uploadResults.url) {
+        toast.error("user img not update");
+        setLoading(false);
+        return;
       }
+    
+      const finalData = {
+        ...editUser,
+        profilePic: {
+          imgUrl: uploadResults.url,
+          publicId: uploadResults.public_id,
+        },
+      };
+      await updateUser(finalData);
+      return;
     }
-    if (updateUser.error) {
-      setLoading(false);
-      toast.error(updateUser.message);
-    }
+    await updateUser(editUser);
   };
 
   const updateRole = async (editUser) => {
-    setLoading(true)
+    setLoading(true);
     const updateUserFetch = await fetch(apiSummary.updateUserRole.url, {
       method: apiSummary.updateUserRole.method,
       headers: {
@@ -85,32 +106,6 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, []);
-
-  const handleSave = async () => {
-    setLoading(true);
-    if (editUser?.profilePic[0].name) {
-      const uploadResults = await uploadImgCloudnary(editUser.profilePic[0]);
-      const finalData = {
-        ...editUser,
-        profilePic: {
-          imgUrl: uploadResults.url,
-          public_id: uploadResults.public_id,
-        },
-      };
-      return await updateUser(finalData);
-    }
-    await updateUser({
-      ...editUser,
-      profilePic: {
-        imgUrl: "",
-        public_id: "",
-      },
-    });
-  };
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
@@ -136,13 +131,10 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
               htmlFor="profileUpload"
               className="w-16 h-16 rounded-full overflow-hidden bg-gray-200"
             >
-              {editUser?.profilePic.imgUrl || editUser?.profilePic[0]?.name ? (
+              {editUser?.profilePic?.imgUrl || editpic.length > 0 ? (
                 <img
-                  src={
-                    editUser?.profilePic.imgUrl ||
-                    URL.createObjectURL(editUser?.profilePic[0])
-                  }
-                  alt={editUser.name}
+                  src={previewUrl || editUser?.profilePic?.imgUrl}
+                  alt={editUser?.name}
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -213,7 +205,7 @@ const UpdateUserDetails = ({ user, setEditingUser, fetchAllUsers }) => {
             >
               Cancel
             </button>
-            {sessionUser?.role === "owner" ? (
+            {sessionUser?._id !== editUser?._id ? (
               <button
                 className="px-4 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
                 onClick={() => updateRole(editUser)}
