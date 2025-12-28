@@ -4,7 +4,6 @@ const editProductControler = async (req, res) => {
     const userId = req.userId;
     const newproduct = req.body;
     const product = await ProductModel.findById(newproduct._id);
-    console.log(product.userId.toString() === userId);
     if (!product) {
       return res
         .status(404)
