@@ -5,9 +5,11 @@ import uploadImgCloudnary from "../../helpers/uploadImageInCloudnary";
 import ProductImage from "./ProductImage";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
+import CommonLoader from "../components/loadingEffect/CommonLoader";
 
 const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
   const [selectedImgFiles, setSelectedImgfiles] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     productName: "",
     brandName: "",
@@ -59,6 +61,7 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
 
   const heandleOnSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const allImgs = await handleUploadAllImages();
     const finaldata = {
       ...data,
@@ -75,7 +78,8 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
     const dataRes = await fetchUploadProductApi.json();
     if (dataRes.success) {
       toast.success(dataRes.message);
-      setAllProduct((prev) => [dataRes.data,...prev]);
+      setAllProduct((prev) => [dataRes.data, ...prev]);
+      setLoading(false);
       setUploadProduct(false);
     }
     if (dataRes.error) {
@@ -209,6 +213,7 @@ const UploadProduct = ({ setUploadProduct, setAllProduct }) => {
           </button>
         </div>
       </form>
+      {loading && <CommonLoader />}
     </div>
   );
 };

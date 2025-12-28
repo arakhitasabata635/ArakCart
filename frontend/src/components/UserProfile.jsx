@@ -57,7 +57,7 @@ const UserProfile = ({ setUserDrawer }) => {
                 navigate("/user-details/users");
                 setUserDrawer?.(false);
               }}
-              className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition"
+              className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 transition cursor-pointer"
             >
               <FaUsers /> All Users
             </div>
@@ -67,7 +67,7 @@ const UserProfile = ({ setUserDrawer }) => {
                 navigate("/user-details/products");
                 setUserDrawer?.(false);
               }}
-              className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition"
+              className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 transition cursor-pointer"
             >
               <FaBox /> Products
             </div>
@@ -78,7 +78,7 @@ const UserProfile = ({ setUserDrawer }) => {
             navigate("/orders");
             setUserDrawer?.(false);
           }}
-          className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition cursor-pointer"
+          className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 transition cursor-pointer"
         >
           <FaShoppingCart /> Orders
         </div>
@@ -89,7 +89,7 @@ const UserProfile = ({ setUserDrawer }) => {
               navigate("/user/apply-seller");
               setUserDrawer?.(false);
             }}
-            className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-blue-500 transition cursor-pointer"
+            className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-500 transition cursor-pointer"
           >
             <FaStore />
             Become a Seller

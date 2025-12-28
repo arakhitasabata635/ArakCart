@@ -6,10 +6,13 @@ import ProductImage from "./ProductImage";
 import apiSummary from "../../common";
 import { toast } from "react-toastify";
 import deleteImageFromCloudnary from "../../helpers/deleteImageFromCloudnary";
+import CommonLoader from "../components/loadingEffect/CommonLoader"
+
 
 const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
   const [selectedImgFiles, setSelectedImgfiles] = useState([]);
   const [oldImgToBeDelete, setOldImgToBeDelete] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     _id: product?._id,
     productName: product?.productName,
@@ -68,6 +71,7 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
   const heandleOnSubmit = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true)
       const allImgs = (await handleUploadAllImages()) || [];
       const finaldata = {
         ...data,
@@ -97,6 +101,7 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
             product._id === dataRes.data._id ? dataRes.data : product
           );
         });
+        setLoading(false)
         setEditProduct(false);
       }
       if (dataRes.error) {
@@ -242,6 +247,7 @@ const AdminEditProduct = ({ product, setEditProduct, setAllProduct }) => {
           </button>
         </div>
       </form>
+      {loading && <CommonLoader />}
     </div>
   );
 };
