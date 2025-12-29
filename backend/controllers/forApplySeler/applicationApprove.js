@@ -1,6 +1,6 @@
 import SellerModel from "../../models/sellorModel.js";
 import userModel from "../../models/userModel.js";
-import approveReqMail from "../../utils/approveReqmail.js";
+import approveReqMail from "../../utils/approveReqMail.js";
 const applicationApprove = async (req, res) => {
   try {
     const { id } = req.params;
