@@ -36,7 +36,9 @@ const createPayCheckoutSession = async (req, res) => {
             currency: "inr",
             product_data: {
               name: item.product.productName,
-              images: [item.product.productImages[0].imgUrl],
+              images: item.product.productImages?.[0]?.imgUrl
+                ? [item.product.productImages[0].imgUrl]
+                : [],
               metadata: {
                 productId: item.product._id,
               },
