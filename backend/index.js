@@ -10,11 +10,7 @@ dotenv.config();
 
 const app = express();
 // stripe webhook
-app.post(
-  "/api/webhooks",
-  express.raw({ type: "application/json" }),
-  webhooks
-);
+app.post("/api/webhooks", express.raw({ type: "application/json" }), webhooks);
 
 // Middlewares
 app.use(
@@ -28,7 +24,11 @@ app.use(cookieParser());
 
 app.use("/api", router);
 
-const PORT = 8080 || process.env.PORT;
-connectDB().then(() => {
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-});
+const PORT = process.env.PORT || 8080;
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+  .catch((err) => {
+    console.error(" Server failed to start", err);
+  });

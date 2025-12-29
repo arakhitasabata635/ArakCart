@@ -1,7 +1,7 @@
 import stripe from "../../config/stripe.js";
 import orderModel from "../../models/orderProductModel.js";
 import sendOrderMail from "../../utils/sendOrderMail.js";
-const endPointSecreateKey = process.env.STRIPE_ENDPOINT_WEBHOOK_SECRET_KEY;
+const endPointSecreateKey = process.env.STRIPE_WEBHOOK_SECRET;
 
 const getProductDetails = async (lineItems) => {
   const allProducts = [];
@@ -34,20 +34,6 @@ const webhooks = async (req, res) => {
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
-  if (event.type === "checkout.session.expired") {
-    const session = event.data.object;
-    await orderModel.findOneAndUpdate(
-      { sessionId: session.id },
-      {
-        status: "cancelled",
-        paymentDetails: {
-          paymentId: session.payment_intent,
-          payment_method_type: session.payment_method_types,
-          payment_status: session.payment_status,
-        },
-      }
-    );
-  }
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
     const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
@@ -75,6 +61,20 @@ const webhooks = async (req, res) => {
       orderId: saveOrder._id,
       totalAmount: saveOrder.totalAmount,
     });
+  }
+    if (event.type === "checkout.session.expired") {
+    const session = event.data.object;
+    await orderModel.findOneAndUpdate(
+      { sessionId: session.id },
+      {
+        status: "cancelled",
+        paymentDetails: {
+          paymentId: session.payment_intent,
+          payment_method_type: session.payment_method_types,
+          payment_status: session.payment_status,
+        },
+      }
+    );
   }
   res.status(200).send();
 };
