@@ -1,7 +1,6 @@
-import Stripe from "stripe";
 import userModel from "../../models/userModel.js";
 import orderModel from "../../models/orderProductModel.js";
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+import stripe from "../../config/stripe.js";
 
 const createPayCheckoutSession = async (req, res) => {
   try {
