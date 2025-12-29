@@ -14,7 +14,7 @@ const userLoginController = async (req, res) => {
     }
 
     const user = await userModel.findOne({ email });
-   
+
     if (!user) {
       throw new Error("invalid user");
     }
@@ -33,6 +33,8 @@ const userLoginController = async (req, res) => {
     const tokenOption = {
       httpOnly: true,
       secure: true,
+      sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000,
     };
     res.cookie("token", token, tokenOption).status(200).json({
       message: "Login Sucessfully",
