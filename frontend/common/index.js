@@ -1,4 +1,4 @@
-const backendPortUrl = "http://localhost:8080";
+const backendPortUrl = process.env.VITE_BACKEND_URL;
 
 const apiSummary = {
   SignUP: {
