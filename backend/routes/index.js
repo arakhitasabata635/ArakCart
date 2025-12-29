@@ -22,7 +22,7 @@ import updateCartItemCount from "../controllers/cart/updateCartItemCount.js";
 import searchProduct from "../controllers/product/searchProduct.js";
 import categoryWiseProducts from "../controllers/product/categoryWiseProducts.js";
 import createPayCheckoutSession from "../controllers/order/createPayCheckoutSession.js";
-import allOrdersControler from "../controllers/order/AllOrders.js";
+import allOrdersControler from "../controllers/order/allOrders.js";
 import updateUserDetails from "../controllers/user/updateUserDetails.js";
 import updateUserRole from "../controllers/user/updateUserRole.js";
 import sessonOrder from "../controllers/order/sessonOrder.js";
