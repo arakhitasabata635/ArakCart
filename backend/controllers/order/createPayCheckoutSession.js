@@ -24,7 +24,6 @@ const createPayCheckoutSession = async (req, res) => {
     const user = await userModel.findById(req.userId);
     if (user) {
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
         mode: "payment",
         customer_email: user.email,
         metadata: {
