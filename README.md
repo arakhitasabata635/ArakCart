@@ -19,7 +19,8 @@ ArakCart/
 
 ## 🎥 Project Demo
 
-[![Watch Demo](https://res.cloudinary.com/dah6qrspo/image/upload/v1767872796/Screenshot_2026-01-08_171006_kbbhkc.png)](https://drive.google.com/file/d/1oblb4HUgMqNkF7tFCtMFTRxMxAxSLYAP/view)
+[![Watch Demo](https://res.cloudinary.com/dah6qrspo/image/upload/v1767872796/Screenshot_2026-01-08_171006_kbbhkc.png)](https://drive.google.com/file/d/1HhMdgr7vyWGidPkmdwr5cXobYzK0g-gN/view?usp=sharing)
+
 
 ---
 🚀 Features
