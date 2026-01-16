@@ -21,18 +21,18 @@ const applicationApprove = async (req, res) => {
 
       const user = await userModel.findById(sellerRequest.userId);
       user.role = "admin";
+
       await user.save();
+      res.status(200).json({
+        message: "application is approved",
+        error: false,
+        success: true,
+      });
 
       await approveReqMail({
         email: sellerRequest.ShopMail,
         ownerName: sellerRequest.ownerName,
         shopName: sellerRequest.shopName,
-      });
-
-      res.status(200).json({
-        message: "application is approved",
-        error: false,
-        success: true,
       });
     } else {
       res.status(403).json({
