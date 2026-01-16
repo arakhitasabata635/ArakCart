@@ -1,0 +1,221 @@
+[33m246d82b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m chore: move source code to src folder
+[33ma10b7c4[m chore: update scripts for ts-node
+[33me77866f[m[33m ([m[1;31morigin/main[m[33m)[m Merge branch 'main' of https://github.com/arakhitasabata635/mern-project
+[33m64f899d[m chore: add typescript configuration
+[33m3369758[m Update demo link in README.md
+[33m9818b37[m Fix markdown link for project demo image
+[33m30785ac[m add global readme file
+[33m2acc961[m Update README.md formatting and content
+[33ma7e4700[m add readme file
+[33m1c50e97[m add readme file
+[33ma8a7356[m remove checkout session timeout
+[33m95842c8[m wip: remove payment method type
+[33md93c708[m wip: stripe checkout page not open
+[33me00131d[m deploy: move env.config top
+[33mf565a92[m remove one stripe fron createPayCheckout session
+[33m4c45af3[m add versal.json file
+[33mf0dd7ac[m Merge branch 'main' of https://github.com/arakhitasabata635/mern-project
+[33m0ac6a3a[m feat: user  login update authToken option
+[33meab330a[m Change backend URL access method to import.meta.env
+[33m12b3031[m fix: add backend url in env
+[33mf9421b9[m build: file name mismatch at build time
+[33mff8c253[m fix: file name  at build time
+[33m2b46a81[m Backend ready for deployment
+[33mcfcc15c[m Fix file name casing
+[33m58c885a[m chenge package .json
+[33m841a77f[m feat:add febicon img
+[33m8904679[m clear connsole log
+[33m3786c51[m fix:img upload at sign up page
+[33me7761e6[m feat: add commonLoader
+[33ma13f0be[m fix: updateUser details  not working
+[33m29ed1c6[m feat: show the uploaded docuemnt name in seller apply form
+[33m670e4e9[m fix: editUser and role bug
+[33mb520f1f[m feat: add approve ui
+[33ma48258b[m feat: owner approve the requst and change the role to admin
+[33m04c938e[m feat: owner reject the application gave resion
+[33mbc1a978[m wip: make all connection for reject application
+[33mee61c49[m wip: make reject resion ui
+[33m079d31c[m feat: create ui for owner to see the panding application
+[33m33cca49[m wip: add shopmail in db
+[33m4c56d48[m fix: some bog releated to update user
+[33me0afb8b[m wip:change UserModel schema
+[33m7e4ed25[m fix: not  change user role by owner
+[33mee93e2a[m feat: using sellerApplication status show different page
+[33m1da742e[m wip: create different component to show the sellerApply result
+[33md00173e[m wip: make fuction to check status
+[33m3be4b15[m wip: create seller status check api
+[33m58bccaf[m wip:add admin res in db
+[33m3d96649[m wip: apply sellerApi in ui
+[33maa794ab[m wip: created applySeller api
+[33m93570d1[m wip: create seller model
+[33mde5e5a9[m feat:create ui for apply seller
+[33m67a9ce7[m refector: img delete from clodnary call last to take less time ui updated
+[33m6cfb70a[m feat: add new payment logic in orderdetails
+[33m3ef919a[m style: update ui of payment success. feat: after order save redirect to orders page
+[33m8bfb06f[m wip: make ui better for payment success page
+[33mf268d36[m feat: add receiverdetails in order
+[33ma5844e9[m feat : seperate db call for role and userDetails update
+[33me2810ea[m wip: create user update controler
+[33m77bc54a[m wip: update change user role component to user profile update
+[33mc7b69cf[m feat: cancel payment session after 30min
+[33m167629f[m wip: update order schema
+[33m709ac4f[m feat: after complite order send a product conform mail to user
+[33m958de95[m feat: create route for orders
+[33m34c9157[m feat: show all orders in order page
+[33m169ccfb[m feat: create to fetch all orders controler
+[33m1f2c070[m feat: making order model and save the order
+[33m4b95b95[m wip: retrive all produts details from sesson
+[33m1cf5aac[m feat: make stripe webhook connection
+[33mbadbf68[m fix: before login not go to the payment section
+[33m76f0ca5[m feat: make footer component
+[33mcb64dd5[m feat: edit button is show only for owner in allUsers.jsx
+[33mbe15d12[m fix: img is not show on allUser .
+[33md1898e9[m feat: add payment on productdetails page
+[33m52b824a[m refector: update heandle submit on signup page
+[33m7e0fa08[m feat: add cloudnary for user profile img and remove base 64
+[33md70581e[m refector: change file name updateuser to updateUserRole
+[33mf8e9759[m feat: not gave the login user  and owner when call all user
+[33m01d9a81[m feat: only ccreated admin  only update the products
+[33m3ce1bc0[m fix: after  signup redirect to login is not heppen feat : seperate products with respect to admin id
+[33m10fd27d[m refector:  add enum in user model and userId in  product model to separate all products
+[33mbdd43e0[m feat: make payment success and fail ui
+[33m2b7b5f3[m feat: payment connection is done
+[33m4655c48[m feat: make payment schema in frontend
+[33m962589b[m feat: create stripe payment controler schema
+[33m9a9201d[m style: adding loading effect on header feat: create loading effect
+[33m5ea9ce9[m refector:  make the adminpannel to user-details and chenge calling style
+[33mc33c799[m refactor: chenge the logout function in user slice
+[33m4e39fe0[m style: improving style make it mobile responsiv
+[33m0f356c7[m style: make mobile responsiv
+[33m9666e80[m feat: shorting product heandler is add
+[33me9eae89[m bug: when refresh the category product page the filter selection is not applied
+[33m7e1aec3[m feat: create backend api for category search proucts
+[33m5caa473[m feat: create fetchProducts category wise
+[33mb2c2454[m feat: create ui of category product and set the search url
+[33mb32e803[m feat: show the search roducts
+[33mc58d335[m feat : connect search api to front end
+[33m6d4927f[m feat: create search products
+[33m2447d52[m feat: add cart item quantity update feature
+[33m50f3236[m feat; create update-cart-item-count api schema
+[33md26c8e2[m feat: create cart folder
+[33m92f93c5[m feat: add loading effect in cart component
+[33m6d64917[m feat: chenge cartCount locally
+[33mec46d1f[m feat: remove cart item from cart
+[33me886410[m feat: create removeCartItem schema
+[33mab9713b[m improve ui
+[33med18cfc[m fix: not gave  all cart details
+[33mae33bbf[m feat : creat fetchAllCartProducts controler
+[33m3bf682a[m remove cartSlice
+[33md734bb6[m refactor: chenge cartCount logic
+[33m202aa39[m create getCartitemCount
+[33mfc2a8a6[m refactor : chenge add to cart logic
+[33m4111705[m refactor(cart-schema): make a single cart for single user
+[33m3a54efb[m feat: create cart page
+[33m4cd9a58[m fix: add to cart function
+[33mdf5a62e[m fix: when show password click  login form submit
+[33me58d8f8[m style: show login button in mobile
+[33m205ce5b[m update locally addToCart
+[33m1942bfd[m fix: load user & cart from API on app mount to restore redux state
+[33mab51fee[m refactor: Migrate user context state logic to redux and clean the context code
+[33m6ce14f3[m feat: setup global cart state with redux & fetch initial cart in App.jsx
+[33m60db460[m feat: create cart products controler to fetch products
+[33m59720e9[m feat : create AddToCrt in ui and use it
+[33m1f0beed[m feat: create route in backend for add to cart
+[33mc1011e6[m feat: creat controler for add to cart
+[33m281ab9f[m create cart model
+[33m931fcd0[m feat: dynamic recommended products based on selected product
+[33m8148827[m improve: responsive product image layout & spacing fixes
+[33me28792d[m feat: add loadingEffect on product card details
+[33m5bdaa5a[m feat: added fully responsive product details UI with improved layout, spacing, and mobile support
+[33m67ed144[m feat: improve product details UI layout and structure
+[33m087ad4e[m feat create ui to show the product details
+[33m1307c66[m feat: create singleProductDetails api
+[33mb978e13[m feat: create productDetails schema
+[33mc8049b8[m feat: create vertical and horizontal shimmer card
+[33m0efe1de[m feat: create all products ui in home page
+[33m73d0bbc[m fetch categorydata and show in the ui and chenge the fetch method
+[33md9cbfb0[m feat: create fetchCategoryWiseProduct in frontend
+[33mca15b36[m feat: create getCategoryWiseProduct API
+[33mba13515[m fix(slider): make left & right navigation buttons visible
+[33m9b417cc[m feat(slider): added responsive banner slider with modulo loop, auto-play and navigation controls
+[33mc819530[m feat: add category skeleton loading component with shimmer animation
+[33mad5dfc6[m feat(ui): add responsive category list component with round images and horizontal scroll
+[33m77a090b[m feat: add APIs to get all categories and fetch single item per category
+[33mb49d4ec[m refactor: organize controllers into product/ and user/ folders
+[33md9c3d32[m img cut problem in product card
+[33m9d2c624[m feat: improve product image management with parallel upload and async delete
+[33mecec19d[m fix remove img in upload product
+[33m9608eb0[m improvement: optimized product image upload and fixed empty array issue
+[33m8629123[m style(ui): make product page header sticky and fix card layout
+[33m6fc1607[m fix : not calling the edit api and form submission
+[33m63e803c[m create edit product ui and add functionality
+[33mf3bbbcd[m fix a bug , after peoduct save saved product not show in the ui
+[33mc9a76b1[m header profile image ui fix
+[33m34428d2[m fix the ui of showing admin pannel
+[33m973eacf[m fix the upload product by passing the credntials
+[33m840f26c[m create edit product ui and pass the data
+[33mb3072bd[m create ui for showin products in admin
+[33m0a2533c[m complite allProductlistControler api
+[33mcda75a6[m create get product list api schema
+[33mabc6c0d[m show the error message when upload product
+[33mfd688a3[m add upload img api in in frontend
+[33mbf8589f[m upload product model route  created
+[33mbfc1bf1[m create handleChange function in UploadProduct
+[33m7842dcd[m delete image from cloudnary
+[33mdd88dad[m show   image in full page functionality
+[33m7ab0976[m create useState for product
+[33m619b185[m upload image in cloudnary
+[33mcf32175[m create function to save image in cloudnary
+[33macf4400[m add category in update product
+[33m2608ce7[m Add Product popup modal UI
+[33mfbd8977[m Added Products page header with "Add Product" button
+[33ma664da1[m only owner change the role
+[33mb693656[m show update role in ui
+[33me380b0d[m not send the password
+[33m70f7554[m update user api issue solve
+[33m100fe00[m user updated api created
+[33m2ba7068[m add role in user schema
+[33me1aef81[m create editing user ui
+[33mae3ae08[m create allusers table and show the data
+[33mbe6679d[m alluser api created
+[33mc6d7086[m make allUsersController schema
+[33m99eced8[m create users and products routes
+[33m2bb5cf5[m hide footer at admin
+[33m985d20f[m admin assid bar
+[33ma308fca[m add routing to admin page
+[33m68a7445[m fix some error
+[33m2b32768[m resolve some error occoured for variable name
+[33m16b5fca[m logout api impliment
+[33mc2407ed[m show the profile image in header
+[33md6611d0[m store user in redux store
+[33m0ea4043[m user detail api is done
+[33m3701e27[m add  user fetch function in context
+[33ma7a9f26[m jwt veryfy and add userId in req
+[33me8b86e1[m after successfully login redirect to home
+[33mde820ef[m add the login functionality in front end
+[33mcbcbe2b[m add the jwt token and test the api
+[33m581a1ce[m create login api  and valid the email and password
+[33m60d3c36[m add a react toast for showing err and sucess message
+[33m8ac6fce[m add the user api in signup ui and log the response data
+[33m29cf81d[m check duplicate user  and throw error
+[33m5e93671[m sign up api create
+[33m4f31121[m create image to base64 function
+[33ma41551f[m create connection to mongoDB
+[33m76f3044[m create all folder and create server
+[33m3b8de1d[m add animation in header inputs
+[33m24b75db[m add animation in signup page
+[33maa76ece[m chenge the image upload logic and logo from login to signup page
+[33md16a462[m create signup page
+[33mb0c3eaa[m take user input and log
+[33m091780a[m create forgot-password and signup file and add the routes
+[33m461f3aa[m Refactor Login component animation
+[33ma339c78[m add show and hide functionality in login password input
+[33m05997fe[m add email password and login inputs in login
+[33m89b49a3[m create login container and add upload image functionality
+[33m6b38d36[m add user and cart icons with counter
+[33m838708f[m implement responsive search bar
+[33mf571201[m add header layout and logo
+[33m5014e73[m add app logo and delete duplicate assest folder
+[33m9e2aa8b[m add assest folder
+[33m99d7739[m create header footer and home schema page and make the connection using react router dom
+[33m83039aa[m setup frontend files : downlod tailwind and connect to frontend
