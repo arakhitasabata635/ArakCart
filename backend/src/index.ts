@@ -6,6 +6,7 @@ import connectDB from "./config/db";
 import router from "./routes";
 import cookieParser from "cookie-parser";
 import webhooks from "./controllers/order/webhooks";
+import { errorHandler } from "./middlewares/globalErrorHendler";
 
 const app = express();
 
@@ -28,7 +29,8 @@ app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
 app.use("/api", router);
-
+// Global Error Handler
+app.use(errorHandler);
 const PORT = process.env.PORT || 8080;
 
 connectDB()
