@@ -3,10 +3,10 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import connectDB from "./config/db";
-import router from "./routes";
 import cookieParser from "cookie-parser";
 import webhooks from "./controllers/order/webhooks";
 import { errorHandler } from "./middlewares/globalErrorHendler";
+import router from "./routes/index";
 
 const app = express();
 
