@@ -1,6 +1,14 @@
+import { Request, Response } from "express";
 import userModel from "../../models/userModel.js";
 
-const updateUserDetails = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const updateUserDetails = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> =>{
   try {
     const editUser = req.body;
     delete editUser.role;
@@ -10,14 +18,14 @@ const updateUserDetails = async (req, res) => {
         .findByIdAndUpdate(editUser._id, editUser, { new: true })
         .select("-password");
 
-      res.status(200).json({
+      return res.status(200).json({
         message: "User details updated successfully!",
         data: updatedUser,
         error: false,
         success: true,
       });
     } else {
-      res.status(400).json({
+     return res.status(400).json({
         message: "Access denied! ",
         error: true,
         success: false,

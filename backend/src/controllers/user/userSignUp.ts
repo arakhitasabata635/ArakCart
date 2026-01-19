@@ -1,7 +1,13 @@
 import userModel from "../../models/userModel.js";
+import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-
-const userSignUpController = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+const userSignUpController = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     //veryfing user gave the data or not
     const { email, password, name } = req.body;
@@ -33,7 +39,7 @@ const userSignUpController = async (req, res) => {
     };
     const userData = new userModel(payload);
     const saveUser = await userData.save();
-    res.status(201).json({
+   return res.status(201).json({
       data: saveUser,
       success: true,
       error: false,
