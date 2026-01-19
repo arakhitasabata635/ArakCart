@@ -1,6 +1,35 @@
-import mongoose from "mongoose";
+import mongoose, { Model, Schema, Document } from "mongoose";
 
-const orderSchema = new mongoose.Schema(
+interface Order extends Document {
+  sessionId: string;
+
+  productDetails: string[];
+
+  email: string;
+
+  userId: string;
+
+  status: "pending";
+  paid;
+  cancelled;
+  receiver: {
+    receiverName: string;
+    phone: number;
+    address: string;
+    city: string;
+    pincode: number;
+  };
+
+  paymentDetails: {
+    paymentId: string;
+    payment_method_type: [];
+    payment_status: string;
+  };
+
+  totalAmount: number;
+}
+
+const orderSchema: Schema<Order> = new mongoose.Schema(
   {
     sessionId: {
       type: String,
@@ -9,7 +38,7 @@ const orderSchema = new mongoose.Schema(
     },
 
     productDetails: {
-      type: Array,
+      type: [String],
       default: [],
     },
 
@@ -69,9 +98,9 @@ const orderSchema = new mongoose.Schema(
       default: 0,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-const orderModel = mongoose.model("order", orderSchema);
+const orderModel: Model<Order> = mongoose.model<Order>("order", orderSchema);
 
 export default orderModel;

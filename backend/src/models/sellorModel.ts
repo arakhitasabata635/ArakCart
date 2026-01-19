@@ -1,6 +1,19 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
-const sellerRequestSchema = new mongoose.Schema(
+interface Seller extends Document {
+  userId?: mongoose.Types.ObjectId;
+  shopName?: string;
+  ownerName?: string;
+  phone?: string;
+  gstNumber?: string;
+  ShopMail?: string;
+  address?: string;
+  documents?: any[];
+  ownerNote?: string;
+  status?: "pending" | "approved" | "rejected";
+}
+
+const sellerRequestSchema: Schema<Seller> = new Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -16,11 +29,8 @@ const sellerRequestSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-
-    gstNumber: String,
-
     documents: {
-      type: Array,
+      type: [String],
       required: true,
     },
     ownerNote: String,
@@ -30,9 +40,12 @@ const sellerRequestSchema = new mongoose.Schema(
       default: "pending",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-const SellerModel = mongoose.model("seller", sellerRequestSchema);
+const SellerModel: Model<Seller> = mongoose.model<Seller>(
+  "seller",
+  sellerRequestSchema,
+);
 
 export default SellerModel;
