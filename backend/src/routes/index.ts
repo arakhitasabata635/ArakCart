@@ -3,14 +3,14 @@ import userSignUpController from "../controllers/user/userSignUp.js";
 import userLoginController from "../controllers/user/userLogin.js";
 import userDetailsController from "../controllers/user/userDetails.js";
 import userLogoutController from "../controllers/user/userLogout.js";
-import allUsersController from "../controllers/user/allUsers.js";
+import allUsersController from "../controllers/user/allUsers";
 import deleteCloudinaryImage from "../controllers/deleteImgFromCloudnary.js";
 
 import uploadProductControler from "../controllers/product/uploadProduct.js";
 import allProductlistControler from "../controllers/product/allProduct.js";
 import editProductControler from "../controllers/product/editProduct.js";
 
-import authToken from "../middlewares/authToken.js";
+import authToken from "../middlewares/authToken";
 import getCategoryProduct from "../controllers/product/getCategoryProduct.js";
 import getCategoryWiseProduct from "../controllers/product/getCategoryWiseProduct.js";
 import singleProductDetails from "../controllers/product/singleProductDetails.js";
