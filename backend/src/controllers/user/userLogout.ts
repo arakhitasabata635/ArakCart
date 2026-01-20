@@ -1,11 +1,7 @@
 import { Request, Response } from "express";
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
-
 const userLogoutController = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> =>{
   try {

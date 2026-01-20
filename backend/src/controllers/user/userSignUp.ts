@@ -1,11 +1,8 @@
 import userModel from "../../models/userModel";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-interface AuthRequest extends Request {
-  userId?: string;
-}
 const userSignUpController = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> => {
   try {

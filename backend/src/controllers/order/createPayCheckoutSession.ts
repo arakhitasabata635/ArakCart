@@ -3,12 +3,8 @@ import orderModel from "../../models/orderProductModel";
 import stripe from "../../config/stripe";
 import { Request, Response } from "express";  
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
-
 const createPayCheckoutSession = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> =>{
   try {

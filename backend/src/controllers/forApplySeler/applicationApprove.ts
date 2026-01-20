@@ -3,11 +3,8 @@ import userModel from "../../models/userModel";
 import approveReqMail from "../../utils/approveReqMail";
 import { Request, Response } from "express";  
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
 const applicationApprove = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> => {
   try {

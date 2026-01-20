@@ -1,12 +1,8 @@
 import orderModel from "../../models/orderProductModel";
 import { Request, Response } from "express";  
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
-
 const allOrdersControler =async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> => {
   try {

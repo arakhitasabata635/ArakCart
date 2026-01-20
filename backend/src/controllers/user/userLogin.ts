@@ -3,17 +3,13 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt, { SignOptions } from "jsonwebtoken";
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
-
 interface LoginBody {
   email: string;
   password: string;
 }
 
 const userLoginController = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> => {
   try {

@@ -1,12 +1,8 @@
 import { Request, Response } from "express";
 import userModel from "../../models/userModel";
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
-
 const updateUserRole = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> => {
   try {

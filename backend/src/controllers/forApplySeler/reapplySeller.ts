@@ -1,12 +1,9 @@
 import SellerModel from "../../models/sellorModel";
 import { Request, Response } from "express";  
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
 
 const reapplySeller = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> => {
   try {

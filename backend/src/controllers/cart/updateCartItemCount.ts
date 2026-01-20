@@ -1,12 +1,8 @@
 import cartModel from "../../models/productCartModel";
 import { Request, Response } from "express";  
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
-
 const updateCartItemCount = async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> =>{
   try {

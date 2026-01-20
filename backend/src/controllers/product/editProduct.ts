@@ -1,11 +1,8 @@
 import ProductModel from "../../models/productModel";
 import { Request, Response } from "express";  
 
-interface AuthRequest extends Request {
-  userId?: string;
-}
 const editProductControler =async (
-  req: AuthRequest,
+  req: Request,
   res: Response
 ): Promise<Response> =>{
   try {

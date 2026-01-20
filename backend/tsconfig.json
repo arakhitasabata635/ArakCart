@@ -16,5 +16,6 @@
 
     "allowJs": true,
     "skipLibCheck": true
-  }
+  },
+   "include": ["src"],
 }
