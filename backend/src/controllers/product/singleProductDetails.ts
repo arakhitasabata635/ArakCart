@@ -1,10 +1,18 @@
-import ProductModel from "../../models/productModel.js";
+import ProductModel from "../../models/productModel";
+import { Request, Response } from "express";  
 
-const singleProductDetails = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const singleProductDetails = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> =>{
   try {
     const { id } = req.body;
     const details = await ProductModel.findById({ _id: id });
-    res.status(200).json({
+    return res.status(200).json({
       message: "Product Details",
       error: false,
       success: true,

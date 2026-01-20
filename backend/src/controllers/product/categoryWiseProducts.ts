@@ -1,8 +1,16 @@
-import ProductModel from "../../models/productModel.js";
+import ProductModel from "../../models/productModel";
+import { Request, Response } from "express";  
 
-const categoryWiseProducts = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const categoryWiseProducts = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
-    const categoryString = req.query.category;
+    const categoryString = req.query.category.toString();
 
     let categories = [];
 
@@ -17,7 +25,7 @@ const categoryWiseProducts = async (req, res) => {
       category: { $in: regexCategories },
     });
 
-    res.status(200).json({
+   return res.status(200).json({
       data: products,
       error: false,
       success: true,

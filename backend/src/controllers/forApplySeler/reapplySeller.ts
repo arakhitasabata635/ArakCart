@@ -1,10 +1,18 @@
-import SellerModel from "../../models/sellorModel.js";
+import SellerModel from "../../models/sellorModel";
+import { Request, Response } from "express";  
 
-const reapplySeller = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const reapplySeller = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     await SellerModel.deleteOne({ userId: req.userId });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "You can apply again",
     });

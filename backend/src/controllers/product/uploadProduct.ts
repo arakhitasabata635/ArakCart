@@ -1,13 +1,21 @@
-import ProductModel from "../../models/productModel.js";
+import ProductModel from "../../models/productModel";
+import { Request, Response } from "express";  
 
-const uploadProductControler = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const uploadProductControler =async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const userId = req.userId;
     const  productDetails = req.body;
     const uploadProduct = new ProductModel({ ...productDetails, userId });
     const saveProduct = await uploadProduct.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Product upload successfully",
       error: false,
       success: true,

@@ -1,6 +1,14 @@
-import orderModel from "../../models/orderProductModel.js";
+import orderModel from "../../models/orderProductModel";
+import { Request, Response } from "express";  
 
-const sessonOrder = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const sessonOrder = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const { sessionId } = req.params;
     const sessionOrder = await orderModel.findOne({
@@ -8,7 +16,7 @@ const sessonOrder = async (req, res) => {
       sessionId,
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "sesson order",
       data: sessionOrder,
       error: false,

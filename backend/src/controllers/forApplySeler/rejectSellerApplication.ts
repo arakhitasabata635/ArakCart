@@ -1,6 +1,14 @@
-import SellerModel from "../../models/sellorModel.js";
-import userModel from "../../models/userModel.js";
-const rejectSellerApplication = async (req, res) => {
+import SellerModel from "../../models/sellorModel";
+import userModel from "../../models/userModel";
+import { Request, Response } from "express";  
+
+interface AuthRequest extends Request {
+  userId?: string;
+}
+const rejectSellerApplication =async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> =>{
   try {
     const { reqiId, ownerNote } = req.body;
     const sessionUser = await userModel.findById(req.userId);
@@ -13,7 +21,7 @@ const rejectSellerApplication = async (req, res) => {
           new: true,
         }
       );
-      res.status(200).json({
+      return res.status(200).json({
         message: "application is rejected",
         success: true,
         error: false,

@@ -1,6 +1,14 @@
-import SellerModel from "../../models/sellorModel.js";
-import userModel from "../../models/userModel.js";
-const allApplications = async (req, res) => {
+import SellerModel from "../../models/sellorModel";
+import userModel from "../../models/userModel";
+import { Request, Response } from "express";  
+
+interface AuthRequest extends Request {
+  userId?: string;
+}
+const allApplications = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> =>{
   try {
     const sessionUser = await userModel.findById(req.userId);
 
@@ -8,7 +16,7 @@ const allApplications = async (req, res) => {
       const requests = await SellerModel.find({ status: "pending" }).sort({
         createdAt: -1,
       });
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         error: false,
         data: requests,

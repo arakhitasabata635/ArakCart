@@ -1,6 +1,14 @@
-import cartModel from "../../models/productCartModel.js";
+import cartModel from "../../models/productCartModel";
+import { Request, Response } from "express";  
 
-const removeFromCart = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const removeFromCart = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const currentUser = req.userId;
     const { productId } = req.body;

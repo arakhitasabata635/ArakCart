@@ -1,5 +1,13 @@
-import ProductModel from "../../models/productModel.js";
-const editProductControler = async (req, res) => {
+import ProductModel from "../../models/productModel";
+import { Request, Response } from "express";  
+
+interface AuthRequest extends Request {
+  userId?: string;
+}
+const editProductControler =async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> =>{
   try {
     const userId = req.userId;
     const newproduct = req.body;
@@ -19,7 +27,7 @@ const editProductControler = async (req, res) => {
       { ...newproduct, userId },
       { new: true }
     );
-    res.status(200).json({
+    return res.status(200).json({
       message: "Product updated successfully",
       data: editProduct,
       error: false,

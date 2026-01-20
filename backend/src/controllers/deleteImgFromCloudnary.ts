@@ -1,12 +1,20 @@
-import cloudinary from "../config/cloudinary.js";
+import cloudinary from "../config/cloudinary";
+import { Request, Response } from "express";  
 
-const deleteCloudinaryImage = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const deleteCloudinaryImage = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const { public_id } = req.body;
 
     const result = await cloudinary.uploader.destroy(public_id);
 
-    res.status(200).json({
+   return res.status(200).json({
       message: "image delete successfully",
       success: true,
       error: false,

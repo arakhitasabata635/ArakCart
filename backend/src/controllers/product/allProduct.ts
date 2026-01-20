@@ -1,12 +1,22 @@
-import ProductModel from "../../models/productModel.js";
+import ProductModel from "../../models/productModel";
+import { Request, Response } from "express";  
 
-const allProductlistControler = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+
+
+const allProductlistControler = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const userId = req.userId;
     
     const allProducts = await ProductModel.find({ userId }).sort({ createdAt: -1 });
 
-    res.status(200).json({
+   return res.status(200).json({
       message: "All products",
       data: allProducts,
       error: false,

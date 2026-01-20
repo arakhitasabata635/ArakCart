@@ -1,4 +1,4 @@
-import cartModel from "../../models/productCartModel.js";
+import cartModel from "../../models/productCartModel";
 
 const getCartitemCount = async (req, res) => {
   try {

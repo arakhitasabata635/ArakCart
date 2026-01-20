@@ -1,6 +1,6 @@
-import stripe from "../../config/stripe.js";
-import orderModel from "../../models/orderProductModel.js";
-import sendOrderMail from "../../utils/sendOrderMail.js";
+import stripe from "../../config/stripe";
+import orderModel from "../../models/orderProductModel";
+import sendOrderMail from "../../utils/sendOrderMail";
 const endPointSecreateKey = process.env.STRIPE_WEBHOOK_SECRET;
 
 const getProductDetails = async (lineItems) => {

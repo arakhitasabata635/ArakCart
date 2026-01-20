@@ -1,6 +1,14 @@
-import cartModel from "../../models/productCartModel.js";
+import cartModel from "../../models/productCartModel";
+import { Request, Response } from "express";  
 
-const fetchAllCartProducts = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const fetchAllCartProducts = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const userId = req.userId;
     let cartProductList ;

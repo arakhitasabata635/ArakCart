@@ -1,8 +1,16 @@
-import userModel from "../../models/userModel.js";
-import orderModel from "../../models/orderProductModel.js";
-import stripe from "../../config/stripe.js";
+import userModel from "../../models/userModel";
+import orderModel from "../../models/orderProductModel";
+import stripe from "../../config/stripe";
+import { Request, Response } from "express";  
 
-const createPayCheckoutSession = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const createPayCheckoutSession = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> =>{
   try {
     const { cartItems, receiver } = req.body;
 

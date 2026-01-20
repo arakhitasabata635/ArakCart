@@ -1,7 +1,15 @@
-import SellerModel from "../../models/sellorModel.js";
-import userModel from "../../models/userModel.js";
-import approveReqMail from "../../utils/approveReqMail.js";
-const applicationApprove = async (req, res) => {
+import SellerModel from "../../models/sellorModel";
+import userModel from "../../models/userModel";
+import approveReqMail from "../../utils/approveReqMail";
+import { Request, Response } from "express";  
+
+interface AuthRequest extends Request {
+  userId?: string;
+}
+const applicationApprove = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const { id } = req.params;
     const selReq = req.body;
@@ -23,7 +31,7 @@ const applicationApprove = async (req, res) => {
       user.role = "admin";
 
       await user.save();
-      res.status(200).json({
+     return res.status(200).json({
         message: "application is approved",
         error: false,
         success: true,
@@ -35,7 +43,7 @@ const applicationApprove = async (req, res) => {
         shopName: sellerRequest.shopName,
       });
     } else {
-      res.status(403).json({
+     return res.status(403).json({
         message: "Access denied",
         error: true,
         success: false,

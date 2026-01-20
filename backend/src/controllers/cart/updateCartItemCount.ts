@@ -1,6 +1,14 @@
-import cartModel from "../../models/productCartModel.js";
+import cartModel from "../../models/productCartModel";
+import { Request, Response } from "express";  
 
-const updateCartItemCount = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const updateCartItemCount = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> =>{
   try {
     const { productId, action } = req.body;
     const userId = req.userId;

@@ -1,5 +1,13 @@
-import SellerModel from "../../models/sellorModel.js";
-const sellerApplyStatus = async (req, res) => {
+import SellerModel from "../../models/sellorModel";
+import { Request, Response } from "express";  
+
+interface AuthRequest extends Request {
+  userId?: string;
+}
+const sellerApplyStatus = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const request  = await SellerModel.findOne({
       userId: req.userId,
@@ -10,7 +18,7 @@ const sellerApplyStatus = async (req, res) => {
         data: { status: "not_applied" },
       });
     }  
-   res.status(200).json({
+  return res.status(200).json({
       success: true,
       data: request,
     });

@@ -1,20 +1,28 @@
-import SellerModel from "../../models/sellorModel.js";
-import userModel from "../../models/userModel.js";
-const applyForSeller = async (req, res) => {
+import SellerModel from "../../models/sellorModel";
+import userModel from "../../models/userModel";
+import { Request, Response } from "express";  
+
+interface AuthRequest extends Request {
+  userId?: string;
+}
+const applyForSeller = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> =>{
   try {
     const seller = req.body;
     const sessionUser = await userModel.findById(req.userId);
     if (sessionUser._id.toString() === seller.userId) {
       const sellerData = new SellerModel(seller);
       const createReq = await sellerData.save();
-      res.status(200).json({
+      return res.status(200).json({
         data: createReq,
         message: "request created successfully",
         error: false,
         success: true,
       });
     } else {
-      res.status(403).json({
+      return res.status(403).json({
         message: "Access denied",
         error: true,
         success: false,

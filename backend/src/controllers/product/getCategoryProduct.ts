@@ -1,6 +1,14 @@
-import ProductModel from "../../models/productModel.js";
+import ProductModel from "../../models/productModel";
+import { Request, Response } from "express";  
 
-const getCategoryProduct = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const getCategoryProduct = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const allCategoryPresent = await ProductModel.distinct("category");
     const allCategoryProduct = [];
@@ -11,7 +19,7 @@ const getCategoryProduct = async (req, res) => {
         allCategoryProduct.push(product);
       }
     }
-    res.status(200).json({
+   return res.status(200).json({
       message: "all categoryes",
       error: false,
       success: true,

@@ -1,6 +1,14 @@
-import ProductModel from "../../models/productModel.js";
+import ProductModel from "../../models/productModel";
+import { Request, Response } from "express";  
 
-const searchProduct = async (req, res) => {
+interface AuthRequest extends Request {
+  userId?: string;
+}
+
+const searchProduct = async (
+  req: AuthRequest,
+  res: Response
+): Promise<Response> => {
   try {
     const { query } = req.query;
     // Logic to search products based on the query
@@ -12,7 +20,7 @@ const searchProduct = async (req, res) => {
       ],
     });
 
-    res.status(200).json({
+   return res.status(200).json({
       data: products,
       error:false,
       success:true
