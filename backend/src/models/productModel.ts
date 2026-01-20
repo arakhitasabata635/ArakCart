@@ -4,7 +4,7 @@ interface Product extends Document {
   productName: String;
   brandName: String;
   category: String;
-  productImages: string[];
+  productImages: [];
   price: Number;
   sellingPrice: Number;
   description: String;
@@ -16,7 +16,7 @@ const productSchema: Schema<Product> = new mongoose.Schema(
     productName: String,
     brandName: String,
     category: String,
-    productImages: [String],
+    productImages: [],
     price: Number,
     sellingPrice: Number,
     description: String,

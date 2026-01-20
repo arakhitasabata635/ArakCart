@@ -24,7 +24,7 @@ const categoryWiseProducts = async (
     const products = await ProductModel.find({
       category: { $in: regexCategories },
     });
-
+  
    return res.status(200).json({
       data: products,
       error: false,
